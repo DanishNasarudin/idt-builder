@@ -1,5 +1,5 @@
-import Image from "next/image";
 import { Inter } from "next/font/google";
+import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,7 +49,9 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          <h2 className={`${inter.className} mb-3 text-2xl font-semibold`}>
+          <h2
+            className={`${inter.className} mb-3 text-2xl font-semibold text-primary`}
+          >
             Docs{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
