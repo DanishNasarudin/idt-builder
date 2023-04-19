@@ -18,6 +18,10 @@ module.exports = {
         accent: "#009BFF",
         "nav-bg": "#1E1E1E",
       },
+      screens: {
+        offer: "620px",
+        mobilehover: { raw: "(hover:hover)" },
+      },
     },
     screens: {
       xs: "480px",

@@ -25,3 +25,20 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+h1 {
+  font-size: clamp(24px, 4vw, 32px);
+  font-weight: 700;
+}
+
+h2 {
+  font-size: clamp(20px, 8vw, 26px);
+}
+
+p {
+  font-size: clamp(12px, 3vw, 14px);
+}
+
+h6 {
+  font-size: clamp(8px, 3vw, 12px);
+}

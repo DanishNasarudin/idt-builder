@@ -1,11 +1,14 @@
 import { Inter } from "next/font/google";
+import Hero from "./(components)/Hero";
+import Offers from "./(components)/Offers";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main
-      className={`${inter.className}flex min-h-screen flex-col items-center justify-between p-24`}
-    ></main>
+    <main className={`${inter.className}flex flex-col w-4/5 mx-auto`}>
+      <Hero />
+      <Offers />
+    </main>
   );
 }
