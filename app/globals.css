@@ -32,7 +32,8 @@ h1 {
 }
 
 h2 {
-  font-size: clamp(20px, 8vw, 26px);
+  font-size: clamp(18px, 8vw, 24px);
+  font-weight: 600;
 }
 
 p {
