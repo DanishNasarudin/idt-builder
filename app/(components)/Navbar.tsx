@@ -47,17 +47,17 @@ function Navbar({}: Props) {
             } flex-col absolute top-[99%] w-full text-center gap-8 left-0 py-8 bg-primary/50 border-y-[1px] border-white/10
             sm:relative sm:flex sm:flex-row sm:justify-between sm:pl-10 sm:w-full sm:py-0 sm:border-y-0 sm:bg-transparent`}
           >
-            <li>
+            <li key={"home"}>
               <Link href="/">
                 <p className="h-full flex items-center justify-center">Home</p>
               </Link>
             </li>
-            <li>
+            <li key={"about"}>
               <Link href="/">
                 <p className="h-full flex items-center justify-center">About</p>
               </Link>
             </li>
-            <li>
+            <li key={"specialoffer"}>
               <Link href="/">
                 <p
                   className="flex items-center justify-center"
@@ -87,29 +87,31 @@ function Navbar({}: Props) {
             ${offerToggle ? "sm:absolute" : "sm:hidden"}
             sm:primary/30 sm:py-10 sm:px-10 sm:-translate-x-[20%] sm:translate-y-[30%] sm:border-b-[1px] sm:border-white/10`}
               >
-                <li
+                <div
                   className={`
             ${offerToggle ? "block" : "hidden"} h-full`}
+                  key={"packagepc"}
                 >
                   <Link href="/">
                     <p className="h-full flex items-center justify-center">
                       Package PC
                     </p>
                   </Link>
-                </li>
-                <li
+                </div>
+                <div
                   className={`
             ${offerToggle ? "block" : "hidden"} h-full`}
+                  key={"workstationpc"}
                 >
                   <Link href="/">
                     <p className="h-full flex items-center justify-center">
                       Workstation PC
                     </p>
                   </Link>
-                </li>
+                </div>
               </div>
             </li>
-            <li>
+            <li key={"customercare"}>
               <Link href="/">
                 <p
                   className="flex items-center justify-center"
@@ -139,29 +141,31 @@ function Navbar({}: Props) {
                 ${careToggle ? "sm:absolute" : "sm:hidden"}
                 sm:primary/30 sm:py-10 sm:px-10 sm:-translate-x-[20%] sm:translate-y-[30%] sm:border-b-[1px] sm:border-white/10`}
               >
-                <li
+                <div
                   className={`
             ${careToggle ? "block" : "hidden"} h-full`}
+                  key={"AEON"}
                 >
                   <Link href="/">
                     <p className="h-full flex items-center justify-center">
                       AEON
                     </p>
                   </Link>
-                </li>
-                <li
+                </div>
+                <div
                   className={`
             ${careToggle ? "block" : "hidden"} h-full`}
+                  key={"terms"}
                 >
                   <Link href="/">
                     <p className="h-full flex items-center justify-center">
                       Terms and Conditions
                     </p>
                   </Link>
-                </li>
+                </div>
               </div>
             </li>
-            <li>
+            <li key={"contact"}>
               <Link href="/">
                 <p className="h-full flex items-center justify-center">
                   Contact Us

@@ -1,29 +1,50 @@
 "use client";
 
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 import FormItem from "./FormItem";
-
-interface Products {
-  category: string;
-  price: string;
-}
 
 const initialProducts = [
   {
-    id: uuidv4(),
     category: "CPU",
-    options: [
-      { name: "Intel i5", price: 100 },
-      { name: "Intel i7", price: 150 },
+    brands: [
+      {
+        name: "FOC Contact Frame for 13th Gen Only!",
+        options: [],
+      },
+      {
+        name: "",
+        options: [],
+      },
+      {
+        name: "12th Gen CPU",
+        options: [
+          { name: "Intel i5", price: 100 },
+          { name: "Intel i7", price: 150 },
+        ],
+      },
+      {
+        name: "",
+        options: [],
+      },
+      {
+        name: "13th Gen CPU",
+        options: [
+          { name: "Intel i5", price: 200 },
+          { name: "Intel i7", price: 250 },
+        ],
+      },
     ],
   },
   {
-    id: uuidv4(),
     category: "RAM",
-    options: [
-      { name: "8GB", price: 50 },
-      { name: "16GB", price: 80 },
+    brands: [
+      {
+        name: "RAM Brand 1",
+        options: [
+          { name: "8GB", price: 50 },
+          { name: "16GB", price: 80 },
+        ],
+      },
     ],
   },
 ];
@@ -31,30 +52,23 @@ const initialProducts = [
 type Props = {};
 
 function Form({}: Props) {
-  // const [products, setProducts] = useState([...products]);
-  // const [test, setTest] = useState(false);
-
   const [rows, setRows] = useState(
     initialProducts.map((product) => ({
       ...product,
-      id: uuidv4(),
       added: false,
     }))
   );
-  // const [addedRows, setAddedRows] = useState<number[]>([]);
 
   const addRow = (rowIndex: number) => {
-    const newRow = { ...rows[rowIndex], id: uuidv4(), added: true };
+    const newRow = { ...rows[rowIndex], added: true };
     rows.splice(rowIndex + 1, 0, newRow);
     setRows([...rows]);
-    // setAddedRows([...addedRows, rowIndex + 1]);
   };
 
   const removeRow = (rowIndex: number) => {
     if (rowIndex >= 0) {
       rows.splice(rowIndex, 1);
       setRows([...rows]);
-      // setAddedRows(addedRows.filter((row) => row !== rowIndex));
     }
   };
 
@@ -93,12 +107,12 @@ function Form({}: Props) {
             {rows.map((row, index) => {
               return (
                 <FormItem
-                  key={row.id}
+                  key={index}
                   rowIndex={index}
                   addRow={addRow}
                   removeRow={removeRow}
                   category={row.category}
-                  options={row.options}
+                  brands={row.brands}
                   added={row.added}
                 />
               );

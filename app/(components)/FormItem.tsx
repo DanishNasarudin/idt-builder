@@ -1,14 +1,22 @@
 "use client";
 
-import { useState } from "react";
-import { RiArrowDropDownFill, RiArrowDropLeftFill } from "react-icons/ri";
+import React, { useState } from "react";
+import {
+  RiAddFill,
+  RiArrowDropDownFill,
+  RiArrowDropLeftFill,
+  RiSubtractFill,
+} from "react-icons/ri";
 
 type Props = {
   addRow: (rowIndex: number) => void;
   removeRow: (rowIndex: number) => void;
   rowIndex: number;
   category: string;
-  options: { name: string; price: number }[];
+  brands: {
+    name: string;
+    options: { name: string; price: number }[];
+  }[];
   added: boolean;
 };
 
@@ -17,16 +25,17 @@ function FormItem({
   removeRow,
   rowIndex,
   category,
-  options,
+  brands,
   added,
 }: Props) {
   const [toggle, setToggle] = useState(false);
-  // const [isAdded, setIsAdded] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedOption, setSelectedOption] = useState(
+    { name: "", price: 0 } || brands[0]?.options[0]
+  );
+  const [quantityOption, setQuantityOption] = useState(1);
 
   const handleAddRow = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    // setIsAdded(true);
     addRow(rowIndex);
   };
 
@@ -34,16 +43,30 @@ function FormItem({
     event.preventDefault();
     console.log(rowIndex);
     if (rowIndex >= 0) {
-      // setIsAdded(false);
       removeRow(rowIndex);
     }
   };
 
   const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    const selected = options.find(
-      (option) => option.name === event.target.value
-    );
-    if (selected) setSelectedOption(selected);
+    let selected;
+    for (const brand of brands) {
+      selected = brand.options.find(
+        (option) => option.name === event.target.value
+      );
+      if (selected) break;
+    }
+    if (selected) {
+      setSelectedOption(selected);
+    } else if (event.target.value === "notSelected") {
+      setSelectedOption({ name: "", price: 0 });
+    }
+  };
+
+  const handleQuantityChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const value = event.target.value;
+    setQuantityOption(Number(value));
   };
 
   return (
@@ -51,14 +74,14 @@ function FormItem({
       <td className="h-full pr-2">
         <button
           className="
-          mt-4 w-16 h-16 bg-secondary  flex justify-center items-center 
+          mt-4 w-16 h-16 bg-secondary  flex justify-center items-center
           text-black text-5xl font-bold rounded-2xl
           mobilehover:hover:bg-accent mobilehover:hover:text-secondary cursor-pointer transition-all"
           onClick={(event) => {
             added ? handleRemoveRow(event) : handleAddRow(event);
           }}
         >
-          {added ? "-" : "+"}
+          {added ? <RiSubtractFill /> : <RiAddFill />}
         </button>
       </td>
       <td className="relative h-full w-[80%] px-2">
@@ -72,16 +95,28 @@ function FormItem({
             setToggle(!toggle);
           }}
           onChange={handleOptionChange}
+          defaultValue={"notSelected"}
         >
-          <optgroup label={`Choose your ${category} here`}>
-            {options.map((option, index) => {
-              return (
-                <option key={index} value={option.name}>
-                  {rowIndex + option.name}
-                </option>
-              );
-            })}
-          </optgroup>
+          <option
+            value="notSelected"
+            className="font-bold text-black"
+          >{`Choose your ${category} here`}</option>
+          {brands.map((brand, brandIndex) => {
+            return (
+              <React.Fragment key={brandIndex}>
+                <optgroup label={brand.name}>
+                  {brand.options.map((option, optionIndex) => {
+                    return (
+                      <option key={optionIndex} value={option.name}>
+                        {option.name} | RM {option.price}
+                      </option>
+                    );
+                  })}
+                </optgroup>
+              </React.Fragment>
+            );
+          })}
+          <optgroup></optgroup>
         </select>
         <RiArrowDropLeftFill
           size={40}
@@ -101,15 +136,16 @@ function FormItem({
           name="quantity__name"
           id="quantity__select"
           className="mt-4 text-black w-16 h-16 bg-secondary px-4 text-center appearance-none cursor-pointer rounded-2xl"
+          onChange={handleQuantityChange}
         >
-          <option value="opt1">1</option>
-          <option value="opt2">2</option>
-          <option value="opt3">3</option>
+          <option value={1}>1</option>
+          <option value={2}>2</option>
+          <option value={3}>3</option>
         </select>
       </td>
       <td className="pl-2">
-        <div className="mt-4 h-16 flex items-center">
-          <p>{`RM${selectedOption.price}`}</p>
+        <div className="mt-4 w-16 h-16 flex justify-center items-center">
+          <p>{`RM${selectedOption.price * quantityOption}`}</p>
         </div>
       </td>
     </tr>
