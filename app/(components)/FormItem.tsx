@@ -3,10 +3,49 @@
 import { useState } from "react";
 import { RiArrowDropDownFill, RiArrowDropLeftFill } from "react-icons/ri";
 
-type Props = {};
+type Props = {
+  addRow: (rowIndex: number) => void;
+  removeRow: (rowIndex: number) => void;
+  rowIndex: number;
+  category: string;
+  options: { name: string; price: number }[];
+  added: boolean;
+};
 
-function FormItem({}: Props) {
+function FormItem({
+  addRow,
+  removeRow,
+  rowIndex,
+  category,
+  options,
+  added,
+}: Props) {
   const [toggle, setToggle] = useState(false);
+  // const [isAdded, setIsAdded] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(options[0]);
+
+  const handleAddRow = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    // setIsAdded(true);
+    addRow(rowIndex);
+  };
+
+  const handleRemoveRow = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    console.log(rowIndex);
+    if (rowIndex >= 0) {
+      // setIsAdded(false);
+      removeRow(rowIndex);
+    }
+  };
+
+  const handleOptionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selected = options.find(
+      (option) => option.name === event.target.value
+    );
+    if (selected) setSelectedOption(selected);
+  };
+
   return (
     <tr className="h-full">
       <td className="h-full pr-2">
@@ -15,8 +54,11 @@ function FormItem({}: Props) {
           mt-4 w-16 h-16 bg-secondary  flex justify-center items-center 
           text-black text-5xl font-bold rounded-2xl
           mobilehover:hover:bg-accent mobilehover:hover:text-secondary cursor-pointer transition-all"
+          onClick={(event) => {
+            added ? handleRemoveRow(event) : handleAddRow(event);
+          }}
         >
-          +
+          {added ? "-" : "+"}
         </button>
       </td>
       <td className="relative h-full w-[80%] px-2">
@@ -29,13 +71,16 @@ function FormItem({}: Props) {
           onClick={() => {
             setToggle(!toggle);
           }}
+          onChange={handleOptionChange}
         >
-          <optgroup label="Choose your CPU here"></optgroup>
-          <optgroup></optgroup>
-          <optgroup label="CPU">
-            <option value="cpu">CPU</option>
-            <option value="i5">Intel i5</option>
-            <option value="i7">Intel i7</option>
+          <optgroup label={`Choose your ${category} here`}>
+            {options.map((option, index) => {
+              return (
+                <option key={index} value={option.name}>
+                  {rowIndex + option.name}
+                </option>
+              );
+            })}
           </optgroup>
         </select>
         <RiArrowDropLeftFill
@@ -64,7 +109,7 @@ function FormItem({}: Props) {
       </td>
       <td className="pl-2">
         <div className="mt-4 h-16 flex items-center">
-          <p>RM10,999</p>
+          <p>{`RM${selectedOption.price}`}</p>
         </div>
       </td>
     </tr>

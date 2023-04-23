@@ -7,6 +7,7 @@ function Hero({}: Props) {
     flex flex-col items-center justify-between text-center py-4 pt-8
     xs:flex-row xs:text-left sm:py-8"
     >
+      <div className="idt__container"></div>
       <div className="w-4/5">
         <h1 className="my-2 xs:my-4">
           Ideal Tech Official <br />
