@@ -18,7 +18,7 @@ function Navbar({}: Props) {
   return (
     <nav
       className=" 
-    bg-primary/30 sticky top-0 border-b-[1px] border-white/10
+    bg-primary/30 sticky top-0 border-b-[1px] border-white/10 z-50
     sm:border-b-0"
     >
       <div
@@ -58,22 +58,20 @@ function Navbar({}: Props) {
               </Link>
             </li>
             <li key={"specialoffer"}>
-              <Link href="/">
-                <p
-                  className="flex items-center justify-center"
-                  onClick={() => {
-                    setOfferToggle(!offerToggle);
-                    setCareToggle(false);
-                  }}
-                >
-                  Special Offer{" "}
-                  {offerToggle ? (
-                    <RiArrowDropDownFill size={20} />
-                  ) : (
-                    <RiArrowDropLeftFill size={20} />
-                  )}
-                </p>
-              </Link>
+              <p
+                className="flex items-center justify-center cursor-pointer"
+                onClick={() => {
+                  setOfferToggle(!offerToggle);
+                  setCareToggle(false);
+                }}
+              >
+                Special Offer{" "}
+                {offerToggle ? (
+                  <RiArrowDropDownFill size={20} />
+                ) : (
+                  <RiArrowDropLeftFill size={20} />
+                )}
+              </p>
               <div
                 className={`
                 sm:before:absolute sm:before:w-full sm:before:h-full sm:before:backdrop-blur-md sm:before:top-0 sm:before:left-0 sm:before:-z-[10] sm:mt-0
@@ -112,22 +110,20 @@ function Navbar({}: Props) {
               </div>
             </li>
             <li key={"customercare"}>
-              <Link href="/">
-                <p
-                  className="flex items-center justify-center"
-                  onClick={() => {
-                    setCareToggle(!careToggle);
-                    setOfferToggle(false);
-                  }}
-                >
-                  Customer Care{" "}
-                  {careToggle ? (
-                    <RiArrowDropDownFill size={20} />
-                  ) : (
-                    <RiArrowDropLeftFill size={20} />
-                  )}
-                </p>
-              </Link>
+              <p
+                className="flex items-center justify-center cursor-pointer"
+                onClick={() => {
+                  setCareToggle(!careToggle);
+                  setOfferToggle(false);
+                }}
+              >
+                Customer Care{" "}
+                {careToggle ? (
+                  <RiArrowDropDownFill size={20} />
+                ) : (
+                  <RiArrowDropLeftFill size={20} />
+                )}
+              </p>
               <div
                 className={`
                 sm:before:absolute sm:before:w-full sm:before:h-full sm:before:backdrop-blur-md sm:before:top-0 sm:before:left-0 sm:before:-z-[10] sm:mt-0

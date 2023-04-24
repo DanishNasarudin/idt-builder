@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   RiAddFill,
   RiArrowDropDownFill,
@@ -18,6 +18,7 @@ type Props = {
     options: { name: string; price: number }[];
   }[];
   added: boolean;
+  updateGrandTotal: (newTotalPrice: number, rowIndex: number) => void;
 };
 
 function FormItem({
@@ -27,6 +28,7 @@ function FormItem({
   category,
   brands,
   added,
+  updateGrandTotal,
 }: Props) {
   const [toggle, setToggle] = useState(false);
   const [selectedOption, setSelectedOption] = useState(
@@ -41,7 +43,6 @@ function FormItem({
 
   const handleRemoveRow = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
-    console.log(rowIndex);
     if (rowIndex >= 0) {
       removeRow(rowIndex);
     }
@@ -68,6 +69,10 @@ function FormItem({
     const value = event.target.value;
     setQuantityOption(Number(value));
   };
+
+  useEffect(() => {
+    updateGrandTotal(selectedOption.price * quantityOption, rowIndex);
+  }, [selectedOption, quantityOption]);
 
   return (
     <tr className="h-full">

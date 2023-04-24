@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { v4 as uuidv4 } from "uuid";
 import FormItem from "./FormItem";
 
 const initialProducts = [
@@ -47,6 +48,18 @@ const initialProducts = [
       },
     ],
   },
+  {
+    category: "GPU",
+    brands: [
+      {
+        name: "GPU Brand 1",
+        options: [
+          { name: "RTX4070", price: 350 },
+          { name: "RTX4090", price: 380 },
+        ],
+      },
+    ],
+  },
 ];
 
 type Props = {};
@@ -56,11 +69,13 @@ function Form({}: Props) {
     initialProducts.map((product) => ({
       ...product,
       added: false,
+      totalPrice: 0,
+      id: uuidv4(),
     }))
   );
 
   const addRow = (rowIndex: number) => {
-    const newRow = { ...rows[rowIndex], added: true };
+    const newRow = { ...rows[rowIndex], added: true, id: uuidv4() };
     rows.splice(rowIndex + 1, 0, newRow);
     setRows([...rows]);
   };
@@ -70,6 +85,21 @@ function Form({}: Props) {
       rows.splice(rowIndex, 1);
       setRows([...rows]);
     }
+  };
+
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  const updateGrandTotal = (newTotalPrice: number, rowIndex: number) => {
+    const updatedRows = [...rows];
+
+    updatedRows[rowIndex].totalPrice = newTotalPrice;
+
+    const newGrandTotalPrice = updatedRows.reduce(
+      (sum, row) => sum + row.totalPrice,
+      0
+    );
+
+    setTotalPrice(newGrandTotalPrice);
   };
 
   return (
@@ -107,16 +137,31 @@ function Form({}: Props) {
             {rows.map((row, index) => {
               return (
                 <FormItem
-                  key={index}
+                  key={row.id}
                   rowIndex={index}
                   addRow={addRow}
                   removeRow={removeRow}
                   category={row.category}
                   brands={row.brands}
                   added={row.added}
+                  updateGrandTotal={updateGrandTotal}
                 />
               );
             })}
+            <tr>
+              <td></td>
+              <td></td>
+              <td>
+                <p>
+                  <b>Grand Total: </b>
+                </p>
+              </td>
+              <td>
+                <p>
+                  <b>RM {totalPrice}</b>
+                </p>
+              </td>
+            </tr>
           </tbody>
         </table>
       </form>
