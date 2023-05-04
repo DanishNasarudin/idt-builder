@@ -18,8 +18,7 @@ function Navbar({}: Props) {
   return (
     <nav
       className=" 
-    bg-primary/30 sticky top-0 border-b-[1px] border-white/10 z-50
-    sm:border-b-0"
+    bg-primary/30 sticky top-0 border-b-[1px] border-white/10 z-50"
     >
       <div
         className="

@@ -43,6 +43,16 @@ p {
   font-size: clamp(12px, 3vw, 14px);
 }
 
+h5 {
+  font-size: clamp(16px, 3vw, 18px);
+}
+
 h6 {
   font-size: clamp(8px, 3vw, 12px);
+}
+
+@media (max-width: 768px) {
+  tr:nth-of-type(2n) {
+    background: rgba(255, 255, 255, 0.05);
+  }
 }

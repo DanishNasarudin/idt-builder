@@ -82,6 +82,8 @@ function Form({}: Props) {
 
   const removeRow = (rowIndex: number) => {
     if (rowIndex >= 0) {
+      const rowTotalPrice = rows[rowIndex].totalPrice;
+      setTotalPrice(totalPrice - rowTotalPrice); // Subtract row's total price from the grand total
       rows.splice(rowIndex, 1);
       setRows([...rows]);
     }
@@ -102,14 +104,27 @@ function Form({}: Props) {
     setTotalPrice(newGrandTotalPrice);
   };
 
+  const resetForm = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    setRows(
+      initialProducts.map((product) => ({
+        ...product,
+        added: false,
+        totalPrice: 0,
+        id: uuidv4(),
+      }))
+    );
+    setTotalPrice(0);
+  };
+
   return (
     <div className="py-8">
       <div className="text-center mb-4">
         <h2>Choose your parts</h2>
       </div>
-      <form>
+      <form className="w-full">
         <table className="w-full">
-          <thead>
+          <thead className="hidden sm:table-header-group">
             <tr>
               <th>
                 <label htmlFor="add__label">
@@ -148,21 +163,64 @@ function Form({}: Props) {
                 />
               );
             })}
-            <tr>
-              <td></td>
-              <td></td>
-              <td>
-                <p>
-                  <b>Grand Total: </b>
-                </p>
+          </tbody>
+          <tfoot className="sticky bottom-0">
+            <tr className="sticky">
+              <td className="hidden sm:table-cell"></td>
+              {/* <td className="hidden sm:table-cell"></td> */}
+              <td className="h-full pr-2 hidden sm:table-cell">
+                <div className="flex flex-col items-end justify-between h-32 mt-4">
+                  <button className="py-4 px-8 bg-secondary text-black rounded-2xl w-28">
+                    <p>
+                      <b>Reset</b>
+                    </p>
+                  </button>
+                  <button className="py-4 px-8 bg-accent text-secondary rounded-2xl w-28">
+                    <p>
+                      <b>Next</b>
+                    </p>
+                  </button>
+                </div>
               </td>
-              <td>
-                <p>
-                  <b>RM {totalPrice}</b>
-                </p>
+              <td colSpan={2} className="pl-2 block sm:table-cell">
+                <div
+                  className="
+                flex max-w-[300px] justify-between mx-auto
+                sm:w-full"
+                >
+                  <div className="flex sm:hidden flex-col items-end justify-between h-32 mt-4">
+                    <button
+                      className="py-4 px-8 bg-secondary text-black rounded-2xl w-28 shadow-2xl"
+                      onClick={(event) => resetForm(event)}
+                    >
+                      <p>
+                        <b>Reset</b>
+                      </p>
+                    </button>
+                    <button className="py-4 px-8 bg-accent text-secondary rounded-2xl w-28 shadow-2xl">
+                      <p>
+                        <b>Next</b>
+                      </p>
+                    </button>
+                  </div>
+                  <div
+                    className="
+                  bg-secondary w-[50%] text-black rounded-2xl h-32 mt-4 flex justify-center items-center flex-col gap-2
+                  shadow-2xl
+                  sm:w-full"
+                  >
+                    <p>
+                      <b>Grand Total</b>
+                    </p>
+                    <div className="border-b-[1px] border-black w-[70%]" />
+                    <p>
+                      <b>RM {totalPrice}</b>
+                    </p>
+                  </div>
+                </div>
               </td>
             </tr>
-          </tbody>
+          </tfoot>
         </table>
       </form>
     </div>
