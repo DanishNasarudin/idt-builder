@@ -19,6 +19,15 @@ type Props = {
   }[];
   added: boolean;
   updateGrandTotal: (newTotalPrice: number, rowIndex: number) => void;
+  updateFormData: (
+    rowIndex: number,
+    rowData: {
+      category: string;
+      selectedOption: { name: string; price: number };
+      quantity: number;
+      total: number;
+    }
+  ) => void;
 };
 
 function FormItem({
@@ -29,6 +38,7 @@ function FormItem({
   brands,
   added,
   updateGrandTotal,
+  updateFormData,
 }: Props) {
   const [toggle, setToggle] = useState(false);
   const [selectedOption, setSelectedOption] = useState(
@@ -72,6 +82,12 @@ function FormItem({
 
   useEffect(() => {
     updateGrandTotal(selectedOption.price * quantityOption, rowIndex);
+    updateFormData(rowIndex, {
+      category,
+      selectedOption,
+      quantity: quantityOption,
+      total: selectedOption.price * quantityOption,
+    });
   }, [selectedOption, quantityOption]);
 
   return (

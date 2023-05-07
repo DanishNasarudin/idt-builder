@@ -23,7 +23,7 @@ function Navbar({}: Props) {
       <div
         className="
         before:absolute before:w-full before:h-full before:content-[''] before:backdrop-blur-md before:top-0 before:-z-10
-      relative"
+      relative max-w-[1060px] mx-auto"
       >
         <ul
           className="

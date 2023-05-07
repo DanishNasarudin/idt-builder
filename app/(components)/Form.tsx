@@ -1,5 +1,8 @@
 "use client";
 
+import { db } from "@/firebase";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import FormItem from "./FormItem";
@@ -64,6 +67,13 @@ const initialProducts = [
 
 type Props = {};
 
+export interface FormDataItem {
+  category: string;
+  selectedOption: { name: string; price: number };
+  quantity: number;
+  total: number;
+}
+
 function Form({}: Props) {
   const [rows, setRows] = useState(
     initialProducts.map((product) => ({
@@ -117,6 +127,26 @@ function Form({}: Props) {
     setTotalPrice(0);
   };
 
+  const [formData, setFormData] = useState<FormDataItem[]>([]);
+
+  console.log(formData);
+
+  const router = useRouter();
+  const createNewQuote = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    // Filter out undefined values from formData
+    const filteredFormData = formData.filter((item) => item !== undefined);
+
+    const doc = await addDoc(collection(db, "quote__ids"), {
+      formData: filteredFormData, // Add filteredFormData to the document
+      grandTotal: totalPrice,
+      createdAt: serverTimestamp(),
+    });
+
+    router.push(`/quote/${doc.id}`);
+  };
+
   return (
     <div className="py-8">
       <div className="text-center mb-4">
@@ -160,6 +190,11 @@ function Form({}: Props) {
                   brands={row.brands}
                   added={row.added}
                   updateGrandTotal={updateGrandTotal}
+                  updateFormData={(rowIndex, rowData) => {
+                    const newFormData = [...formData];
+                    newFormData[rowIndex] = rowData;
+                    setFormData(newFormData);
+                  }}
                 />
               );
             })}
@@ -175,7 +210,10 @@ function Form({}: Props) {
                       <b>Reset</b>
                     </p>
                   </button>
-                  <button className="py-4 px-8 bg-accent text-secondary rounded-2xl w-28">
+                  <button
+                    onClick={(event) => createNewQuote(event)}
+                    className="py-4 px-8 bg-accent text-secondary rounded-2xl w-28"
+                  >
                     <p>
                       <b>Next</b>
                     </p>
@@ -197,7 +235,10 @@ function Form({}: Props) {
                         <b>Reset</b>
                       </p>
                     </button>
-                    <button className="py-4 px-8 bg-accent text-secondary rounded-2xl w-28 shadow-2xl">
+                    <button
+                      onClick={(event) => createNewQuote(event)}
+                      className="py-4 px-8 bg-accent text-secondary rounded-2xl w-28 shadow-2xl"
+                    >
                       <p>
                         <b>Next</b>
                       </p>

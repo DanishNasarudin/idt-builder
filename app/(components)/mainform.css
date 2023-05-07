@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media (max-width: 768px) {
+  tr:nth-of-type(2n) {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
