@@ -90,9 +90,33 @@ function FormItem({
     });
   }, [selectedOption, quantityOption]);
 
+  const [tooltipVisible, setTooltipVisible] = useState(false);
+
+  const handleCopy = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+
+    setTooltipVisible(true);
+    setTimeout(() => {
+      setTooltipVisible(false);
+    }, 2000);
+
+    if (quantityOption === 1) {
+      const copyText = `${selectedOption.name}, Price: RM${selectedOption.price}
+      `;
+      navigator.clipboard.writeText(copyText);
+    } else {
+      const copyText = `${selectedOption.name}, Price: RM${
+        selectedOption.price
+      }, Qty: x${quantityOption}, Total: RM${
+        selectedOption.price * quantityOption
+      }`;
+      navigator.clipboard.writeText(copyText);
+    }
+  };
+
   return (
     <tr className="h-full">
-      <td className="h-full pr-2 hidden sm:table-cell">
+      <td className="relative h-full pr-2 hidden sm:table-cell">
         <button
           className="
           mt-4 w-16 h-16 bg-secondary  flex justify-center items-center
@@ -103,6 +127,17 @@ function FormItem({
           }}
         >
           {added ? <RiSubtractFill /> : <RiAddFill />}
+        </button>
+        <button
+          className={`
+            absolute right-[100%] top-0
+            mt-4 mr-4 w-16 h-16 bg-zinc-900 text-secondary rounded-xl font-bold
+            mobilehover:hover:bg-zinc-900/80 mobilehover:hover:text-secondary/80 transition-all
+            ${tooltipVisible ? "bg-green-600" : ""}
+            ${selectedOption.name === "" ? "hidden" : ""}`}
+          onClick={(event) => handleCopy(event)}
+        >
+          <p>Copy</p>
         </button>
       </td>
       <td className="relative h-full w-full sm:w-[80%] px-2 block sm:table-cell">
@@ -174,7 +209,7 @@ function FormItem({
         </select>
       </td>
       <td className="pl-2 block">
-        <div className="flex justify-between max-w-[300px] mx-auto mb-8 sm:mb-0">
+        <div className="relative flex justify-between max-w-[300px] mx-auto mb-8 sm:mb-0">
           <div className="flex sm:hidden flex-col text-center mt-4">
             <label htmlFor="add__label">
               <p>

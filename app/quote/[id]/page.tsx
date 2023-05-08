@@ -3,7 +3,6 @@
 import { Inter } from "next/font/google";
 import { useEffect, useState } from "react";
 import { RiArrowDropDownFill, RiArrowDropLeftFill } from "react-icons/ri";
-import "./quoteform.css";
 
 import { db } from "@/firebase";
 import { collection, query } from "firebase/firestore";
@@ -17,9 +16,7 @@ type Props = {};
 function QuotePage({}: Props) {
   const [toggle, setToggle] = useState(false);
 
-  const [formData, loading, error] = useCollection(
-    query(collection(db, "quote__ids"))
-  );
+  const [formData] = useCollection(query(collection(db, "quote__ids")));
 
   const pathname = usePathname();
 
@@ -27,7 +24,7 @@ function QuotePage({}: Props) {
 
   // console.log(pathname.includes(formData!.docs[0].id));
 
-  console.log(formData?.docs[0].data());
+  // console.log(formData?.docs[0].data());
 
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
@@ -192,7 +189,7 @@ function QuotePage({}: Props) {
               <input
                 type="url"
                 id="quotation__id"
-                className="input-quote-form"
+                className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
                 value={fullUrl}
                 readOnly
               />
@@ -222,7 +219,11 @@ function QuotePage({}: Props) {
           <p>Your Name</p>
         </label>
         <p>
-          <input type="text" className="input-quote-form" required />
+          <input
+            type="text"
+            className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
+            required
+          />
         </p>
         <div className="flex gap-0 sm:gap-8 flex-col sm:flex-row">
           <div className="flex-[3]">
@@ -230,7 +231,11 @@ function QuotePage({}: Props) {
               <p>Your Email</p>
             </label>
             <p>
-              <input type="email" className="input-quote-form" required />
+              <input
+                type="email"
+                className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
+                required
+              />
             </p>
           </div>
           <div className="flex-[2]">
@@ -240,7 +245,7 @@ function QuotePage({}: Props) {
             <p>
               <input
                 type="tel"
-                className="input-quote-form"
+                className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
                 pattern="\+60-[0-9]{10}"
                 required
                 placeholder="+60-123456789"
@@ -298,7 +303,7 @@ function QuotePage({}: Props) {
             name="reason__name"
             id="reason__id"
             rows={2}
-            className="input-quote-form"
+            className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
             required
           />
         </p>
@@ -310,7 +315,7 @@ function QuotePage({}: Props) {
             name="requirements__name"
             id="requirements__id"
             rows={2}
-            className="input-quote-form"
+            className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
           />
         </p>
         <div className="flex justify-around items-center">

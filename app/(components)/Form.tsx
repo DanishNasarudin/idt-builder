@@ -1,9 +1,20 @@
 "use client";
 
 import { db } from "@/firebase";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  limit,
+  orderBy,
+  query,
+  serverTimestamp,
+} from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useCollection } from "react-firebase-hooks/firestore";
 import { v4 as uuidv4 } from "uuid";
 import FormItem from "./FormItem";
 
@@ -75,6 +86,19 @@ export interface FormDataItem {
 }
 
 function Form({}: Props) {
+  const [mainData] = useCollection(query(collection(db, "products__data")));
+
+  // if (!mainData) {
+  //   return (
+  //     <h2 className="flex flex-col justify-center items-center h-[100vh] text-center">
+  //       Loading...
+  //     </h2>
+  //   );
+  // }
+
+  console.log("firestore", mainData?.docs[0].data().data);
+  console.log("original", initialProducts);
+
   const [rows, setRows] = useState(
     initialProducts.map((product) => ({
       ...product,
@@ -127,9 +151,19 @@ function Form({}: Props) {
     setTotalPrice(0);
   };
 
+  const deleteOldestDocuments = async () => {
+    const quoteIdsRef = collection(db, "quote__ids");
+    const q = query(quoteIdsRef, orderBy("createdAt"), limit(250));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach(async (docSnapshot) => {
+      await deleteDoc(doc(db, "quote__ids", docSnapshot.id));
+    });
+  };
+
   const [formData, setFormData] = useState<FormDataItem[]>([]);
 
-  console.log(formData);
+  // console.log(formData);
 
   const router = useRouter();
   const createNewQuote = async (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -143,6 +177,13 @@ function Form({}: Props) {
       grandTotal: totalPrice,
       createdAt: serverTimestamp(),
     });
+
+    // Check the total number of documents in the collection
+    const quoteIdsSnapshot = await getDocs(collection(db, "quote__ids"));
+    if (quoteIdsSnapshot.size >= 500) {
+      // Delete the first 250 documents ordered by createdAt
+      await deleteOldestDocuments();
+    }
 
     router.push(`/quote/${doc.id}`);
   };
@@ -205,14 +246,20 @@ function Form({}: Props) {
               {/* <td className="hidden sm:table-cell"></td> */}
               <td className="h-full pr-2 hidden sm:table-cell">
                 <div className="flex flex-col items-end justify-between h-32 mt-4">
-                  <button className="py-4 px-8 bg-secondary text-black rounded-2xl w-28">
+                  <button
+                    className="
+                  py-4 px-8 bg-secondary text-black rounded-2xl w-28
+                  mobilehover:hover:bg-secondary/80 transition-all"
+                  >
                     <p>
                       <b>Reset</b>
                     </p>
                   </button>
                   <button
                     onClick={(event) => createNewQuote(event)}
-                    className="py-4 px-8 bg-accent text-secondary rounded-2xl w-28"
+                    className="
+                    py-4 px-8 bg-accent text-secondary rounded-2xl w-28
+                    mobilehover:hover:bg-accent/50 transition-all"
                   >
                     <p>
                       <b>Next</b>
@@ -228,7 +275,9 @@ function Form({}: Props) {
                 >
                   <div className="flex sm:hidden flex-col items-end justify-between h-32 mt-4">
                     <button
-                      className="py-4 px-8 bg-secondary text-black rounded-2xl w-28 shadow-2xl"
+                      className="
+                      py-4 px-8 bg-secondary text-black rounded-2xl w-28 shadow-2xl
+                      mobilehover:hover:bg-secondary/80 transition-all"
                       onClick={(event) => resetForm(event)}
                     >
                       <p>
@@ -237,7 +286,9 @@ function Form({}: Props) {
                     </button>
                     <button
                       onClick={(event) => createNewQuote(event)}
-                      className="py-4 px-8 bg-accent text-secondary rounded-2xl w-28 shadow-2xl"
+                      className="
+                      py-4 px-8 bg-accent text-secondary rounded-2xl w-28 shadow-2xl
+                      mobilehover:hover:bg-accent/50 transition-all"
                     >
                       <p>
                         <b>Next</b>
