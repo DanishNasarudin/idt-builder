@@ -45,7 +45,7 @@ function QuotePage({}: Props) {
   const [quoteId, setQuoteId] = useState<string | null>(null);
 
   useEffect(() => {
-    const pathArray = pathname.split("/");
+    const pathArray = pathname!.split("/");
     const id = pathArray[pathArray.length - 1];
     if (id) {
       setQuoteId(id);
