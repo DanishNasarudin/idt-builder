@@ -171,7 +171,7 @@ function Form({}: Props) {
 
     // Filter out undefined values from formData
     const filteredFormData = formData.filter(
-      (item) => item.selectedOption.name !== ""
+      (item) => item !== undefined && item.selectedOption.name !== ""
     );
 
     const doc = await addDoc(collection(db, "quote__ids"), {
