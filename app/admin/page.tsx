@@ -1,8 +1,8 @@
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import Admin from "../(components)/Admin";
 import Login from "../(components)/Login";
 import SessionProvider from "../(components)/SessionProvider";
-import { authOptions } from "../api/auth/[...nextauth]/route";
 
 type Props = {};
 
