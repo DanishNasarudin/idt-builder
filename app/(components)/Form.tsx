@@ -96,8 +96,8 @@ function Form({}: Props) {
   //   );
   // }
 
-  console.log("firestore", mainData?.docs[0].data().data);
-  console.log("original", initialProducts);
+  // console.log("firestore", mainData?.docs[0].data().data);
+  // console.log("original", initialProducts);
 
   const [rows, setRows] = useState(
     initialProducts.map((product) => ({
@@ -170,7 +170,9 @@ function Form({}: Props) {
     event.preventDefault();
 
     // Filter out undefined values from formData
-    const filteredFormData = formData.filter((item) => item !== undefined);
+    const filteredFormData = formData.filter(
+      (item) => item.selectedOption.name !== ""
+    );
 
     const doc = await addDoc(collection(db, "quote__ids"), {
       formData: filteredFormData, // Add filteredFormData to the document
