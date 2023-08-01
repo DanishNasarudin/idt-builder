@@ -1,11 +1,20 @@
 "use client";
 
-import { db, storage } from "@/firebase";
-import { addDoc, collection } from "firebase/firestore";
-import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { signOut, useSession } from "next-auth/react";
-import { parse } from "papaparse";
 import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+import AdminCategory from "./AdminCategory";
+
+const initialCategories = [
+  {
+    category: "Product 1",
+    text: "test",
+  },
+  {
+    category: "Product 2",
+    text: "test2",
+  },
+];
 
 type Props = {};
 
@@ -13,6 +22,75 @@ function Admin({}: Props) {
   const { data: session } = useSession();
   const [allow, setAllow] = useState(0);
   const [loading, setLoading] = useState(true);
+  // const [expandBar, setExpandBar] = useState(false);
+  const [editorContent, setEditorContent] = useState("");
+  // const updateEditorContent = (newContent: any) => {
+  //   setEditorContent(newContent);
+  // };
+
+  // const [categoryComponents, setCategoryComponents] = useState([
+  //   <AdminCategory updateEditorContent={updateEditorContent} />,
+  // ]);
+
+  // Fetch categories from Firestore
+
+  // Text Editor initialisation
+  // const editor = useEditor({
+  //   extensions: [StarterKit],
+  //   content: "test",
+  //   onUpdate: ({ editor }) => {
+  //     setEditorContent(editor.getText());
+  //   },
+  //   onCreate: ({ editor }) => {
+  //     setEditorContent(editor.getText());
+  //   },
+  // });
+
+  // const addCategory = () => {
+  //   setCategoryComponents([
+  //     ...categoryComponents,
+  //     <AdminCategory updateEditorContent={updateEditorContent} />,
+  //   ]);
+  // };
+
+  // const moveUp = (index) => {
+  //   if (index === 0) return; // Can't move up the first element
+  //   const newCategoryComponents = [...categoryComponents];
+  //   const temp = newCategoryComponents[index];
+  //   newCategoryComponents[index] = newCategoryComponents[index - 1];
+  //   newCategoryComponents[index - 1] = temp;
+  //   setCategoryComponents(newCategoryComponents);
+  // };
+
+  // const moveDown = (index) => {
+  //   if (index === categoryComponents.length - 1) return; // Can't move down the last element
+  //   const newCategoryComponents = [...categoryComponents];
+  //   const temp = newCategoryComponents[index];
+  //   newCategoryComponents[index] = newCategoryComponents[index + 1];
+  //   newCategoryComponents[index + 1] = temp;
+  //   setCategoryComponents(newCategoryComponents);
+  // };
+
+  const [rows, setRows] = useState(
+    initialCategories.map((category) => ({
+      ...category,
+      added: false,
+      id: uuidv4(),
+    }))
+  );
+
+  const addRow = (rowIndex: number) => {
+    const newRow = { ...rows[rowIndex], added: true, id: uuidv4() };
+    rows.splice(rowIndex + 1, 0, newRow);
+    setRows([...rows]);
+  };
+
+  const removeRow = (rowIndex: number) => {
+    if (rowIndex >= 0) {
+      rows.splice(rowIndex, 1);
+      setRows([...rows]);
+    }
+  };
 
   useEffect(() => {
     const securePage = async () => {
@@ -38,127 +116,62 @@ function Admin({}: Props) {
     );
   }
 
-  // Function to download data as CSV
-  const downloadCSV = () => {
-    const header = ["Category", "Brand", "Option Name", "Option Price"];
-
-    const csvContent = "data:text/csv;charset=utf-8," + header.join(",");
-
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", "data.csv");
-    document.body.appendChild(link);
-    link.click();
-  };
-
-  const parseCSVData = (csvData: string) => {
-    const parsedData = parse(csvData, {
-      header: true,
-      skipEmptyLines: true,
-    });
-
-    const categoryMap = new Map<string, any>();
-
-    console.log(parsedData);
-
-    parsedData.data.forEach((row: any) => {
-      const category = row.Category;
-      const brand = row.Brand;
-      const optionName = row.OptionName;
-      const optionPrice = parseFloat(row.OptionPrice);
-
-      if (!categoryMap.has(category)) {
-        categoryMap.set(category, {
-          category,
-          brands: [],
-        });
-      }
-
-      const categoryData = categoryMap.get(category);
-      const existingBrand = categoryData.brands.find(
-        (b: any) => b.name === brand
-      );
-
-      if (existingBrand) {
-        existingBrand.options.push({ name: optionName, price: optionPrice });
-      } else {
-        categoryData.brands.push({
-          name: brand,
-          options: [{ name: optionName, price: optionPrice }],
-        });
-      }
-    });
-
-    const initialProducts = Array.from(categoryMap.values()).map((product) => {
-      return {
-        ...product,
-        brands: product.brands.map((brand: any) => {
-          return {
-            ...brand,
-            options: brand.options.filter(
-              (option: any) => option !== undefined
-            ),
-          };
-        }),
-      };
-    });
-
-    console.log(initialProducts);
-    return initialProducts;
-  };
-
-  // Function to handle file upload
-  const handleFileUpload = async (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = async (event) => {
-      if (event.target) {
-        const csvData = event.target.result;
-
-        // Save CSV file to Firebase Storage
-        const storageRef = ref(storage, `csv/${file.name}`);
-        await uploadBytes(
-          storageRef,
-          new Blob([csvData as string], { type: file.type })
-        );
-
-        // Get the download URL for the saved CSV file
-        const downloadURL = await getDownloadURL(storageRef);
-
-        // Process and save the formatted data to Firestore
-        const formattedData = parseCSVData(csvData as string);
-
-        await addDoc(collection(db, "products__data"), {
-          csvUrl: downloadURL,
-          data: formattedData,
-        });
-
-        console.log("CSV data saved");
-      }
-    };
-    reader.readAsText(file);
-  };
-
   return (
-    <div className="flex flex-col justify-center items-center h-[100vh] text-center">
+    <div className="flex flex-col justify-center items-center h-[100vh] text-center w-4/5 mx-auto">
       {allow === 1 ? (
-        <div>
+        <div className="w-full">
           <h1>Admin</h1>
           <button onClick={() => signOut()}>Logout</button>
-          <br />
-          <button onClick={downloadCSV}>Download CSV</button>
-          <br />
-          <input
-            type="file"
-            id="csvUpload"
-            accept=".csv"
-            onChange={handleFileUpload}
-          />
+          {/* <p>{editorContent}</p> */}
+
+          {/* Render categories */}
+          {/* <div className="w-full flex">
+            <div className="bg-zinc-900 w-[88%] mx-auto px-4 py-2 text-start">
+              <div
+                className=" w-full py-4"
+                onClick={() => setExpandBar(!expandBar)}
+              >
+                Product 1
+              </div>
+              <div
+                className={`grid overflow-hidden transition-all
+                ${expandBar ? "my-4 grid-rows-[1fr]" : "my-0 grid-rows-[0fr]"}`}
+              >
+                <div
+                  className={`min-h-[0] bg-white text-black
+                ${expandBar ? "px-2 py-2" : ""}`}
+                >
+                  <EditorContent editor={editor} />
+                </div>
+              </div>
+            </div>
+            <div className="w-[10%] flex flex-col h-[72px]">
+              <button className="bg-zinc-900 h-full border-b-[1px] border-white/10">
+                Up
+              </button>
+              <button className="bg-zinc-900 h-full">Down</button>
+            </div>
+          </div> */}
+          <div className="flex flex-col gap-4">
+            {rows.map((row, index) => {
+              return (
+                <AdminCategory
+                  key={row.id}
+                  rowIndex={index}
+                  removeRow={removeRow}
+                  category={row.category}
+                  textEditor={row.text}
+                  added={row.added}
+                />
+              );
+            })}
+            <button
+              className="bg-zinc-900 w-full mx-auto px-4 py-6 text-start"
+              onClick={() => addRow(0)}
+            >
+              Add
+            </button>
+          </div>
         </div>
       ) : (
         <div>

@@ -2,7 +2,6 @@
 
 import { db } from "@/firebase";
 import {
-  addDoc,
   collection,
   deleteDoc,
   doc,
@@ -11,6 +10,7 @@ import {
   orderBy,
   query,
   serverTimestamp,
+  setDoc,
 } from "firebase/firestore";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -174,7 +174,8 @@ function Form({}: Props) {
       (item) => item !== undefined && item.selectedOption.name !== ""
     );
 
-    const doc = await addDoc(collection(db, "quote__ids"), {
+    const id = uuidv4();
+    await setDoc(doc(db, "quote__ids", id), {
       formData: filteredFormData, // Add filteredFormData to the document
       grandTotal: totalPrice,
       createdAt: serverTimestamp(),
@@ -187,7 +188,7 @@ function Form({}: Props) {
       await deleteOldestDocuments();
     }
 
-    router.push(`/quote/${doc.id}`);
+    router.push(`/quote/${id}`);
   };
 
   return (

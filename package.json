@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tiptap/pm": "^2.0.3",
+    "@tiptap/react": "^2.0.3",
+    "@tiptap/starter-kit": "^2.0.3",
     "@types/node": "18.15.11",
     "@types/react": "18.0.35",
     "@types/react-dom": "18.0.11",
@@ -25,9 +28,13 @@
     "papaparse": "^5.4.1",
     "postcss": "8.4.22",
     "react": "18.2.0",
+    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "18.2.0",
     "react-firebase-hooks": "^5.1.1",
     "react-icons": "^4.8.0",
+    "slate": "^0.94.1",
+    "slate-history": "^0.93.0",
+    "slate-react": "^0.94.2",
     "tailwindcss": "3.3.1",
     "typescript": "5.0.4",
     "uuid": "^9.0.0"
@@ -37,6 +44,7 @@
     "@types/busboy": "^1.5.0",
     "@types/formidable": "^2.0.5",
     "@types/papaparse": "^5.3.7",
+    "@types/react-beautiful-dnd": "^13.1.4",
     "@types/uuid": "^9.0.1"
   }
 }

@@ -16,7 +16,9 @@ type Props = {};
 function QuotePage({}: Props) {
   const [toggle, setToggle] = useState(false);
 
-  const [formData] = useCollection(query(collection(db, "quote__ids")));
+  const [formData, loading] = useCollection(
+    query(collection(db, "quote__ids"))
+  );
 
   const pathname = usePathname();
 
@@ -52,7 +54,7 @@ function QuotePage({}: Props) {
     }
   }, [pathname]);
 
-  if (!formData) {
+  if (loading) {
     return (
       <h2 className="flex flex-col justify-center items-center h-[100vh] text-center">
         Loading...
