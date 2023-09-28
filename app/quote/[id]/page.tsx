@@ -122,22 +122,22 @@ function QuotePage({}: Props) {
                 return quoteData.map((data: any, dataIndex: number) => (
                   <tr key={`${index}-${dataIndex}`}>
                     <td className="w-[70%] p-0">
-                      <div className="mt-4 py-4 pl-8 pr-2 bg-secondary/20 rounded-l-2xl">
+                      <div className="mt-4 h-16 pl-8 pr-2 bg-secondary/20 rounded-l-2xl text-xs flex justify-center flex-col">
                         {data.selectedOption.name}
                       </div>
                     </td>
                     <td className="w-[10%] p-0">
-                      <div className="mt-4 text-center py-4 px-2 bg-secondary/20">
+                      <div className="mt-4 text-center py-6 px-2 bg-secondary/20 text-xs">
                         {data.selectedOption.price}
                       </div>
                     </td>
                     <td className="w-[10%] p-0">
-                      <div className="mt-4 text-center py-4 px-2 bg-secondary/20">
+                      <div className="mt-4 text-center py-6 px-2 bg-secondary/20 text-xs">
                         {data.quantity}
                       </div>
                     </td>
                     <td className="w-[10%] p-0">
-                      <div className="mt-4 text-center py-4 px-8 bg-secondary/20 rounded-r-2xl">
+                      <div className="mt-4 text-center py-6 px-8 bg-secondary/20 rounded-r-2xl text-xs">
                         {data.total}
                       </div>
                     </td>
