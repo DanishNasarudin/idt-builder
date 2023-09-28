@@ -1,0 +1,98 @@
+----------------------------------------------------------------------
+RAPOO C280 WEBCAM (FULL HD), 169
+----------------------------------------------------------------------
+
+ASUS
+ASUS ROG EYE S (Normal Price: RM299), 280
+ASUS Webcam C3 (Normal Price: RM169), 130
+
+EVGA
+EVGA XR1 Capture Device, 839
+
+LOGITECH 
+LOGITECH VC- C930E WEBCAM  (3 Year Warranty), 649
+LOGITECH VC- C925e WEBCAM  (3 Year Warranty), 549
+LOGITECH VC- C525 WEBCAM HD   (3 Year Warranty), 239
+LOGITECH BRIO 4K WEBCAM (1 Year Warranty), 979
+LOGITECH BRIO 500 WEBCAM - GRAPHITE (1 Year Warranty), 609
+LOGITECH BRIO 500 WEBCAM - OFF WHITE (1 Year Warranty), 609
+LOGITECH BRIO 500 WEBCAM - ROSE (1 Year Warranty), 609
+LOGITECH BRIO 300 WEBCAM - GRAPHITE (1 Year Warranty), 309
+LOGITECH BRIO 300 WEBCAM - OFF WHITE (1 Year Warranty), 309
+LOGITECH BRIO 300 WEBCAM - ROSE (1 Year Warranty), 309
+LOGITECH BRIO 100 WEBCAM - GRAPHITE (1 Year Warranty), 179
+LOGITECH BRIO 100 WEBCAM - OFF WHITE (1 Year Warranty), 179
+LOGITECH BRIO 100 WEBCAM - ROSE (1 Year Warranty), 179
+LOGITECH C922 PRO  STREAM WEBCAM  (1 Year Warranty), 489
+LOGITECH C615 PORTABLE HD WEBCAM  (2 Years Warranty), 318
+LOGITECH C310 HD WEBCAM (2 Years Warranty), 210
+LOGITECH C270 HD WEBCAM (2 Years Warranty), 139
+LOGITECH C170 HD WEBCAM (2 Years Warranty), 87 
+
+LOGITECH VC-BRIO 4K PRO WEBCAM (3 Years Warranty), 1099
+LOGITECH VC RALLY CAMERA - BLACK - USB - PLUGB  (2 Years Warranty), 6400
+LOGITECH VC- GROUP (2 Years Warranty), 5500
+LOGITECH VC- GROUP EXPAN. MICROPHONE  (2 Years Warranty), 1490
+LOGITECH VC-MEETUP (2 Years Warranty), 4799
+LOGITECH VC-MEETUP EXPANSION MIC (2 Years Warranty), 1169
+LOGITECH VC-MEETUP TV MOUNT  (2 Years Warranty), 480
+LOGITECH VC- PTZ Pro 2   (2 Years Warranty), 3599
+LOGITECH VC- CONFERENCECAM CONNECT  (2 Years Warranty), 2399
+LOGITECH VC- BCC950 CONFERENCE CAM(2 Years Warranty), 1189
+LOGITECH VC- SCREEN SHARE (2 Years Warranty), 1450
+LOGITECH VC- HEADSET H570E USB  (2 Years Warranty), 249
+LOGITECH VC- GROUP 10M EXTENDER CABLE  (2 Years Warranty), 530
+LOGITECH VC-GROUP 15M EXTENSION CABLE  (2 Years Warranty), 1050
+
+SOUND CARD
+CREATIVE BlasterX AE-5 Plus, 629
+CREATIVE Blaster Z SE, 449
+
+ELGATO ( 2 YEARS WARRANTY )*
+Video Capture
+ELGATO HD60 X External Capture Card (1080p60 HDR10 or 4K30 HDR10 with ultra-low latency), 949
+ELGATO 4K60 PRO MK.2 PCIe Game Capture Card @ 4K 60FPS Capture, 1399
+StreamDeck
+ELGATO StreamDeck +, 999
+ELGATO StreamDeck XL (32 Keys LCD), 1299
+ELGATO StreamDeck MK.2 (15 Keys LCD), 799
+ELGATO StreamDeck MK.2 (15 Keys LCD) White, 799
+ELGATO StreamDeck Mini (6 Keys LCD), 529
+ELGATO Stream Deck Pedal, 449
+Cam Capture
+ELGATO CamLink PRO 4 HDMI Camera Capture PCIe Card, 2009
+ELGATO CamLink 4K USB Camera Capture, 559
+Green Screen
+ELGATO Green Screen XL, 849
+ELGATO Green Screen, 809
+ELGATO Green Screen MT (Mount), 799
+ELGATO Green Screen Mouse Mat, 139
+Multi Mount
+ELGATO Multi Mount L, 259
+ELGATO Flex Arm L Kit, 229
+ELGATO Weighted Base, 229
+ELGATO Flex Arm S Kit, 129
+ELGATO Solid Arm (A single steel pole that clamps horizontally onto Master Mount), 159
+ELGATO Heavy Clamp (Heavy Duty G-Clamp and Ball Head), 189
+Microphone
+ELGATO Wave:3 (USB Condenser Microphone and Digital Mixer), 755
+ELGATO Wave:3 - White (USB Condenser Microphone and Digital Mixer), 755
+ELGATO Wave:1 (USB Condenser Microphone and Digital Mixer), 615
+ELGATO Wave DX (Dynamic Microphone), 529
+ELGATO Wave XLR, 829
+ELGATO Wave XLR Cable - 3meter, 109
+ELGATO Wave Mic Arm, 499
+ELGATO Pop Filter for Wave Series, 159
+ELGATO Shock Mount for Wave Series, 219
+ELGATO Extension Rods for Wave Series, 49
+Facecam
+ELGATO Facecam (Premium 1080p60 Webcam), 859
+ELGATO Key Light Air, 859
+
+Razer Broadcaster Peripherals
+Razer Kiyo Pro (High-Performance Adaptive Light Sensor/ Uncompressed 1080p 60FPS/ HDR-enabled 30FPS),819
+Razer Kiyo - Streaming Camera (High fps HD Video (720p 60fps/1080p 30fps/Multi-step ring light),459
+Razer Seiren Emote - Streaming Mic (8-bit Emoticon LED Display/Build-in Shock Mount/Interchangeable gooseneck),669
+Razer Seiren X - Streaming Mic (Condenser Microphone/Supercardioid Pick-Up Pattern/Build-in Shock Mount),419
+Razer Seiren Mini - Portable Mini Mic (Condenser Microphone/Supercardioid Pick-Up Pattern/Build-in Shock Mount),209
+Razer Ripsaw HD - Game Capture Card (1080p at 60FPS Stream/4K Passthrough/Full Audio Mixing Capabilities),659

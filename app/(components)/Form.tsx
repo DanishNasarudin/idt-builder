@@ -13,69 +13,111 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import { useCollection } from "react-firebase-hooks/firestore";
+import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import FormItem from "./FormItem";
+import readFileAndParse from "./TxtToProduct";
 
-const initialProducts = [
-  {
-    category: "CPU",
-    brands: [
-      {
-        name: "FOC Contact Frame for 13th Gen Only!",
-        options: [],
-      },
-      {
-        name: "",
-        options: [],
-      },
-      {
-        name: "12th Gen CPU",
-        options: [
-          { name: "Intel i5", price: 100 },
-          { name: "Intel i7", price: 150 },
-        ],
-      },
-      {
-        name: "",
-        options: [],
-      },
-      {
-        name: "13th Gen CPU",
-        options: [
-          { name: "Intel i5", price: 200 },
-          { name: "Intel i7", price: 250 },
-        ],
-      },
-    ],
-  },
-  {
-    category: "RAM",
-    brands: [
-      {
-        name: "RAM Brand 1",
-        options: [
-          { name: "8GB", price: 50 },
-          { name: "16GB", price: 80 },
-        ],
-      },
-    ],
-  },
-  {
-    category: "GPU",
-    brands: [
-      {
-        name: "GPU Brand 1",
-        options: [
-          { name: "RTX4070", price: 350 },
-          { name: "RTX4090", price: 380 },
-        ],
-      },
-    ],
-  },
-];
+// const initialProductsTest = readFileAndParse();
+// // const initialProducts: any = [];
+// initialProductsTest.then((value) => {
+//   const initialProducts = value;
+//   console.log(initialProducts, "value");
+// });
 
+type OptionType = {
+  name: string;
+  price: number;
+};
+
+type BrandType = {
+  name: string;
+  options: OptionType[];
+};
+
+type ProductType = {
+  category: string;
+  brands: BrandType[];
+};
+
+// const initialProducts: ProductType[] = [];
+
+// readFileAndParse().then((value) => {
+//   value.forEach((product) => {
+//     initialProducts.push(product);
+//   });
+//   console.log(initialProducts, "array");
+// });
+
+// console.log(initialProducts);
+// async function handlePromise () {
+//   const readProduct = readFileAndParse();
+//   const initial = await readProduct;
+
+//   return initial
+// }
+// handlePromise();
+
+// console.log(initialProducts, "text");
+
+// const initialProducts = [
+//   {
+//     category: "CPU",
+//     brands: [
+//       {
+//         name: "FOC Contact Frame for 13th Gen Only!",
+//         options: [],
+//       },
+//       {
+//         name: "",
+//         options: [],
+//       },
+//       {
+//         name: "12th Gen CPU",
+//         options: [
+//           { name: "Intel i5", price: 100 },
+//           { name: "Intel i7", price: 150 },
+//         ],
+//       },
+//       {
+//         name: "",
+//         options: [],
+//       },
+//       {
+//         name: "13th Gen CPU",
+//         options: [
+//           { name: "Intel i5", price: 200 },
+//           { name: "Intel i7", price: 250 },
+//         ],
+//       },
+//     ],
+//   },
+//   {
+//     category: "RAM",
+//     brands: [
+//       {
+//         name: "RAM Brand 1",
+//         options: [
+//           { name: "8GB", price: 50 },
+//           { name: "16GB", price: 80 },
+//         ],
+//       },
+//     ],
+//   },
+//   {
+//     category: "GPU",
+//     brands: [
+//       {
+//         name: "GPU Brand 1",
+//         options: [
+//           { name: "RTX4070", price: 350 },
+//           { name: "RTX4090", price: 380 },
+//         ],
+//       },
+//     ],
+//   },
+// ];
+// console.log(initialProducts, "value");
 type Props = {};
 
 export interface FormDataItem {
@@ -86,7 +128,26 @@ export interface FormDataItem {
 }
 
 function Form({}: Props) {
-  const [mainData] = useCollection(query(collection(db, "products__data")));
+  const [initialProducts, setProducts] = useState<ProductType[]>([]);
+
+  useEffect(() => {
+    readFileAndParse().then((data) => {
+      setProducts(data);
+    });
+  }, []);
+
+  // console.log(initialProducts);
+
+  useEffect(() => {
+    setRows(
+      initialProducts.map((product) => ({
+        ...product,
+        added: false,
+        totalPrice: 0,
+        id: uuidv4(),
+      }))
+    );
+  }, [initialProducts]);
 
   // if (!mainData) {
   //   return (
@@ -107,6 +168,7 @@ function Form({}: Props) {
       id: uuidv4(),
     }))
   );
+  // console.log(rows);
 
   const addRow = (rowIndex: number) => {
     const newRow = { ...rows[rowIndex], added: true, id: uuidv4() };
