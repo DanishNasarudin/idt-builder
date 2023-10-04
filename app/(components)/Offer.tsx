@@ -16,6 +16,7 @@ function Offer({ src, text }: Props) {
         width={iconSize}
         height={iconSize}
         priority
+        unoptimized={true}
       />
       <h6 className="ml-4">{text}</h6>
     </div>

@@ -120,24 +120,52 @@ function QuotePage({}: Props) {
               if (item.id === quoteId) {
                 const quoteData = item.data().formData;
                 return quoteData.map((data: any, dataIndex: number) => (
-                  <tr key={`${index}-${dataIndex}`}>
-                    <td className="w-[70%] p-0">
-                      <div className="mt-4 py-4 pl-8 pr-2 bg-secondary/20 rounded-l-2xl">
-                        {data.selectedOption.name}
+                  <tr key={`${index}-${dataIndex}`} className="">
+                    <td className="w-full sm:w-[70%] p-0 flex sm:table-cell flex-col">
+                      <div className="mt-4 h-16 pt-8 sm:pt-0 px-12 sm:pl-8 sm:pr-2 bg-secondary/20 rounded-t-2xl sm:rounded-none sm:rounded-l-2xl text-xs flex justify-center flex-col font-bold sm:font-normal gap-4">
+                        <div className="flex gap-4">
+                          {/* <img
+                            src={data.selectedOption.imdisp}
+                            alt="img"
+                            className="w-10"
+                          /> */}
+                          {data.selectedOption.name}
+                        </div>
+                        <div className="border-b-[1px] border-secondary w-full block sm:hidden" />
                       </div>
                     </td>
-                    <td className="w-[10%] p-0">
-                      <div className="mt-4 text-center py-4 px-2 bg-secondary/20">
+                    <td className="w-full sm:w-[10%] p-0 block sm:table-cell ">
+                      <div className="mt-4 text-center py-6 px-2 bg-secondary/20 text-xs hidden sm:block">
                         {data.selectedOption.price}
                       </div>
+                      <div className="flex sm:hidden justify-between bg-secondary/20 px-12 rounded-b-2xl">
+                        <div className=" text-center py-6 text-xs flex flex-col gap-4">
+                          <label htmlFor="quantity__label">
+                            <p style={{ fontSize: "12px" }}>Price</p>
+                          </label>
+                          {data.selectedOption.price}
+                        </div>
+                        <div className=" text-center py-6 text-xs flex flex-col gap-4">
+                          <label htmlFor="quantity__label">
+                            <p style={{ fontSize: "12px" }}>Quantity</p>
+                          </label>
+                          {data.quantity}
+                        </div>
+                        <div className=" text-center py-6 text-xs flex flex-col gap-4 text-green-300 font-bold">
+                          <label htmlFor="total__label">
+                            <p style={{ fontSize: "12px" }}>Total</p>
+                          </label>
+                          {data.total}
+                        </div>
+                      </div>
                     </td>
-                    <td className="w-[10%] p-0">
-                      <div className="mt-4 text-center py-4 px-2 bg-secondary/20">
+                    <td className="w-full sm:w-[10%] p-0 hidden sm:table-cell">
+                      <div className="mt-4 text-center py-6 px-2 bg-secondary/20 text-xs">
                         {data.quantity}
                       </div>
                     </td>
-                    <td className="w-[10%] p-0">
-                      <div className="mt-4 text-center py-4 px-8 bg-secondary/20 rounded-r-2xl">
+                    <td className="w-full sm:w-[10%] p-0 hidden sm:table-cell">
+                      <div className="mt-4 text-center py-6 px-8 bg-secondary/20 rounded-r-2xl text-xs">
                         {data.total}
                       </div>
                     </td>
@@ -151,11 +179,21 @@ function QuotePage({}: Props) {
         <tfoot>
           <tr>
             <td colSpan={3} className="w-[90%] p-0">
-              <div className="mt-4 py-4 pl-8 pr-2 bg-secondary text-black font-bold rounded-l-2xl">
+              <div className="mt-4 py-4 px-12 sm:px-8 bg-secondary text-black font-bold rounded-2xl sm:rounded-none sm:rounded-l-2xl flex justify-between w-full align-middle items-center">
                 Grand Total
+                <div className=" text-center py-4 bg-secondary text-black font-bold rounded-r-2xl block sm:hidden">
+                  {formData &&
+                    quoteId &&
+                    formData.docs.map((item) => {
+                      if (item.id === quoteId) {
+                        return item.data().grandTotal;
+                      }
+                      return null;
+                    })}
+                </div>
               </div>
             </td>
-            <td className="w-[10%] p-0">
+            <td className="w-[10%] p-0 hidden sm:table-cell">
               <div className="mt-4 text-center py-4 px-8 bg-secondary text-black font-bold rounded-r-2xl">
                 {formData &&
                   quoteId &&

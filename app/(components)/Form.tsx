@@ -18,15 +18,9 @@ import { v4 as uuidv4 } from "uuid";
 import FormItem from "./FormItem";
 import readFileAndParse from "./TxtToProduct";
 
-// const initialProductsTest = readFileAndParse();
-// // const initialProducts: any = [];
-// initialProductsTest.then((value) => {
-//   const initialProducts = value;
-//   console.log(initialProducts, "value");
-// });
-
 type OptionType = {
   name: string;
+  oriPrice: number;
   price: number;
 };
 
@@ -144,27 +138,18 @@ function Form({}: Props) {
         ...product,
         added: false,
         totalPrice: 0,
+        totalOriPrice: 0,
         id: uuidv4(),
       }))
     );
   }, [initialProducts]);
-
-  // if (!mainData) {
-  //   return (
-  //     <h2 className="flex flex-col justify-center items-center h-[100vh] text-center">
-  //       Loading...
-  //     </h2>
-  //   );
-  // }
-
-  // console.log("firestore", mainData?.docs[0].data().data);
-  // console.log("original", initialProducts);
 
   const [rows, setRows] = useState(
     initialProducts.map((product) => ({
       ...product,
       added: false,
       totalPrice: 0,
+      totalOriPrice: 0,
       id: uuidv4(),
     }))
   );
@@ -186,11 +171,17 @@ function Form({}: Props) {
   };
 
   const [totalPrice, setTotalPrice] = useState(0);
+  const [totalOriPrice, setTotalOriPrice] = useState(0);
 
-  const updateGrandTotal = (newTotalPrice: number, rowIndex: number) => {
+  const updateGrandTotal = (
+    newTotalPrice: number,
+    newTotalOriPrice: number,
+    rowIndex: number
+  ) => {
     const updatedRows = [...rows];
 
     updatedRows[rowIndex].totalPrice = newTotalPrice;
+    updatedRows[rowIndex].totalOriPrice = newTotalOriPrice;
 
     const newGrandTotalPrice = updatedRows.reduce(
       (sum, row) => sum + row.totalPrice,
@@ -198,6 +189,13 @@ function Form({}: Props) {
     );
 
     setTotalPrice(newGrandTotalPrice);
+
+    const newGrandTotalOriPrice = updatedRows.reduce(
+      (sum, row) => sum + row.totalOriPrice,
+      0
+    );
+
+    setTotalOriPrice(newGrandTotalOriPrice);
   };
 
   const resetForm = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -207,6 +205,7 @@ function Form({}: Props) {
         ...product,
         added: false,
         totalPrice: 0,
+        totalOriPrice: 0,
         id: uuidv4(),
       }))
     );
@@ -240,6 +239,7 @@ function Form({}: Props) {
     await setDoc(doc(db, "quote__ids", id), {
       formData: filteredFormData, // Add filteredFormData to the document
       grandTotal: totalPrice,
+      //grand total ori - discount
       createdAt: serverTimestamp(),
     });
 
@@ -305,8 +305,8 @@ function Form({}: Props) {
               );
             })}
           </tbody>
-          <tfoot className="sticky bottom-0">
-            <tr className="sticky">
+          <tfoot className="sticky bottom-0 w-full bg-gradient-to-t from-primary">
+            <tr className="sticky bottom-4">
               <td className="hidden sm:table-cell"></td>
               {/* <td className="hidden sm:table-cell"></td> */}
               <td className="h-full pr-2 hidden sm:table-cell">
@@ -372,6 +372,8 @@ function Form({}: Props) {
                     <div className="border-b-[1px] border-black w-[70%]" />
                     <p>
                       <b>RM {totalPrice}</b>
+                      <br />
+                      <b>Original: RM {totalOriPrice}</b>
                     </p>
                   </div>
                 </div>

@@ -2,10 +2,11 @@
 const nextConfig = {
   experimental: {
     appDir: true,
-    serverActions: true,
+    // serverActions: true,
   },
   images: {
     domains: ["idealtech.com.my"],
+    unoptimized: true,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -17,6 +18,7 @@ const nextConfig = {
 
     return config;
   },
+  // output: "export",
 };
 
 module.exports = nextConfig;

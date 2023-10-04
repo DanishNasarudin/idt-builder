@@ -4,6 +4,7 @@ import path from "path";
 
 type OptionType = {
   name: string;
+  oriPrice: number;
   price: number;
 };
 
@@ -38,9 +39,12 @@ function TxtToProduct(txtContent: string): ProductType {
 
       // Extract options for the brand
       while (i < lines.length && lines[i].includes(",")) {
-        const [optionName, priceStr] = lines[i].split(",").map((s) => s.trim());
+        const [optionName, priceStr, priceOri] = lines[i]
+          .split(",")
+          .map((s) => s.trim());
         brand.options.push({
           name: optionName,
+          oriPrice: parseInt(priceOri, 10),
           price: parseInt(priceStr, 10),
         });
         i++;
