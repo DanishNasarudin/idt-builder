@@ -239,6 +239,7 @@ function Form({}: Props) {
     await setDoc(doc(db, "quote__ids", id), {
       formData: filteredFormData, // Add filteredFormData to the document
       grandTotal: totalPrice,
+      oriTotal: totalOriPrice,
       //grand total ori - discount
       createdAt: serverTimestamp(),
     });
@@ -309,41 +310,14 @@ function Form({}: Props) {
             <tr className="sticky bottom-4">
               <td className="hidden sm:table-cell"></td>
               {/* <td className="hidden sm:table-cell"></td> */}
-              <td className="h-full pr-2 hidden sm:table-cell">
-                <div className="flex flex-col items-end justify-between h-32 mt-4">
-                  <button
-                    className="
-                  py-4 px-8 bg-secondary text-black rounded-2xl w-28
-                  mobilehover:hover:bg-secondary/80 transition-all"
-                  >
-                    <p>
-                      <b>Reset</b>
-                    </p>
-                  </button>
-                  <button
-                    onClick={(event) => createNewQuote(event)}
-                    className="
-                    py-4 px-8 bg-accent text-secondary rounded-2xl w-28
-                    mobilehover:hover:bg-accent/50 transition-all"
-                  >
-                    <p>
-                      <b>Next</b>
-                    </p>
-                  </button>
-                </div>
-              </td>
-              <td colSpan={2} className="pl-2 block sm:table-cell">
-                <div
-                  className="
-                flex max-w-[300px] justify-between mx-auto
-                sm:w-full"
-                >
-                  <div className="flex sm:hidden flex-col items-end justify-between h-32 mt-4">
+              <td className="h-full pr-2 hidden sm:table-cell align-top">
+                <div className="flex flex-col w-full">
+                  <div className="border-b-[10px] border-[transparent] w-full rounded-xl mt-4" />
+                  <div className="flex flex-col items-end justify-between h-32 mt-4">
                     <button
                       className="
-                      py-4 px-8 bg-secondary text-black rounded-2xl w-28 shadow-2xl
-                      mobilehover:hover:bg-secondary/80 transition-all"
-                      onClick={(event) => resetForm(event)}
+                    py-4 px-8 bg-secondary text-black rounded-2xl w-28
+                    mobilehover:hover:bg-secondary/80 transition-all"
                     >
                       <p>
                         <b>Reset</b>
@@ -352,7 +326,7 @@ function Form({}: Props) {
                     <button
                       onClick={(event) => createNewQuote(event)}
                       className="
-                      py-4 px-8 bg-accent text-secondary rounded-2xl w-28 shadow-2xl
+                      py-4 px-8 bg-accent text-secondary rounded-2xl w-28
                       mobilehover:hover:bg-accent/50 transition-all"
                     >
                       <p>
@@ -360,21 +334,85 @@ function Form({}: Props) {
                       </p>
                     </button>
                   </div>
-                  <div
-                    className="
-                  bg-secondary w-[50%] text-black rounded-2xl h-32 mt-4 flex justify-center items-center flex-col gap-2
-                  shadow-2xl
-                  sm:w-full"
-                  >
-                    <p>
-                      <b>Grand Total</b>
-                    </p>
-                    <div className="border-b-[1px] border-black w-[70%]" />
-                    <p>
-                      <b>RM {totalPrice}</b>
-                      <br />
-                      <b>Original: RM {totalOriPrice}</b>
-                    </p>
+                </div>
+              </td>
+              <td colSpan={2} className="pl-2 block sm:table-cell">
+                <div
+                  className="
+                flex max-w-[300px] justify-between mx-auto
+                sm:w-full"
+                >
+                  <div className="flex flex-col w-full sm:hidden">
+                    <div className="border-b-[10px] border-[transparent] w-[50%] rounded-xl mt-4 sm:w-full sm:hidden" />
+                    <div className="flex sm:hidden flex-col items-start justify-between h-32 mt-4">
+                      <button
+                        className="
+                        py-4 px-8 bg-secondary text-black rounded-2xl w-28 shadow-2xl
+                        mobilehover:hover:bg-secondary/80 transition-all"
+                        onClick={(event) => resetForm(event)}
+                      >
+                        <p>
+                          <b>Reset</b>
+                        </p>
+                      </button>
+                      <button
+                        onClick={(event) => createNewQuote(event)}
+                        className="
+                        py-4 px-8 bg-accent text-secondary rounded-2xl w-28 shadow-2xl
+                        mobilehover:hover:bg-accent/50 transition-all"
+                      >
+                        <p>
+                          <b>Next</b>
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+                  <div className="flex flex-col w-full">
+                    <div className="border-b-[10px] border-[#009BFF] w-full rounded-xl mt-4" />
+                    <div
+                      className="
+                    bg-secondary w-full text-black rounded-2xl h-32 mt-4 flex justify-center items-center flex-col gap-2
+                    shadow-2xl text-center
+                    sm:w-full"
+                    >
+                      {/* <p>
+                        <b>Grand Total</b>
+                      </p>
+                      <div className="border-b-[1px] border-black w-[70%]" />
+                      <p>
+                        <b>RM {totalPrice}</b>
+                        <br />
+                        <b>Original: RM {totalOriPrice}</b>
+                      </p> */}
+                      <p>
+                        <b style={{ color: "gray", fontSize: 12 }}>
+                          <s> RM {totalOriPrice}</s>
+                        </b>
+                        <br />
+                        <b style={{ fontSize: 20 }}>RM {totalPrice}</b>
+                        <br />
+                        {totalPrice > 0 ? (
+                          <b style={{ color: "#009BFF", fontSize: 12 }}>
+                            Save RM {totalOriPrice - totalPrice}
+                          </b>
+                        ) : (
+                          ""
+                        )}
+                      </p>
+                    </div>
+                    {totalPrice > 0 ? (
+                      <div className="text-center mt-2">
+                        <p style={{ fontSize: 12 }}>
+                          Starting from{" "}
+                          <b style={{ color: "#009BFF" }}>
+                            {Math.floor(totalPrice / (1 - 0.05) / 18)}/mo
+                          </b>{" "}
+                          with AEON Credit Card
+                        </p>
+                      </div>
+                    ) : (
+                      ""
+                    )}
                   </div>
                 </div>
               </td>

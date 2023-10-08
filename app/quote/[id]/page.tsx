@@ -14,6 +14,15 @@ const inter = Inter({ subsets: ["latin"] });
 type Props = {};
 
 function QuotePage({}: Props) {
+  const [quantityOption, setQuantityOption] = useState(3);
+
+  const handleQuantityChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const value = event.target.value;
+    setQuantityOption(Number(value));
+  };
+
   const [toggle, setToggle] = useState(false);
 
   const [formData, loading] = useCollection(
@@ -176,7 +185,7 @@ function QuotePage({}: Props) {
             })}
         </tbody>
 
-        <tfoot>
+        {/* <tfoot>
           <tr>
             <td colSpan={3} className="w-[90%] p-0">
               <div className="mt-4 py-4 px-12 sm:px-8 bg-secondary text-black font-bold rounded-2xl sm:rounded-none sm:rounded-l-2xl flex justify-between w-full align-middle items-center">
@@ -206,8 +215,160 @@ function QuotePage({}: Props) {
               </div>
             </td>
           </tr>
-        </tfoot>
+        </tfoot> */}
       </table>
+      <div className="flex flex-col pt-16 gap-16 items-center mx-auto w-full">
+        <div className="flex gap-16">
+          <h2>
+            Grand <br /> Total
+          </h2>
+          <div className="text-center">
+            {formData &&
+              quoteId &&
+              formData.docs.map((item) => {
+                if (item.id === quoteId) {
+                  return (
+                    <p>
+                      <b style={{ color: "gray", fontSize: 12 }}>
+                        <s> RM {item.data().oriTotal}</s>
+                      </b>
+                      <br />
+                      <b style={{ fontSize: 20 }}>
+                        RM {item.data().grandTotal}
+                      </b>
+                      <br />
+                      {item.data().grandTotal > 0 ? (
+                        <b style={{ color: "#009BFF", fontSize: 12 }}>
+                          Save RM{" "}
+                          {item.data().oriTotal - item.data().grandTotal}
+                        </b>
+                      ) : (
+                        ""
+                      )}
+                    </p>
+                  );
+                }
+                return null;
+              })}
+          </div>
+        </div>
+        <div className="flex gap-4 sm:flex-row flex-col w-full mx-auto flex-wrap justify-center">
+          <div className="flex gap-4">
+            <select
+              name="quantity__name"
+              id="quantity__select"
+              className="flex text-white w-full sm:w-16 h-28 bg-accent sm:px-4 text-center appearance-none cursor-pointer rounded-2xl font-bold"
+              onChange={handleQuantityChange}
+              defaultValue={3}
+            >
+              <option value={1}>3%</option>
+              <option value={2}>4%</option>
+              <option value={3}>5%</option>
+            </select>
+            <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
+              <b style={{ fontSize: 12 }}>Installment with</b>
+              <b style={{ color: "#009BFF", fontSize: 20 }}>
+                {quantityOption == 1 ? 6 : ""}
+                {quantityOption == 2 ? 12 : ""}
+                {quantityOption == 3 ? 18 : ""} months
+              </b>
+              <b style={{ fontSize: 12 }}>period</b>
+            </div>
+          </div>
+          {formData &&
+            quoteId &&
+            formData.docs.map((item) => {
+              if (item.id === quoteId) {
+                return (
+                  <>
+                    <div className="flex gap-4">
+                      <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
+                        <b style={{ fontSize: 12 }}>Starting from</b>
+                        <b style={{ color: "#009BFF", fontSize: 20 }}>
+                          RM{" "}
+                          {Math.floor(
+                            item.data().grandTotal /
+                              (1 -
+                                (quantityOption == 1
+                                  ? 0.03
+                                  : quantityOption == 2
+                                  ? 0.04
+                                  : quantityOption == 3
+                                  ? 0.05
+                                  : 0)) /
+                              (quantityOption == 1
+                                ? 6
+                                : quantityOption == 2
+                                ? 12
+                                : quantityOption == 3
+                                ? 18
+                                : 0)
+                          )}
+                          /mo
+                        </b>
+                        <b style={{ fontSize: 12 }}>with AEON CC</b>
+                      </div>
+                      <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
+                        <b style={{ fontSize: 12 }}>Interest</b>
+                        <b style={{ color: "#009BFF", fontSize: 20 }}>
+                          RM{" "}
+                          {Math.floor(
+                            item.data().grandTotal /
+                              (1 -
+                                (quantityOption == 1
+                                  ? 0.03
+                                  : quantityOption == 2
+                                  ? 0.04
+                                  : quantityOption == 3
+                                  ? 0.05
+                                  : 0))
+                          ) - item.data().grandTotal}
+                        </b>
+                        <b style={{ fontSize: 12 }}>
+                          {quantityOption == 1
+                            ? "3%"
+                            : quantityOption == 2
+                            ? "4%"
+                            : quantityOption == 3
+                            ? "5%"
+                            : ""}
+                        </b>
+                      </div>
+                    </div>
+                  </>
+                );
+              }
+              return null;
+            })}
+          {formData &&
+            quoteId &&
+            formData.docs.map((item) => {
+              if (item.id === quoteId) {
+                return (
+                  <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
+                    <b style={{ fontSize: 12 }}>Total</b>
+                    <b style={{ color: "#009BFF", fontSize: 20 }}>
+                      RM{" "}
+                      {Math.floor(
+                        item.data().grandTotal /
+                          (1 -
+                            (quantityOption == 1
+                              ? 0.03
+                              : quantityOption == 2
+                              ? 0.04
+                              : quantityOption == 3
+                              ? 0.05
+                              : 0))
+                      )}
+                    </b>
+                    <b style={{ fontSize: 12 }}>with Installment</b>
+                  </div>
+                );
+              }
+              return null;
+            })}
+        </div>
+      </div>
       <div className="text-center py-16 w-[80%] sm:w-[40%] mx-auto">
         <p>
           <b>Next Step</b>
