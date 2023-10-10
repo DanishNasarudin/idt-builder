@@ -20,6 +20,7 @@
     "axios": "^1.4.0",
     "body-parser": "^1.20.2",
     "busboy": "^1.6.0",
+    "country-state-city": "^3.2.1",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
     "firebase": "^9.21.0",
@@ -28,6 +29,7 @@
     "http": "^0.0.1-security",
     "next": "13.3.0",
     "next-auth": "^4.22.1",
+    "nodemailer": "^6.9.5",
     "papaparse": "^5.4.1",
     "postcss": "8.4.22",
     "react": "18.2.0",
@@ -47,6 +49,7 @@
     "@types/body-parser": "^1.19.2",
     "@types/busboy": "^1.5.0",
     "@types/formidable": "^2.0.5",
+    "@types/nodemailer": "^6.4.11",
     "@types/papaparse": "^5.3.7",
     "@types/react-beautiful-dnd": "^13.1.4",
     "@types/uuid": "^9.0.1"

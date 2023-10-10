@@ -106,7 +106,7 @@ function FormItem({
     setTooltipVisible(true);
     setTimeout(() => {
       setTooltipVisible(false);
-    }, 2000);
+    }, 1000);
 
     if (quantityOption === 1) {
       const copyText = `${selectedOption.name}, Price: RM${selectedOption.price}
@@ -139,9 +139,9 @@ function FormItem({
         <button
           className={`
             absolute right-[100%] top-0
-            mt-4 mr-4 w-16 h-16 bg-zinc-900 text-secondary rounded-xl font-bold
+            mt-4 mr-4 w-16 h-16  text-secondary rounded-xl font-bold
             mobilehover:hover:bg-zinc-900/80 mobilehover:hover:text-secondary/80 transition-all
-            ${tooltipVisible ? "bg-green-600" : ""}
+            ${tooltipVisible ? "bg-green-600" : "bg-zinc-900"}
             ${selectedOption.name === "" ? "hidden" : ""}`}
           onClick={(event) => handleCopy(event)}
         >

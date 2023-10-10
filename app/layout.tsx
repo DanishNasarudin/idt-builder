@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -6,7 +7,7 @@ const Navbar = dynamic(() => import("./(components)/Navbar"), { ssr: false });
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Ideal Tech PC Builder",
   description: "Customize your own PC.",
   keywords: ["Ideal Tech", "Custom PC", "Part Picker"],

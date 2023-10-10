@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <style>
+    body {
+      padding: 0 200px;
+    }
+    table {
+      border-collapse: collapse;
+    }
+    .email__head {
+      text-align: center;
+    }
+    .email__table {
+      width: 100%;
+      /* background-color: gray; */
+    }
+    .email__table-head {
+      text-align: start;
+    }
+    .email__table-body {
+      text-align: start;
+    }
+    .email__table-foot {
+      margin-top: 8px;
+    }
+    .email__row {
+      border-bottom: 1px solid gray;
+    }
+    .email__install {
+      width: 200px;
+      /* background-color: gray; */
+      border: 1px solid black;
+      margin: 0 20px;
+      text-align: center;
+      padding: 16px 32px;
+    }
+    .email__grand {
+      display: flex;
+    }
+  </style>
+  <body>
+    <div class="email__head">
+      <h1>Quotation from Ideal Tech PC</h1>
+      <p>Thank you for using Ideal Tech PC Builder</p>
+      <p>
+        Quotation generated on: ${formData && quoteId &&
+        formData.docs.map((item) => { if (item.id === quoteId) { return
+        item.data().createdAt.toDate().toLocaleString("en-GB", { day: "2-digit",
+        month: "short", year: "numeric", hour: "numeric", minute: "2-digit",
+        hour12: true, }); }
+      </p>
+    </div>
+    <table class="email__table">
+      <thead>
+        <tr>
+          <th class="email__table-head" style="width: 70%">
+            <label htmlFor="product__label">
+              <p>Product</p>
+            </label>
+          </th>
+          <th class="email__table-head" style="width: 10%">
+            <label htmlFor="quantity__label">
+              <p>Price</p>
+            </label>
+          </th>
+          <th class="email__table-head" style="width: 10%">
+            <label htmlFor="quantity__label">
+              <p>Quantity</p>
+            </label>
+          </th>
+          <th class="email__table-head" style="width: 10%">
+            <label htmlFor="total__label">
+              <p>Total</p>
+            </label>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="email__row">
+          <td style="width: 70%">test</td>
+          <td style="width: 10%">test</td>
+          <td style="width: 10%">test</td>
+          <td style="width: 10%">test</td>
+        </tr>
+        <tr class="email__row">
+          <td style="width: 70%">test</td>
+          <td style="width: 10%">test</td>
+          <td style="width: 10%">test</td>
+          <td style="width: 10%">test</td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td style="color: transparent">.</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><b>Price</b></td>
+          <td>RM ${oriPrice}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><b>Discount</b></td>
+          <td>RM ${discount}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><b>Total Price</b></td>
+          <td>RM ${totalPrice}</td>
+        </tr>
+        <tr>
+          <td style="color: transparent">.</td>
+        </tr>
+      </tfoot>
+    </table>
+    <br />
+    <h2 style="text-align: center">Installments</h2>
+    <table class="email__table" style="width: 800px; margin: 0 auto">
+      <tr>
+        <td class="email__install">Installment with ${months} months period</td>
+        <td class="email__install">
+          Starting from RM ${monthly}/mo with AEON CC
+        </td>
+        <td class="email__install">
+          Interest of RM ${interest} at ${interestPerc}%
+        </td>
+        <td class="email__install">
+          Total RM ${totalInstall} with Installment
+        </td>
+      </tr>
+    </table>
+    <br />
+    <br />
+    <div style="text-align: center">
+      <h2>Quotation Link</h2>
+      <a href="/">${link}</a>
+    </div>
+    <br />
+    <div style="text-align: center">
+      <h2>Customer Information</h2>
+      <p><b>Name:</b>${custName}</p>
+      <p><b>Email:</b>${custEmail}</p>
+      <p><b>Contact Number:</b>${custContact}</p>
+      <p><b>State:</b>${custState}</p>
+      <p><b>PC Usage:</b>${custReason}</p>
+      <p><b>Other Requirements:</b>${custRequirements}</p>
+    </div>
+  </body>
+</html>

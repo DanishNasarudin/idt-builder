@@ -9,9 +9,24 @@ import { collection, query } from "firebase/firestore";
 import { usePathname } from "next/navigation";
 import { useCollection } from "react-firebase-hooks/firestore";
 
+import { State } from "country-state-city";
+
 const inter = Inter({ subsets: ["latin"] });
 
 type Props = {};
+
+interface FormDataItem {
+  formData: string;
+  grandTotal: number;
+  oriTotal: number;
+  createdAt: string;
+}
+
+// formData: filteredFormData, // Add filteredFormData to the document
+//       grandTotal: totalPrice,
+//       oriTotal: totalOriPrice,
+//       //grand total ori - discount
+//       createdAt: serverTimestamp(),
 
 function QuotePage({}: Props) {
   const [quantityOption, setQuantityOption] = useState(3);
@@ -21,6 +36,22 @@ function QuotePage({}: Props) {
   ) => {
     const value = event.target.value;
     setQuantityOption(Number(value));
+    if (Number(value) === 1) {
+      setEmailProp({
+        ...emailProp,
+        months: 6,
+      });
+    } else if (Number(value) === 2) {
+      setEmailProp({
+        ...emailProp,
+        months: 12,
+      });
+    } else if (Number(value) === 3) {
+      setEmailProp({
+        ...emailProp,
+        months: 18,
+      });
+    }
   };
 
   const [toggle, setToggle] = useState(false);
@@ -62,6 +93,415 @@ function QuotePage({}: Props) {
       setQuoteId(id);
     }
   }, [pathname]);
+
+  // ------------- forms
+
+  // const listData = formData?.docs.data();
+
+  type RowData = {
+    selectedOption: {
+      name: string;
+      price: number;
+    };
+    quantity: number;
+    total: number;
+  };
+  type ListData = {
+    createdAt: string;
+    grandTotal: number;
+    oriTotal: number;
+  };
+
+  let listOutside: any[] = [];
+  let listProp: ListData | null = null;
+  formData &&
+    quoteId &&
+    formData.docs.map((item, index) => {
+      if (item.id === quoteId) {
+        const listData = item.data().formData;
+        const listPropData: ListData = {
+          createdAt: item.data().createdAt.toDate().toLocaleString("en-GB", {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "numeric",
+            minute: "2-digit",
+            hour12: true,
+          }),
+          grandTotal: item.data().grandTotal,
+          oriTotal: item.data().oriTotal,
+        };
+        listOutside = listData;
+        listProp = listPropData;
+      }
+    });
+
+  const [emailProp, setEmailProp] = useState({
+    quoteDate: "date",
+    oriPrice: 0,
+    discount: 0,
+    totalPrice: 0,
+    months:
+      quantityOption === 1
+        ? 6
+        : quantityOption === 2
+        ? 12
+        : quantityOption === 3
+        ? 18
+        : 0,
+    monthly: 0,
+    interest: 0,
+    interestPerc: 0,
+    totalInstall: 0,
+    link: fullUrl,
+    name: "",
+    email: "",
+    contact: "",
+    state: "",
+    reason: "",
+    requirements: "",
+  });
+
+  console.log(emailProp, "email prop");
+
+  function generateRows(data: RowData[]): string {
+    return data
+      .map(
+        (item) => `
+    <tr class="email__row">
+      <td style="width: 70%">${item.selectedOption.name}</td>
+      <td style="width: 10%">${item.selectedOption.price}</td>
+      <td style="width: 10%">${item.quantity}</td>
+      <td style="width: 10%">${item.total}</td>
+    </tr>
+  `
+      )
+      .join("");
+  }
+
+  const emailHTMLRow = generateRows(listOutside);
+
+  function listPropDefine(data: ListData | null) {
+    if (data) {
+      setEmailProp({
+        ...emailProp,
+        quoteDate: data.createdAt,
+        oriPrice: data.oriTotal,
+        totalPrice: data.grandTotal,
+        discount: data.oriTotal - data.grandTotal,
+        monthly:
+          quantityOption === 1
+            ? Math.floor(data.grandTotal / (1 - 0.03) / 6)
+            : quantityOption === 2
+            ? Math.floor(data.grandTotal / (1 - 0.04) / 12)
+            : quantityOption === 3
+            ? Math.floor(data.grandTotal / (1 - 0.05) / 18)
+            : 0,
+        interest:
+          quantityOption === 1
+            ? Math.floor(data.grandTotal / (1 - 0.03)) - data.grandTotal
+            : quantityOption === 2
+            ? Math.floor(data.grandTotal / (1 - 0.04)) - data.grandTotal
+            : quantityOption === 3
+            ? Math.floor(data.grandTotal / (1 - 0.05)) - data.grandTotal
+            : 0,
+        interestPerc:
+          quantityOption === 1
+            ? 3
+            : quantityOption === 2
+            ? 4
+            : quantityOption === 3
+            ? 5
+            : 0,
+        totalInstall:
+          quantityOption === 1
+            ? Math.floor(data.grandTotal / (1 - 0.03))
+            : quantityOption === 2
+            ? Math.floor(data.grandTotal / (1 - 0.04))
+            : quantityOption === 3
+            ? Math.floor(data.grandTotal / (1 - 0.05))
+            : 0,
+      });
+    }
+  }
+
+  // listProp.map((item: ListData) =>
+
+  // );
+
+  // const emailHTMLProp = listPropDefine(listProp);
+
+  let emailHTML =
+    `
+  <!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+  </head>
+  <style>
+    body {
+      padding: 0 200px;
+    }
+    table {
+      border-collapse: collapse;
+    }
+    .email__head {
+      text-align: center;
+    }
+    .email__table {
+      width: 100%;
+      /* background-color: gray; */
+    }
+    .email__table-head {
+      text-align: start;
+    }
+    .email__table-body {
+      text-align: start;
+    }
+    .email__table-foot {
+      margin-top: 8px;
+    }
+    .email__row {
+      border-bottom: 1px solid gray;
+    }
+    .email__install {
+      width: 200px;
+      /* background-color: gray; */
+      border: 1px solid black;
+      margin: 0 20px;
+      text-align: center;
+      padding: 16px 32px;
+    }
+    .email__grand {
+      display: flex;
+    }
+  </style>
+  <body>
+    <div class="email__head">
+      <h1>Quotation from Ideal Tech PC</h1>
+      <p>Thank you for using Ideal Tech PC Builder</p>
+      <p>
+        Quotation generated on: ${emailProp.quoteDate}
+      </p>
+    </div>
+    <table class="email__table">
+      <thead>
+        <tr>
+          <th class="email__table-head" style="width: 70%">
+            <label htmlFor="product__label">
+              <p>Product</p>
+            </label>
+          </th>
+          <th class="email__table-head" style="width: 10%">
+            <label htmlFor="quantity__label">
+              <p>Price</p>
+            </label>
+          </th>
+          <th class="email__table-head" style="width: 10%">
+            <label htmlFor="quantity__label">
+              <p>Quantity</p>
+            </label>
+          </th>
+          <th class="email__table-head" style="width: 10%">
+            <label htmlFor="total__label">
+              <p>Total</p>
+            </label>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+      ` +
+    emailHTMLRow +
+    `
+      </tbody>
+      <tfoot>
+        <tr>
+          <td style="color: transparent">.</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Price</td>
+          <td>RM ${emailProp.oriPrice}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Discount</td>
+          <td>RM ${emailProp.discount}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><b>Total Price</b></td>
+          <td><b>RM ${emailProp.totalPrice}</b></td>
+        </tr>
+        <tr>
+          <td style="color: transparent">.</td>
+        </tr>
+      </tfoot>
+    </table>
+    <br />
+    <h2 style="text-align: center">Installments</h2>
+    <table class="email__table" style="width: 800px; margin: 0 auto">
+      <tr>
+        <td class="email__install">Installment with <b>${emailProp.months} months</b> period</td>
+        <td class="email__install">
+          Starting from <b>RM ${emailProp.monthly}/mo</b> with AEON CC
+        </td>
+        <td class="email__install">
+          Interest of <b>RM ${emailProp.interest} at ${emailProp.interestPerc}%</b>
+        </td>
+        <td class="email__install">
+          Total <b>RM ${emailProp.totalInstall}</b> with Installment
+        </td>
+      </tr>
+    </table>
+    <br />
+    <br />
+    <div style="text-align: center">
+      <h2>Quotation Link</h2>
+      <a href="${emailProp.link}">${emailProp.link}</a>
+    </div>
+    <br />
+    <div style="text-align: center">
+      <h2>Customer Information</h2>
+      <p><b>Name: </b>${emailProp.name}</p>
+      <p><b>Email: </b>${emailProp.email}</p>
+      <p><b>Contact Number: </b>${emailProp.contact}</p>
+      <p><b>State: </b>${emailProp.state}</p>
+      <p><b>PC Usage: </b>${emailProp.reason}</p>
+      <p><b>Other Requirements: </b>${emailProp.requirements}</p>
+    </div>
+  </body>
+</html>
+  `;
+
+  interface FormValues {
+    name: string;
+    email: string;
+    contact: string;
+    state: string;
+    reason: string;
+    requirements: string;
+    formData: string;
+  }
+
+  interface FormState {
+    isLoading: boolean;
+    values: FormValues;
+  }
+
+  const initialFormState: FormState = {
+    isLoading: false,
+    values: {
+      name: "",
+      email: "",
+      contact: "",
+      state: "",
+      reason: "",
+      requirements: "",
+      formData: emailHTML,
+    },
+  };
+
+  const [formValues, setFormValues] = useState<FormState>(initialFormState);
+
+  const { values } = formValues;
+
+  const formChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues((prev) => ({
+      ...prev,
+      values: {
+        ...prev.values,
+        [target.name]: target.value,
+      },
+    }));
+
+    setEmailProp({
+      ...emailProp,
+      [target.name]: target.value,
+    });
+  };
+
+  const formAreaChange = ({
+    target,
+  }: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setFormValues((prev) => ({
+      ...prev,
+      values: {
+        ...prev.values,
+        [target.name]: target.value,
+      },
+    }));
+    setEmailProp({
+      ...emailProp,
+      [target.name]: target.value,
+    });
+  };
+
+  const formSelectChange = ({
+    target,
+  }: React.ChangeEvent<HTMLSelectElement>) => {
+    setFormValues((prev) => ({
+      ...prev,
+      values: {
+        ...prev.values,
+        [target.name]: target.value,
+      },
+    }));
+    setEmailProp({
+      ...emailProp,
+      [target.name]: target.value,
+    });
+  };
+
+  const [invalidFormat, setInvalidFormat] = useState({
+    email: true,
+    contact: true,
+  });
+  const [invalidRequired, setInvalidRequired] = useState({
+    name: false,
+    email: false,
+    contact: false,
+    reason: false,
+  });
+
+  useEffect(() => {
+    listPropDefine(listProp);
+  }, [formValues]);
+
+  const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    values.formData = emailHTML;
+
+    setFormValues((prev) => ({
+      ...prev,
+      isLoading: true,
+    }));
+
+    console.log(formValues, "onsubmit check");
+
+    await fetch("/api/contact", {
+      method: "POST",
+      body: JSON.stringify(formValues.values),
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+    }).then(() => {
+      setTimeout(() => {
+        setFormValues((prev) => ({
+          ...prev,
+          isLoading: false,
+        }));
+      }, 2000);
+    });
+  };
 
   if (loading) {
     return (
@@ -380,7 +820,7 @@ function QuotePage({}: Props) {
           Or, you may copy the quotation link and send it to us through message.
         </p>
       </div>
-      <form className="mx-auto w-[70%] max-w-[500px]">
+      <form className="mx-auto w-[100%] max-w-[500px]">
         <div className="flex gap-4">
           <div className="flex-[4]">
             <label htmlFor="quotation__label">
@@ -390,7 +830,7 @@ function QuotePage({}: Props) {
               <input
                 type="url"
                 id="quotation__id"
-                className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
+                className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-4"
                 value={fullUrl}
                 readOnly
               />
@@ -417,37 +857,100 @@ function QuotePage({}: Props) {
           </div>
         </div>
         <label htmlFor="name__label">
-          <p>Your Name</p>
+          <p>
+            Your Name <b style={{ color: "red" }}>*</b>
+          </p>
         </label>
         <p>
           <input
             type="text"
-            className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
+            className={`text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
+            ${invalidRequired.name ? "border-red-500" : "border-transparent"}`}
             required
+            name="name"
+            value={values.name}
+            onChange={formChange}
+            onInput={(e) => {
+              const input = e.currentTarget as HTMLInputElement;
+              setInvalidRequired({
+                ...invalidRequired,
+                name: input.validity.valueMissing,
+              });
+            }}
           />
+          <span
+            className={`${invalidRequired.name ? "block" : "hidden"} mb-2`}
+            style={{ fontSize: 12, color: "red" }}
+          >
+            Required
+          </span>
         </p>
         <div className="flex gap-0 sm:gap-8 flex-col sm:flex-row">
           <div className="flex-[3]">
             <label htmlFor="email__label">
-              <p>Your Email</p>
+              <p>
+                Your Email <b style={{ color: "red" }}>*</b>
+              </p>
             </label>
             <p>
               <input
                 type="email"
-                className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
+                className={`text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
+                ${
+                  invalidFormat.email ? "border-transparent" : "border-red-500"
+                }`}
                 required
+                name="email"
+                value={values.email}
+                onChange={formChange}
+                onInput={(e) => {
+                  const input = e.currentTarget as HTMLInputElement;
+                  setInvalidFormat({
+                    ...invalidFormat,
+                    email: input.validity.valid,
+                  });
+                  setInvalidRequired({
+                    ...invalidRequired,
+                    email: input.validity.valueMissing,
+                  });
+                }}
               />
+              <span
+                className={`${
+                  invalidRequired.email
+                    ? "hidden"
+                    : invalidFormat.email
+                    ? "hidden"
+                    : "block"
+                } mb-2`}
+                style={{ fontSize: 12, color: "red" }}
+              >
+                Invalid Email
+              </span>
+              <span
+                className={`${invalidRequired.email ? "block" : "hidden"} mb-2`}
+                style={{ fontSize: 12, color: "red" }}
+              >
+                Required
+              </span>
             </p>
           </div>
           <div className="flex-[2]">
             <label htmlFor="contact__label">
-              <p>Contact Number</p>
+              <p>
+                Contact Number <b style={{ color: "red" }}>*</b>
+              </p>
             </label>
             <p>
               <input
                 type="tel"
-                className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
-                pattern="\+60-[0-9]{10}"
+                className={`text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
+                ${
+                  invalidFormat.contact
+                    ? "border-transparent"
+                    : "border-red-500"
+                }`}
+                pattern="\+60-[0-9]{7,10}"
                 required
                 placeholder="+60-123456789"
                 onInput={(e) => {
@@ -457,30 +960,74 @@ function QuotePage({}: Props) {
                       ? "Please enter a valid Malaysian phone number in the format: +60-123456789"
                       : ""
                   );
+                  setInvalidFormat({
+                    ...invalidFormat,
+                    contact: input.validity.valid,
+                  });
+                  setInvalidRequired({
+                    ...invalidRequired,
+                    contact: input.validity.valueMissing,
+                  });
                 }}
+                name="contact"
+                value={values.contact}
+                onChange={formChange}
               />
-              <span className="error-message" style={{ display: "none" }}>
-                Please enter a valid Malaysian phone number in the format:
-                +60-123456789
+              <span
+                className={`${
+                  invalidRequired.contact
+                    ? "hidden"
+                    : invalidFormat.contact
+                    ? "hidden"
+                    : "block"
+                } mb-2`}
+                style={{ fontSize: 12, color: "red" }}
+              >
+                Valid format: +60-123456789
+              </span>
+              <span
+                className={`${
+                  invalidRequired.contact ? "block" : "hidden"
+                } mb-2`}
+                style={{ fontSize: 12, color: "red" }}
+              >
+                Required
               </span>
             </p>
           </div>
         </div>
         <label htmlFor="state__label">
-          <p>Which state are you from?</p>
+          <p>
+            Which state are you from? <b style={{ color: "red" }}>*</b>
+          </p>
         </label>
         <div className="relative">
           <p>
             <select
-              name="state__name"
               id="state__id"
-              className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4 appearance-none cursor-pointer"
+              className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 appearance-none cursor-pointer"
               onClick={() => {
                 setToggle(!toggle);
               }}
               required
+              name="state"
+              value={values.state}
+              onChange={formSelectChange}
+              defaultValue="notSelected"
             >
-              <option value="kl">Kuala Lumpur</option>
+              <option
+                value="notSelected"
+                className="font-bold text-black"
+              >{`Choose your state here`}</option>
+              {State.getStatesOfCountry("MY").map((option, optionIndex) => {
+                return (
+                  <option key={optionIndex} value={option.name}>
+                    {option.name}
+                  </option>
+                );
+              })}
+              {/* <option value="kl">Kuala Lumpur</option>
+              <option value="johor">Johor</option> */}
             </select>
           </p>
           <RiArrowDropLeftFill
@@ -497,26 +1044,48 @@ function QuotePage({}: Props) {
           />
         </div>
         <label htmlFor="reason__label">
-          <p>What are you using the PC for?</p>
+          <p>
+            What are you using the PC for? <b style={{ color: "red" }}>*</b>
+          </p>
         </label>
         <p>
           <textarea
-            name="reason__name"
             id="reason__id"
             rows={2}
-            className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
+            className={`text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
+            ${
+              invalidRequired.reason ? "border-red-500" : "border-transparent"
+            }`}
             required
+            name="reason"
+            value={values.reason}
+            onChange={formAreaChange}
+            onInput={(e) => {
+              const input = e.currentTarget as HTMLTextAreaElement;
+              setInvalidRequired({
+                ...invalidRequired,
+                reason: input.validity.valueMissing,
+              });
+            }}
           />
+          <span
+            className={`${invalidRequired.reason ? "block" : "hidden"} mb-2`}
+            style={{ fontSize: 12, color: "red" }}
+          >
+            Required
+          </span>
         </p>
         <label htmlFor="requirements__label">
           <p>Any other requirements you would like?</p>
         </label>
         <p>
           <textarea
-            name="requirements__name"
             id="requirements__id"
             rows={2}
-            className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-xl mt-2 mb-4"
+            className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-4"
+            name="requirements"
+            value={values.requirements}
+            onChange={formAreaChange}
           />
         </p>
         <div className="flex justify-around items-center">
@@ -528,11 +1097,20 @@ function QuotePage({}: Props) {
             <p>Back</p>
           </button>
           <button
-            className="
+            className={`
             py-2 px-4 bg-accent text-secondary font-bold rounded-xl border-transparent
-          mobilehover:hover:bg-accent/50 transition-all"
+          mobilehover:hover:bg-accent/50 transition-all
+          ${formValues.isLoading ? "bg-green-600" : ""}`}
+            disabled={
+              !values.name ||
+              !values.email ||
+              !values.contact ||
+              !values.state ||
+              !values.reason
+            }
+            onClick={onSubmit}
           >
-            <p>Submit</p>
+            <p>{formValues.isLoading ? "Submitting.." : "Submit"}</p>
           </button>
           {/* <button
             className="
