@@ -49,7 +49,7 @@ function TxtToProduct(txtContent: string): ProductType {
         });
         i++;
       }
-      console.log(brand, "T2");
+      // console.log(brand, "T2");
 
       products.brands.push(brand);
     } else {

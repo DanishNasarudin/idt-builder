@@ -6,7 +6,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
   //   status: "ok",
   // });
   const data = await req.json();
-  console.log(data);
+  // console.log(data);
   if (
     !data.name ||
     !data.email ||
@@ -24,14 +24,15 @@ export async function POST(req: NextRequest, res: NextResponse) {
       port: 465,
       secure: true,
       auth: {
-        user: "danish@idealtech.com.my",
+        user: process.env.EMAIL,
         pass: process.env.EMAIL_PASS,
       },
     });
 
     const mailOption = {
-      from: "danish@idealtech.com.my",
-      to: "danish@idealtech.com.my",
+      from: process.env.EMAIL,
+      to: data.email,
+      cc: process.env.EMAIL,
       replyTo: data.email,
       subject: `Custom PC Quotation: ${data.name}`,
       html: data.formData,

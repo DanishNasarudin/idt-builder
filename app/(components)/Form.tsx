@@ -12,11 +12,13 @@ import {
   serverTimestamp,
   setDoc,
 } from "firebase/firestore";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { ScrollContext, useScrollListener } from "../(hooks)/useScrollListener";
 import FormItem from "./FormItem";
 import readFileAndParse from "./TxtToProduct";
+import { queueWrite, readData, writeData } from "./QuoteDataJSON";
 
 type OptionType = {
   name: string;
@@ -142,6 +144,7 @@ function Form({}: Props) {
         id: uuidv4(),
       }))
     );
+    setFormData([]);
   }, [initialProducts]);
 
   const [rows, setRows] = useState(
@@ -167,6 +170,8 @@ function Form({}: Props) {
       setTotalPrice(totalPrice - rowTotalPrice); // Subtract row's total price from the grand total
       rows.splice(rowIndex, 1);
       setRows([...rows]);
+      formData.splice(rowIndex, 1);
+      setFormData([...formData]);
     }
   };
 
@@ -210,25 +215,71 @@ function Form({}: Props) {
       }))
     );
     setTotalPrice(0);
+    setFormData([]);
   };
 
-  const deleteOldestDocuments = async () => {
-    const quoteIdsRef = collection(db, "quote__ids");
-    const q = query(quoteIdsRef, orderBy("createdAt"), limit(250));
-    const querySnapshot = await getDocs(q);
+  // const deleteOldestDocuments = async () => {
+  //   const quoteIdsRef = collection(db, "quote__ids");
+  //   const q = query(quoteIdsRef, orderBy("createdAt"), limit(250));
+  //   const querySnapshot = await getDocs(q);
 
-    querySnapshot.forEach(async (docSnapshot) => {
-      await deleteDoc(doc(db, "quote__ids", docSnapshot.id));
-    });
-  };
+  //   querySnapshot.forEach(async (docSnapshot) => {
+  //     await deleteDoc(doc(db, "quote__ids", docSnapshot.id));
+  //   });
+  // };
 
   const [formData, setFormData] = useState<FormDataItem[]>([]);
 
-  // console.log(formData);
+  // console.log(formData[0] === undefined);
 
-  const router = useRouter();
-  const createNewQuote = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  // const openInNewTab = (url: string) => {
+  //   const newWindow = window.open(url, "_blank", "noopener,noreferrer");
+  //   if (newWindow) newWindow.opener = null;
+  // };
+  // const router = useRouter();
+  // const createNewQuote = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  //   event.preventDefault();
+
+  //   // Filter out undefined values from formData
+  //   const filteredFormData = formData.filter(
+  //     (item) => item !== undefined && item.selectedOption.name !== ""
+  //   );
+
+  //   const id = uuidv4();
+  //   await setDoc(doc(db, "quote__ids", id), {
+  //     formData: filteredFormData, // Add filteredFormData to the document
+  //     grandTotal: totalPrice,
+  //     oriTotal: totalOriPrice,
+  //     //grand total ori - discount
+  //     createdAt: serverTimestamp(),
+  //   });
+
+  //   // Check the total number of documents in the collection
+  //   const quoteIdsSnapshot = await getDocs(collection(db, "quote__ids"));
+  //   if (quoteIdsSnapshot.size >= 500) {
+  //     // Delete the first 250 documents ordered by createdAt
+  //     await deleteOldestDocuments();
+  //   }
+
+  //   // router.push(`/quote/${id}`);
+
+  //   openInNewTab(
+  //     `${window.location.protocol}//${window.location.host}/quote/${id}`
+  //   );
+  // };
+
+  // ----- json data
+
+  // console.log(rows, "Check");
+
+  const [createQuoteLoad, setCreateQuoteLoad] = useState(false);
+
+  const createNewQuoteJSON = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault();
+
+    setCreateQuoteLoad(true);
 
     // Filter out undefined values from formData
     const filteredFormData = formData.filter(
@@ -236,26 +287,177 @@ function Form({}: Props) {
     );
 
     const id = uuidv4();
-    await setDoc(doc(db, "quote__ids", id), {
-      formData: filteredFormData, // Add filteredFormData to the document
+    const currentData = await readData();
+
+    const newQuote = {
+      id,
+      formData: filteredFormData,
       grandTotal: totalPrice,
       oriTotal: totalOriPrice,
-      //grand total ori - discount
-      createdAt: serverTimestamp(),
-    });
+      createdAt: new Date().toISOString(),
+    };
 
-    // Check the total number of documents in the collection
-    const quoteIdsSnapshot = await getDocs(collection(db, "quote__ids"));
-    if (quoteIdsSnapshot.size >= 500) {
-      // Delete the first 250 documents ordered by createdAt
-      await deleteOldestDocuments();
+    currentData.push(newQuote);
+
+    // Ensure we don't exceed 2000 quotes
+    if (currentData.length > 2000) {
+      currentData.splice(0, 1000); // Remove the oldest 500 quotes
     }
 
-    router.push(`/quote/${id}`);
+    queueWrite(currentData);
+
+    setTimeout(() => {
+      setCreateQuoteLoad(false);
+    }, 1000);
+
+    // Navigate to the new quote page
+    window.open(
+      `${window.location.protocol}//${window.location.host}/quote/${id}`,
+      "_blank"
+    );
   };
+
+  // ------ clear the link from google analytics
+
+  const router = useRouter();
+  const pathname = String(window.location.search);
+
+  useEffect(() => {
+    // // List of common Google Analytics parameters - remove them
+
+    // console.log(
+    //   pathname.includes("_ga") || pathname.includes("_gl"),
+    //   "checkfinal"
+    // );
+
+    if (pathname.includes("_ga") || pathname.includes("_gl")) {
+      router.replace("/");
+      // console.log("pass");
+    }
+  }, [pathname]);
+
+  // ------ top bar
+
+  const scroll2 = useScrollListener();
+  const [hideNavbar, setHideNavbar] = useState(false);
+  const [hideNavbar2, setHideNavbar2] = useState(false);
+
+  useEffect(() => {
+    if (scroll2.checkY > 0) {
+      setHideNavbar(true);
+    } else if (scroll2.checkY < 0) {
+      setHideNavbar(false);
+    }
+    if (scroll2.y > 200) {
+      setHideNavbar2(true);
+    } else if (scroll2.y < 200) {
+      setHideNavbar2(false);
+    }
+  }, [scroll2.y, scroll2.lastY]);
+
+  // console.log(rows.some((item) => item.totalPrice > 0 === true));
 
   return (
     <div className="py-8">
+      <div className="absolute top-0 h-[100%] left-0 w-full">
+        <div
+          className={`z-[1] sticky transition-all bg-primary/80 border-b-[1px] border-[#323232]
+          ${hideNavbar ? "top-0" : "top-[72px] sm:top-[103px]"}
+          
+          before:absolute before:w-full before:h-full before:content-[''] before:backdrop-blur-md before:top-0 before:-z-10`}
+        >
+          <div className="relative max-w-[1060px] mx-auto py-2">
+            <div className="w-4/5 mx-auto flex justify-between items-center sm:items-end">
+              <div className="flex flex-col sm:flex-row justify-center w-full">
+                <div className="flex items-center sm:items-end w-full justify-between">
+                  <div className="flex gap-8 items-center sm:items-end">
+                    <div>
+                      <button
+                        className="py-2 px-4 sm:py-4 sm:px-8 border-white border-[1px] rounded-lg text-xs"
+                        onClick={(event) => resetForm(event)}
+                      >
+                        <p className="text-[10px] sm:text-sm">
+                          <b>Reset</b>
+                        </p>
+                      </button>
+                    </div>
+                    <div className="text-center sm:text-left hidden sm:block">
+                      <p className="text-[10px] text-gray-400">
+                        <b>
+                          <s>RM {totalOriPrice}</s>
+                        </b>
+                      </p>
+                      <p>
+                        <b>RM {totalPrice}</b>
+                      </p>
+                      <p className="text-[10px] text-accent">
+                        <b>Save RM {totalOriPrice - totalPrice}</b>
+                      </p>
+                    </div>
+                    <div className="sm:flex hidden">
+                      {totalPrice > 0 ? (
+                        <p className="text-[10px]">
+                          Starting from <br />{" "}
+                          <b className="text-accent">
+                            {Math.floor(totalPrice / (1 - 0.04) / 12)}/mo
+                          </b>{" "}
+                          <br /> with listed Bank.
+                        </p>
+                      ) : (
+                        ""
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-center sm:text-left block sm:hidden">
+                    <p className="text-[10px] text-gray-400">
+                      <b>
+                        <s>RM {totalOriPrice}</s>
+                      </b>
+                    </p>
+                    <p>
+                      <b>RM {totalPrice}</b>
+                    </p>
+                    <p className="text-[10px] text-accent">
+                      <b>Save RM {totalOriPrice - totalPrice}</b>
+                    </p>
+                  </div>
+                  <div>
+                    <button
+                      className={`py-2 px-4 sm:py-4 sm:px-8 bg-accent rounded-lg text-xs
+                      ${createQuoteLoad ? "bg-green-600" : "bg-accent"}`}
+                      onClick={(event) => createNewQuoteJSON(event)}
+                      disabled={
+                        !rows.some((item) => item.totalPrice > 0 === true)
+                      }
+                    >
+                      <p className="text-[10px] sm:text-sm">
+                        <b>{createQuoteLoad ? "Generating.." : "Next"}</b>
+                      </p>
+                    </button>
+                  </div>
+                </div>
+
+                <div className="sm:hidden flex w-full text-center">
+                  {totalPrice > 0 ? (
+                    <p className="text-[10px] w-full">
+                      Starting from{" "}
+                      <b className="text-accent">
+                        {Math.floor(totalPrice / (1 - 0.04) / 12)}/mo
+                      </b>{" "}
+                      with listed Bank.
+                    </p>
+                  ) : (
+                    ""
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* ${
+            hideNavbar2 ? "top-0" : "top-[72px] sm:top-[102px]"
+          } */}
+      </div>
       <div className="text-center mb-4">
         <h2>Choose your parts</h2>
       </div>
@@ -306,10 +508,10 @@ function Form({}: Props) {
               );
             })}
           </tbody>
-          <tfoot className="sticky bottom-0 w-full bg-gradient-to-t from-primary">
+          {/* <tfoot className="sticky bottom-0 w-full bg-gradient-to-t from-primary hidden">
             <tr className="sticky bottom-4">
               <td className="hidden sm:table-cell"></td>
-              {/* <td className="hidden sm:table-cell"></td> */}
+              <td className="hidden sm:table-cell"></td>
               <td className="h-full pr-2 hidden sm:table-cell align-top">
                 <div className="flex flex-col w-full">
                   <div className="border-b-[10px] border-[transparent] w-full rounded-xl mt-4" />
@@ -317,17 +519,17 @@ function Form({}: Props) {
                     <button
                       className="
                     py-4 px-8 bg-secondary text-black rounded-2xl w-28
-                    mobilehover:hover:bg-secondary/80 transition-all"
+                    mobilehover:hover:bg-[#a7a7a7] transition-all"
                     >
                       <p>
                         <b>Reset</b>
                       </p>
                     </button>
                     <button
-                      onClick={(event) => createNewQuote(event)}
+                      onClick={(event) => createNewQuoteJSON(event)}
                       className="
                       py-4 px-8 bg-accent text-secondary rounded-2xl w-28
-                      mobilehover:hover:bg-accent/50 transition-all"
+                      mobilehover:hover:bg-[#0069cd] transition-all"
                     >
                       <p>
                         <b>Next</b>
@@ -348,7 +550,7 @@ function Form({}: Props) {
                       <button
                         className="
                         py-4 px-8 bg-secondary text-black rounded-2xl w-28 shadow-2xl
-                        mobilehover:hover:bg-secondary/80 transition-all"
+                        mobilehover:hover:bg-[#a7a7a7] transition-all "
                         onClick={(event) => resetForm(event)}
                       >
                         <p>
@@ -356,10 +558,10 @@ function Form({}: Props) {
                         </p>
                       </button>
                       <button
-                        onClick={(event) => createNewQuote(event)}
+                        onClick={(event) => createNewQuoteJSON(event)}
                         className="
                         py-4 px-8 bg-accent text-secondary rounded-2xl w-28 shadow-2xl
-                        mobilehover:hover:bg-accent/50 transition-all"
+                        mobilehover:hover:bg-[#0069cd] transition-all"
                       >
                         <p>
                           <b>Next</b>
@@ -375,7 +577,7 @@ function Form({}: Props) {
                     shadow-2xl text-center
                     sm:w-full"
                     >
-                      {/* <p>
+                      <p>
                         <b>Grand Total</b>
                       </p>
                       <div className="border-b-[1px] border-black w-[70%]" />
@@ -383,7 +585,7 @@ function Form({}: Props) {
                         <b>RM {totalPrice}</b>
                         <br />
                         <b>Original: RM {totalOriPrice}</b>
-                      </p> */}
+                      </p>
                       <p>
                         <b style={{ color: "gray", fontSize: 12 }}>
                           <s> RM {totalOriPrice}</s>
@@ -417,7 +619,7 @@ function Form({}: Props) {
                 </div>
               </td>
             </tr>
-          </tfoot>
+          </tfoot> */}
         </table>
       </form>
     </div>

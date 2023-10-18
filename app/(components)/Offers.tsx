@@ -12,8 +12,9 @@ function Offers({}: Props) {
     <>
       <div
         className="
-    flex flex-wrap gap-4 justify-evenly pt-4
-    sm:py-8"
+            flex flex-wrap gap-4 justify-evenly pt-4
+            sm:py-8"
+        id="idt__main-section"
       >
         <div>
           <Offer
@@ -39,7 +40,7 @@ function Offers({}: Props) {
             text={"FREE On-Site Service / Repair within Klang Valley."}
           />
         </div>
-        <div className={`${toggle ? "block" : "hidden"} offer:block`}>
+        <div className={`hidden offer:block`}>
           <Offer
             src={
               "https://idealtech.com.my/wp-content/uploads/2023/03/icons-04.png"
@@ -47,7 +48,7 @@ function Offers({}: Props) {
             text={"Full Years Warranty Covered. Up to 10 Years."}
           />
         </div>
-        <div className={`${toggle ? "block" : "hidden"} offer:block`}>
+        <div className={`hidden offer:block`}>
           <Offer
             src={
               "https://idealtech.com.my/wp-content/uploads/2023/03/icons-05.png"
@@ -55,18 +56,51 @@ function Offers({}: Props) {
             text={"FREE Warranty Pick-Up and Return Covered Whole Malaysia."}
           />
         </div>
-        <div className={`${toggle ? "block" : "hidden"} offer:block`}>
+        <div className={`hidden offer:block`}>
           <Offer
             src={
-              "https://idealtech.com.my/wp-content/uploads/2023/03/icons-15.png"
+              "https://idealtech.com.my/wp-content/uploads/2023/03/icons-08.png"
             }
-            text={"Extra 5% Rebate For Future Upgrade."}
+            text={"Lifetime Technical Support."}
           />
         </div>
       </div>
+      <div
+        className={` ${
+          toggle ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+        } grid transition-all`}
+      >
+        <div className="overflow-hidden flex flex-wrap gap-4 justify-evenly pt-4 sm:py-0">
+          <div className={`block offer:hidden`}>
+            <Offer
+              src={
+                "https://idealtech.com.my/wp-content/uploads/2023/03/icons-04.png"
+              }
+              text={"Full Years Warranty Covered. Up to 10 Years."}
+            />
+          </div>
+          <div className={`block offer:hidden`}>
+            <Offer
+              src={
+                "https://idealtech.com.my/wp-content/uploads/2023/03/icons-05.png"
+              }
+              text={"FREE Warranty Pick-Up and Return Covered Whole Malaysia."}
+            />
+          </div>
+          <div className={`block offer:hidden`}>
+            <Offer
+              src={
+                "https://idealtech.com.my/wp-content/uploads/2023/03/icons-08.png"
+              }
+              text={"Lifetime Technical Support."}
+            />
+          </div>
+        </div>
+      </div>
+
       <button
         className="
-      flex text-center mx-auto underline text-accent items-center my-4 mobilehover:hover:text-white
+      relative z-[1] flex text-center mx-auto underline text-accent items-center my-4 mobilehover:hover:text-white
       offer:hidden"
         onClick={() => {
           setToggle(!toggle);
@@ -79,6 +113,9 @@ function Offers({}: Props) {
           <RiArrowDropLeftFill size={30} />
         )}
       </button>
+      <p className="text-center text-zinc-400 mb-10">
+        Terms & Conditions Apply.
+      </p>
     </>
   );
 }

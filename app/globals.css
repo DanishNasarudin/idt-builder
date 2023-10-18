@@ -5,17 +5,13 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 15, 15, 15;
+  --background-end-rgb: 15, 15, 15;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 15, 15, 15;
-    --background-end-rgb: 15, 15, 15;
-  }
+html {
+  scroll-behavior: smooth !important;
 }
 
 body {
@@ -44,7 +40,7 @@ p {
 }
 
 h5 {
-  font-size: clamp(16px, 3vw, 18px);
+  font-size: clamp(14px, 3vw, 16px);
 }
 
 h6 {
@@ -56,3 +52,8 @@ h6 {
     background: rgba(255, 255, 255, 0.05);
   }
 } */
+td,
+tr {
+  margin: 0;
+  padding: 0;
+}

@@ -6,17 +6,28 @@ import { RiArrowDropDownFill, RiArrowDropLeftFill } from "react-icons/ri";
 
 import { db } from "@/firebase";
 import { collection, query } from "firebase/firestore";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCollection } from "react-firebase-hooks/firestore";
 
 import { State } from "country-state-city";
+import React from "react";
+import Link from "next/link";
+import { readData } from "@/app/(components)/QuoteDataJSON";
 
 const inter = Inter({ subsets: ["latin"] });
 
 type Props = {};
 
 interface FormDataItem {
-  formData: string;
+  category: string;
+  selectedOption: { name: string; price: number };
+  quantity: number;
+  total: number;
+}
+
+interface QuoteData {
+  id: string;
+  formData: FormDataItem[];
   grandTotal: number;
   oriTotal: number;
   createdAt: string;
@@ -29,40 +40,89 @@ interface FormDataItem {
 //       createdAt: serverTimestamp(),
 
 function QuotePage({}: Props) {
-  const [quantityOption, setQuantityOption] = useState(3);
-
-  const handleQuantityChange = (
-    event: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const value = event.target.value;
-    setQuantityOption(Number(value));
-    if (Number(value) === 1) {
-      setEmailProp({
-        ...emailProp,
-        months: 6,
-      });
-    } else if (Number(value) === 2) {
-      setEmailProp({
-        ...emailProp,
-        months: 12,
-      });
-    } else if (Number(value) === 3) {
-      setEmailProp({
-        ...emailProp,
-        months: 18,
-      });
-    }
-  };
-
-  const [toggle, setToggle] = useState(false);
-
-  const [formData, loading] = useCollection(
-    query(collection(db, "quote__ids"))
-  );
-
   const pathname = usePathname();
 
   const fullUrl = `${window.location.protocol}//${window.location.host}${pathname}`;
+  const [quoteId, setQuoteId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const pathArray = pathname!.split("/");
+    const id = pathArray[pathArray.length - 1];
+    if (id) {
+      setQuoteId(id);
+    }
+  }, [pathname]);
+
+  const [formData, setQuotes] = useState<QuoteData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
+
+  const MAX_RETRIES = 5; // maximum number of retries
+  const RETRY_DELAY = 2000; // delay between retries in milliseconds (2 seconds)
+
+  useEffect(() => {
+    let retryCount = 0;
+
+    const fetchData = async () => {
+      try {
+        const data: QuoteData[] = await readData();
+        // console.log(data.length, "check size");
+
+        const quoteExists = data.some((quote) => quote.id === quoteId);
+
+        if (quoteExists) {
+          // check if data is not empty
+          setQuotes(data);
+          setLoading(false);
+        } else if (retryCount < MAX_RETRIES) {
+          console.log("Quote ID not found. Retrying...");
+          retryCount++;
+          setTimeout(fetchData, RETRY_DELAY);
+        } else {
+          console.log("Max retries reached. Not retrying further.");
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Handle the error, you can set some error state here or show a notification to the user
+        router.refresh();
+      }
+    };
+    if (quoteId !== null) fetchData();
+  }, [quoteId]);
+
+  // console.log(formData[0].formData[0].category);
+
+  const [quantityOption, setQuantityOption] = useState(2);
+
+  // const handleQuantityChange = (
+  //   event: React.ChangeEvent<HTMLSelectElement>
+  // ) => {
+  //   const value = event.target.value;
+  //   setQuantityOption(Number(value));
+  //   if (Number(value) === 1) {
+  //     setEmailProp({
+  //       ...emailProp,
+  //       months: 6,
+  //     });
+  //   } else if (Number(value) === 2) {
+  //     setEmailProp({
+  //       ...emailProp,
+  //       months: 12,
+  //     });
+  //   } else if (Number(value) === 3) {
+  //     setEmailProp({
+  //       ...emailProp,
+  //       months: 18,
+  //     });
+  //   }
+  // };
+
+  const [toggle, setToggle] = useState(false);
+
+  // const [formData, loading] = useCollection(
+  //   query(collection(db, "quote__ids"))
+  // );
 
   // console.log(pathname.includes(formData!.docs[0].id));
 
@@ -84,15 +144,16 @@ function QuotePage({}: Props) {
     }
   };
 
-  const [quoteId, setQuoteId] = useState<string | null>(null);
+  const [copySpecVisual, setCopySpecVisual] = useState(false);
 
-  useEffect(() => {
-    const pathArray = pathname!.split("/");
-    const id = pathArray[pathArray.length - 1];
-    if (id) {
-      setQuoteId(id);
-    }
-  }, [pathname]);
+  const handleCopySpec = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    navigator.clipboard.writeText(copySpec);
+    setCopySpecVisual(true);
+    setTimeout(() => {
+      setCopySpecVisual(false);
+    }, 2000);
+  };
 
   // ------------- forms
 
@@ -116,11 +177,11 @@ function QuotePage({}: Props) {
   let listProp: ListData | null = null;
   formData &&
     quoteId &&
-    formData.docs.map((item, index) => {
+    formData.map((item, index) => {
       if (item.id === quoteId) {
-        const listData = item.data().formData;
+        const listData = item.formData;
         const listPropData: ListData = {
-          createdAt: item.data().createdAt.toDate().toLocaleString("en-GB", {
+          createdAt: new Date(item.createdAt).toLocaleString("en-GB", {
             day: "2-digit",
             month: "short",
             year: "numeric",
@@ -128,8 +189,8 @@ function QuotePage({}: Props) {
             minute: "2-digit",
             hour12: true,
           }),
-          grandTotal: item.data().grandTotal,
-          oriTotal: item.data().oriTotal,
+          grandTotal: item.grandTotal,
+          oriTotal: item.oriTotal,
         };
         listOutside = listData;
         listProp = listPropData;
@@ -162,13 +223,13 @@ function QuotePage({}: Props) {
     requirements: "",
   });
 
-  console.log(emailProp, "email prop");
+  // console.log(emailProp, "email prop");
 
   function generateRows(data: RowData[]): string {
     return data
       .map(
         (item) => `
-    <tr class="email__row">
+    <tr class="email__row" style="border-bottom: 1px solid gray;">
       <td style="width: 70%">${item.selectedOption.name}</td>
       <td style="width: 10%">${item.selectedOption.price}</td>
       <td style="width: 10%">${item.quantity}</td>
@@ -180,6 +241,33 @@ function QuotePage({}: Props) {
   }
 
   const emailHTMLRow = generateRows(listOutside);
+
+  function generateCopySpec(data: RowData[]): string {
+    return data
+      .map(
+        (item) =>
+          `${item.selectedOption.name}` +
+          ` | ` +
+          `Qty: ${item.quantity}x` +
+          ` | ` +
+          `RM ${item.total}` +
+          `\n\n`
+      )
+      .join("");
+  }
+
+  function generateCopySpec2(data2: ListData | null): string {
+    if (data2 === null) {
+      return "";
+    } else {
+      return String(data2.grandTotal);
+    }
+  }
+
+  let copySpec =
+    `${generateCopySpec(listOutside)}` +
+    `Grand Total: RM ${generateCopySpec2(listProp)}`;
+  // console.log(copySpec);
 
   function listPropDefine(data: ListData | null) {
     if (data) {
@@ -278,11 +366,37 @@ function QuotePage({}: Props) {
     .email__grand {
       display: flex;
     }
+    .email__install-main {
+      display: flex;
+      max-width: 400px;
+      max-height: 400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .email__install-left {
+      width: 100%;
+      height: 100%;
+      padding: 0 4px;
+    }
+    .email__install-right {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .email__install-right > div {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 4px;
+    }
   </style>
   <body>
     <div class="email__head">
       <h1>Quotation from Ideal Tech PC</h1>
-      <p>Thank you for using Ideal Tech PC Builder</p>
+      <p>Thank you for using Ideal Tech PC Builder.</p>
+      <p>We will contact you to proceed with the order soon.</p>
       <p>
         Quotation generated on: ${emailProp.quoteDate}
       </p>
@@ -345,21 +459,77 @@ function QuotePage({}: Props) {
       </tfoot>
     </table>
     <br />
-    <h2 style="text-align: center">Installments</h2>
-    <table class="email__table" style="width: 800px; margin: 0 auto">
-      <tr>
-        <td class="email__install">Installment with <b>${emailProp.months} months</b> period</td>
-        <td class="email__install">
-          Starting from <b>RM ${emailProp.monthly}/mo</b> with AEON CC
-        </td>
-        <td class="email__install">
-          Interest of <b>RM ${emailProp.interest} at ${emailProp.interestPerc}%</b>
-        </td>
-        <td class="email__install">
-          Total <b>RM ${emailProp.totalInstall}</b> with Installment
-        </td>
-      </tr>
-    </table>
+    <h2 style="text-align: center; margin-bottom: 0">Installment Options</h2>
+    <p style="text-align: center; margin-top: 0">(Walk-in Only)</p>
+    <div
+      class="email__install-main"
+      style="
+        display: flex;
+        max-width: 400px;
+        max-height: 400px;
+        width: 100%;
+        margin: 0 auto;
+      "
+    >
+      <div
+        class="email__install-left"
+        style="
+          border: solid;
+          border-width: 1px;
+          width: 100%;
+          height: 100%;
+          padding: 0 4px;
+        "
+      >
+        <p><b>List of Bank</b></p>
+        <p>Public Bank</p>
+        <p>AEON Credit Card</p>
+        <p>Affin Bank</p>
+        <p>RHB Bank</p>
+        <p>AMBANK</p>
+        <p>HSBC</p>
+        <p>Standard Chartered Bank</p>
+        <p>Bank Simpanan Nasional</p>
+        <p>OCBC</p>
+        <p>UOB</p>
+      </div>
+      <div
+        class="email__install-right"
+        style="
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        "
+      >
+        <div
+          style="
+            border: solid;
+            border-width: 1px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 4px;
+          "
+        >
+          <p>Installment with <b>${emailProp.months} months</b> period</p>
+        </div>
+        <div
+          style="
+            border: solid;
+            border-width: 1px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 4px;
+          "
+        >
+          <p>Starting from <b>RM ${emailProp.monthly}/mo</b> with listed Bank</p>
+        </div>
+      </div>
+    </div>
     <br />
     <br />
     <div style="text-align: center">
@@ -380,6 +550,27 @@ function QuotePage({}: Props) {
 </html>
   `;
 
+  //<h2 style="text-align: center">Installments</h2>
+  // <table class="email__table" style="width: 800px; margin: 0 auto">
+  //   <tr>
+  //     <td class="email__install">
+  //       Installment with <b>${emailProp.months} months</b> period
+  //     </td>
+  //     <td class="email__install">
+  //       Starting from <b>RM ${emailProp.monthly}/mo</b> with AEON CC
+  //     </td>
+  //     <td class="email__install">
+  //       Interest of{" "}
+  //       <b>
+  //         RM ${emailProp.interest} at ${emailProp.interestPerc}%
+  //       </b>
+  //     </td>
+  //     <td class="email__install">
+  //       Total <b>RM ${emailProp.totalInstall}</b> with Installment
+  //     </td>
+  //   </tr>
+  // </table>;
+
   interface FormValues {
     name: string;
     email: string;
@@ -393,10 +584,12 @@ function QuotePage({}: Props) {
   interface FormState {
     isLoading: boolean;
     values: FormValues;
+    isSent: boolean;
   }
 
   const initialFormState: FormState = {
     isLoading: false,
+    isSent: false,
     values: {
       name: "",
       email: "",
@@ -484,7 +677,7 @@ function QuotePage({}: Props) {
       isLoading: true,
     }));
 
-    console.log(formValues, "onsubmit check");
+    // console.log(formValues, "onsubmit check");
 
     await fetch("/api/contact", {
       method: "POST",
@@ -498,8 +691,53 @@ function QuotePage({}: Props) {
         setFormValues((prev) => ({
           ...prev,
           isLoading: false,
+          values: {
+            ...prev.values,
+            name: "",
+            email: "",
+            contact: "",
+            state: "",
+            reason: "",
+            requirements: "",
+          },
         }));
+        setEmailProp({
+          ...emailProp,
+          quoteDate: "date",
+          oriPrice: 0,
+          discount: 0,
+          totalPrice: 0,
+          months:
+            quantityOption === 1
+              ? 6
+              : quantityOption === 2
+              ? 12
+              : quantityOption === 3
+              ? 18
+              : 0,
+          monthly: 0,
+          interest: 0,
+          interestPerc: 0,
+          totalInstall: 0,
+          link: fullUrl,
+          name: "",
+          email: "",
+          contact: "",
+          state: "",
+          reason: "",
+          requirements: "",
+        });
       }, 2000);
+      setFormValues((prev) => ({
+        ...prev,
+        isSent: true,
+      }));
+      setTimeout(() => {
+        setFormValues((prev) => ({
+          ...prev,
+          isSent: false,
+        }));
+      }, 1000);
     });
   };
 
@@ -511,6 +749,13 @@ function QuotePage({}: Props) {
     );
   }
 
+  if (formData.some((item) => item.id === quoteId) === false) {
+    return (
+      <h2 className="flex flex-col justify-center items-center h-[100vh] text-center text-red-400">
+        Quote Does not Exists
+      </h2>
+    );
+  }
   return (
     <div className={`${inter.className} flex flex-col w-4/5 mx-auto`}>
       <div className="text-center py-16">
@@ -522,9 +767,9 @@ function QuotePage({}: Props) {
           Quotation generated on:{" "}
           {formData &&
             quoteId &&
-            formData.docs.map((item) => {
+            formData.map((item) => {
               if (item.id === quoteId) {
-                return item.data().createdAt.toDate().toLocaleString("en-GB", {
+                return new Date(item.createdAt).toLocaleString("en-GB", {
                   day: "2-digit",
                   month: "short",
                   year: "numeric",
@@ -536,6 +781,19 @@ function QuotePage({}: Props) {
               return null;
             })}
         </p>
+        {/* {quotes &&
+          quoteId &&
+          quotes.map((item, index) => {
+            console.log(item.id, "check", quoteId, "check2");
+            if (item.id === quoteId) {
+              console.log("pass");
+              const quoteData = item.formData;
+              // console.log(quoteData.category, "data");
+              return quoteData.map((data: any, dataIndex: number) => (
+                <p key={`${index}-${dataIndex}`}>{data.selectedOption.name}</p>
+              ));
+            }
+          })} */}
       </div>
       <table className="w-full">
         <thead className="hidden sm:table-header-group">
@@ -565,9 +823,9 @@ function QuotePage({}: Props) {
         <tbody>
           {formData &&
             quoteId &&
-            formData.docs.map((item, index) => {
+            formData.map((item, index) => {
               if (item.id === quoteId) {
-                const quoteData = item.data().formData;
+                const quoteData = item.formData;
                 return quoteData.map((data: any, dataIndex: number) => (
                   <tr key={`${index}-${dataIndex}`} className="">
                     <td className="w-full sm:w-[70%] p-0 flex sm:table-cell flex-col">
@@ -623,6 +881,9 @@ function QuotePage({}: Props) {
               }
               return null;
             })}
+          {formData.some((item) => item.id === quoteId) ? null : (
+            <tr style={{ textAlign: "center" }}>Data Does Not Exists</tr>
+          )}
         </tbody>
 
         {/* <tfoot>
@@ -665,22 +926,19 @@ function QuotePage({}: Props) {
           <div className="text-center">
             {formData &&
               quoteId &&
-              formData.docs.map((item) => {
+              formData.map((item) => {
                 if (item.id === quoteId) {
                   return (
-                    <p>
+                    <p key={item.id}>
                       <b style={{ color: "gray", fontSize: 12 }}>
-                        <s> RM {item.data().oriTotal}</s>
+                        <s> RM {item.oriTotal}</s>
                       </b>
                       <br />
-                      <b style={{ fontSize: 20 }}>
-                        RM {item.data().grandTotal}
-                      </b>
+                      <b style={{ fontSize: 20 }}>RM {item.grandTotal}</b>
                       <br />
-                      {item.data().grandTotal > 0 ? (
+                      {item.grandTotal > 0 ? (
                         <b style={{ color: "#009BFF", fontSize: 12 }}>
-                          Save RM{" "}
-                          {item.data().oriTotal - item.data().grandTotal}
+                          Save RM {item.oriTotal - item.grandTotal}
                         </b>
                       ) : (
                         ""
@@ -692,121 +950,137 @@ function QuotePage({}: Props) {
               })}
           </div>
         </div>
-        <div className="flex gap-4 sm:flex-row flex-col w-full mx-auto flex-wrap justify-center">
-          <div className="flex gap-4">
+        <div className="flex gap-4">
+          <button
+            className={`
+            ${
+              copySpecVisual
+                ? "bg-green-600 text-white mobilehover:hover:bg-green-600/80"
+                : "bg-secondary"
+            }
+          py-2 px-4  text-black font-bold rounded-xl
+          mobilehover:hover:bg-secondary/80 transition-all`}
+            onClick={(event) => handleCopySpec(event)}
+          >
+            <p>{copySpecVisual ? "Copied!" : "Copy Specs"}</p>
+          </button>
+        </div>
+        <div className="flex gap-4 flex-col max-w-[340px] w-full text-center">
+          <div>
+            <h2>Installments Option</h2>
+            <p>(Walk-in Only)</p>
+          </div>
+          <div className="flex gap-4 w-full relative">
             <select
               name="quantity__name"
               id="quantity__select"
-              className="flex text-white w-full sm:w-16 h-28 bg-accent sm:px-4 text-center appearance-none cursor-pointer rounded-2xl font-bold"
-              onChange={handleQuantityChange}
-              defaultValue={3}
+              className="flex text-white w-full h-14 bg-accent sm:px-4 text-center appearance-none cursor-pointer rounded-2xl font-bold"
+              defaultValue={1}
             >
-              <option value={1}>3%</option>
-              <option value={2}>4%</option>
-              <option value={3}>5%</option>
+              <option value={1}>Public Bank</option>
+              <option value={2}>AEON Credit Card</option>
+              <option value={3}>Affin Bank</option>
+              <option value={4}>RHB Bank</option>
+              <option value={5}>AMBANK</option>
+              <option value={6}>HSBC</option>
+              <option value={7}>Standard Chartered Bank</option>
+              <option value={8}>Bank Simpanan Nasional</option>
+              <option value={9}>OCBC</option>
+              <option value={10}>UOB</option>
             </select>
-            <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
-              <b style={{ fontSize: 12 }}>Installment with</b>
-              <b style={{ color: "#009BFF", fontSize: 20 }}>
-                {quantityOption == 1 ? 6 : ""}
-                {quantityOption == 2 ? 12 : ""}
-                {quantityOption == 3 ? 18 : ""} months
-              </b>
-              <b style={{ fontSize: 12 }}>period</b>
-            </div>
+            <RiArrowDropLeftFill
+              size={40}
+              className={`absolute top-[50%] sm:right-[0] right-2 sm:translate-y-[-50%] translate-y-[-0%] mt-[-20px] sm:mt-0 pointer-events-none 
+              ${toggle ? "hidden" : ""}`}
+            />
+            <RiArrowDropDownFill
+              size={40}
+              className={`absolute top-[50%] sm:right-[0] right-2 sm:translate-y-[-50%] translate-y-[-0%] mt-[-20px] sm:mt-0 pointer-events-none 
+              ${toggle ? "" : "hidden"}`}
+            />
           </div>
-          {formData &&
-            quoteId &&
-            formData.docs.map((item) => {
-              if (item.id === quoteId) {
-                return (
-                  <>
-                    <div className="flex gap-4">
-                      <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
-                        <b style={{ fontSize: 12 }}>Starting from</b>
-                        <b style={{ color: "#009BFF", fontSize: 20 }}>
-                          RM{" "}
-                          {Math.floor(
-                            item.data().grandTotal /
-                              (1 -
+          <div className="flex gap-4 sm:flex-row flex-col w-full mx-auto flex-wrap justify-center">
+            <div className="flex gap-4 text-center">
+              <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
+                <b style={{ fontSize: 12 }}>Installment with</b>
+                <b style={{ color: "#009BFF", fontSize: 20 }}>
+                  {quantityOption == 1 ? 6 : ""}
+                  {quantityOption == 2 ? 12 : ""}
+                  {quantityOption == 3 ? 18 : ""} months
+                </b>
+                <b style={{ fontSize: 12 }}>period</b>
+              </div>
+            </div>
+            {formData &&
+              quoteId &&
+              formData.map((item) => {
+                if (item.id === quoteId) {
+                  return (
+                    <React.Fragment key={item.id}>
+                      <div className="flex gap-4">
+                        <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
+                          <b style={{ fontSize: 12 }}>Starting from</b>
+                          <b style={{ color: "#009BFF", fontSize: 20 }}>
+                            RM{" "}
+                            {Math.floor(
+                              item.grandTotal /
+                                (1 -
+                                  (quantityOption == 1
+                                    ? 0.03
+                                    : quantityOption == 2
+                                    ? 0.04
+                                    : quantityOption == 3
+                                    ? 0.05
+                                    : 0)) /
                                 (quantityOption == 1
-                                  ? 0.03
+                                  ? 6
                                   : quantityOption == 2
-                                  ? 0.04
+                                  ? 12
                                   : quantityOption == 3
-                                  ? 0.05
-                                  : 0)) /
+                                  ? 18
+                                  : 0)
+                            )}
+                            /mo
+                          </b>
+                          <b style={{ fontSize: 12 }}>with listed Bank</b>
+                        </div>
+                      </div>
+                    </React.Fragment>
+                  );
+                }
+                return null;
+              })}
+            {/* {formData &&
+              quoteId &&
+              formData.docs.map((item) => {
+                if (item.id === quoteId) {
+                  return (
+                    <div
+                      key={item.id}
+                      className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col"
+                    >
+                      <b style={{ fontSize: 12 }}>Total</b>
+                      <b style={{ color: "#009BFF", fontSize: 20 }}>
+                        RM{" "}
+                        {Math.floor(
+                          item.data().grandTotal /
+                            (1 -
                               (quantityOption == 1
-                                ? 6
+                                ? 0.03
                                 : quantityOption == 2
-                                ? 12
+                                ? 0.04
                                 : quantityOption == 3
-                                ? 18
-                                : 0)
-                          )}
-                          /mo
-                        </b>
-                        <b style={{ fontSize: 12 }}>with AEON CC</b>
-                      </div>
-                      <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
-                        <b style={{ fontSize: 12 }}>Interest</b>
-                        <b style={{ color: "#009BFF", fontSize: 20 }}>
-                          RM{" "}
-                          {Math.floor(
-                            item.data().grandTotal /
-                              (1 -
-                                (quantityOption == 1
-                                  ? 0.03
-                                  : quantityOption == 2
-                                  ? 0.04
-                                  : quantityOption == 3
-                                  ? 0.05
-                                  : 0))
-                          ) - item.data().grandTotal}
-                        </b>
-                        <b style={{ fontSize: 12 }}>
-                          {quantityOption == 1
-                            ? "3%"
-                            : quantityOption == 2
-                            ? "4%"
-                            : quantityOption == 3
-                            ? "5%"
-                            : ""}
-                        </b>
-                      </div>
+                                ? 0.05
+                                : 0))
+                        )}
+                      </b>
+                      <b style={{ fontSize: 12 }}>with Installment</b>
                     </div>
-                  </>
-                );
-              }
-              return null;
-            })}
-          {formData &&
-            quoteId &&
-            formData.docs.map((item) => {
-              if (item.id === quoteId) {
-                return (
-                  <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
-                    <b style={{ fontSize: 12 }}>Total</b>
-                    <b style={{ color: "#009BFF", fontSize: 20 }}>
-                      RM{" "}
-                      {Math.floor(
-                        item.data().grandTotal /
-                          (1 -
-                            (quantityOption == 1
-                              ? 0.03
-                              : quantityOption == 2
-                              ? 0.04
-                              : quantityOption == 3
-                              ? 0.05
-                              : 0))
-                      )}
-                    </b>
-                    <b style={{ fontSize: 12 }}>with Installment</b>
-                  </div>
-                );
-              }
-              return null;
-            })}
+                  );
+                }
+                return null;
+              })} */}
+          </div>
         </div>
       </div>
       <div className="text-center py-16 w-[80%] sm:w-[40%] mx-auto">
@@ -841,19 +1115,24 @@ function QuotePage({}: Props) {
               <p className="text-transparent">Copy</p>
             </label>
             <button
-              className="
+              className={`
             mt-2 mb-8 py-2 w-full bg-accent rounded-xl font-bold
-            mobilehover:hover:bg-accent/50 transition-all"
+            mobilehover:hover:bg-accent/50 transition-all
+            ${
+              tooltipVisible
+                ? "bg-green-600 mobilehover:hover:bg-green-600/50"
+                : "bg-accent mobilehover:hover:bg-accent/50"
+            }`}
               onClick={(event) => handleCopy(event)}
             >
-              <p>Copy</p>
+              <p>{tooltipVisible ? "Copied!" : "Copy"}</p>
             </button>
-            <span
+            {/* <span
               className="absolute left-0 top-0 translate-x-[150%] translate-y-[10%] mt-8 ml-4 text-xs text-white bg-black rounded px-2 py-1"
               style={{ display: tooltipVisible ? "block" : "none" }}
             >
               Copied!
-            </span>
+            </span> */}
           </div>
         </div>
         <label htmlFor="name__label">
@@ -1011,7 +1290,6 @@ function QuotePage({}: Props) {
               }}
               required
               name="state"
-              value={values.state}
               onChange={formSelectChange}
               defaultValue="notSelected"
             >
@@ -1089,18 +1367,29 @@ function QuotePage({}: Props) {
           />
         </p>
         <div className="flex justify-around items-center">
-          <button
-            className="
-          py-2 px-4 bg-secondary text-black font-bold rounded-xl
-          mobilehover:hover:bg-secondary/80 transition-all"
-          >
-            <p>Back</p>
-          </button>
+          <Link href={"/"}>
+            <button
+              className="
+            py-2 px-4 bg-secondary text-black font-bold rounded-xl
+            mobilehover:hover:bg-secondary/80 transition-all"
+            >
+              <p>Back</p>
+            </button>
+          </Link>
           <button
             className={`
             py-2 px-4 bg-accent text-secondary font-bold rounded-xl border-transparent
           mobilehover:hover:bg-accent/50 transition-all
-          ${formValues.isLoading ? "bg-green-600" : ""}`}
+          ${formValues.isLoading ? "bg-green-600" : ""}
+          ${
+            values.name ||
+            values.email ||
+            values.contact ||
+            values.state ||
+            values.reason
+              ? "mobilehover:hover:bg-accent/50"
+              : "mobilehover:hover:bg-red-500/50"
+          }`}
             disabled={
               !values.name ||
               !values.email ||
@@ -1110,7 +1399,13 @@ function QuotePage({}: Props) {
             }
             onClick={onSubmit}
           >
-            <p>{formValues.isLoading ? "Submitting.." : "Submit"}</p>
+            <p>
+              {formValues.isLoading
+                ? "Submitting.."
+                : formValues.isSent
+                ? "Submitted!"
+                : "Submit"}
+            </p>
           </button>
           {/* <button
             className="

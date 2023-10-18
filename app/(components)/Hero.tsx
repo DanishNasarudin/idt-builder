@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 type Props = {};
 
 function Hero({}: Props) {
   return (
     <div
       className="
-    flex flex-col items-center justify-between text-center py-4 pt-8
+    flex flex-col items-center justify-between text-center py-4 pt-8 mt-16
     xs:flex-row xs:text-left sm:py-8"
     >
       <div className="idt__container"></div>
@@ -23,13 +25,15 @@ function Hero({}: Props) {
           <b className="font-normal text-accent">Calm yourself</b>, our builder
           will guide you through.
         </p>
-        <button
-          className="
-        bg-accent/0 border-[1px] py-2 px-4 rounded-xl my-4 font-bold 
-        mobilehover:hover:bg-accent mobilehover:hover:text-black mobilehover:hover:border-transparent transition-all"
-        >
-          <p>Start Build!</p>
-        </button>
+        <Link href={"#idt__main-section"}>
+          <button
+            className="
+          relative z-[1] bg-accent/0 border-[1px] py-2 px-4 rounded-lg my-4 font-bold
+          mobilehover:hover:bg-accent mobilehover:hover:text-black mobilehover:hover:border-transparent transition-all"
+          >
+            <p>Start Build!</p>
+          </button>
+        </Link>
       </div>
       <div>
         <img
