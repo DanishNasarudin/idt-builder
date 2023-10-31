@@ -32,6 +32,11 @@ type Props = {
       total: number;
     }
   ) => void;
+  selectedProduct: {
+    name: string;
+    price: number;
+    oriPrice: number;
+  };
 };
 
 function FormItem({
@@ -43,11 +48,17 @@ function FormItem({
   added,
   updateGrandTotal,
   updateFormData,
+  selectedProduct,
 }: Props) {
   const [toggle, setToggle] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(
+  const [searchSelectedProduct, setSearchSelectedProduct] = useState(
     { name: "", price: 0, oriPrice: 0 } || brands[0]?.options[0]
   );
+  const [selectedOption, setSelectedOption] = useState(
+    searchSelectedProduct || { name: "", price: 0, oriPrice: 0 } ||
+      brands[0]?.options[0]
+  );
+  const [currentValue, setCurrentValue] = useState("notSelected");
   const [quantityOption, setQuantityOption] = useState(1);
 
   const handleAddRow = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -72,8 +83,13 @@ function FormItem({
     }
     if (selected) {
       setSelectedOption(selected);
+      if (event.target.value === selected.name) {
+        setCurrentValue(event.target.value);
+      }
+      selected = { name: "", price: 0, oriPrice: 0 };
     } else if (event.target.value === "notSelected") {
       setSelectedOption({ name: "", price: 0, oriPrice: 0 });
+      setCurrentValue(event.target.value);
     }
   };
 
@@ -96,7 +112,23 @@ function FormItem({
       quantity: quantityOption,
       total: selectedOption.price * quantityOption,
     });
-  }, [selectedOption, quantityOption]);
+  }, [selectedOption, quantityOption, rowIndex]);
+
+  useEffect(() => {
+    brands.forEach((brand) => {
+      brand.options.forEach((option) => {
+        if (option.name === selectedProduct.name) {
+          setSelectedOption(selectedProduct);
+          setCurrentValue(selectedProduct.name);
+        }
+      });
+    });
+    if (selectedOption !== selectedProduct) {
+      // setSelectedOption(selectedProduct);
+      // console.log(selectedOption, "option pass");
+      // console.log(selectedProduct, "select pass");
+    }
+  }, [selectedProduct]);
 
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
@@ -109,11 +141,14 @@ function FormItem({
     }, 1000);
 
     if (quantityOption === 1) {
-      const copyText = `${selectedOption.name}, Price: RM${selectedOption.price}
-      `;
+      const copyText = `${selectedOption.name
+        .replace(/\([^)]*\)/g, "")
+        .trim()}, Price: RM${selectedOption.price}`;
       navigator.clipboard.writeText(copyText);
     } else {
-      const copyText = `${selectedOption.name}, Price: RM${
+      const copyText = `${selectedOption.name
+        .replace(/\([^)]*\)/g, "")
+        .trim()}, Price: RM${
         selectedOption.price
       }, Qty: x${quantityOption}, Total: RM${
         selectedOption.price * quantityOption
@@ -168,7 +203,7 @@ function FormItem({
             setToggle(!toggle);
           }}
           onChange={handleOptionChange}
-          defaultValue={"notSelected"}
+          value={currentValue}
         >
           <option
             value="notSelected"
@@ -181,7 +216,7 @@ function FormItem({
                   {brand.options.map((option, optionIndex) => {
                     return (
                       <option key={optionIndex} value={option.name}>
-                        {option.name} | RM {option.oriPrice}
+                        {option.name} | RM {option.price}
                       </option>
                     );
                   })}
@@ -214,6 +249,11 @@ function FormItem({
           <option value={3}>3</option>
           <option value={4}>4</option>
           <option value={5}>5</option>
+          <option value={6}>6</option>
+          <option value={7}>7</option>
+          <option value={8}>8</option>
+          <option value={9}>9</option>
+          <option value={10}>10</option>
         </select>
       </td>
       <td className="pl-2 block">
@@ -254,6 +294,11 @@ function FormItem({
                 <option value={3}>3</option>
                 <option value={4}>4</option>
                 <option value={5}>5</option>
+                <option value={6}>6</option>
+                <option value={7}>7</option>
+                <option value={8}>8</option>
+                <option value={9}>9</option>
+                <option value={10}>10</option>
               </select>
             </div>
             <div className="flex sm:hidden flex-col text-center ">

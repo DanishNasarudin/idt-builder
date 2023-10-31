@@ -13,12 +13,13 @@ import {
   setDoc,
 } from "firebase/firestore";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { ScrollContext, useScrollListener } from "../(hooks)/useScrollListener";
 import FormItem from "./FormItem";
 import readFileAndParse from "./TxtToProduct";
 import { queueWrite, readData, writeData } from "./QuoteDataJSON";
+import React from "react";
 
 type OptionType = {
   name: string;
@@ -145,6 +146,8 @@ function Form({}: Props) {
       }))
     );
     setFormData([]);
+    setSearchTerm("");
+    setSelectedProduct({ name: "", price: 0, oriPrice: 0 });
   }, [initialProducts]);
 
   const [rows, setRows] = useState(
@@ -159,10 +162,21 @@ function Form({}: Props) {
   // console.log(rows);
 
   const addRow = (rowIndex: number) => {
+    // console.log({ ...rows[rowIndex] }, "check2");
     const newRow = { ...rows[rowIndex], added: true, id: uuidv4() };
+
+    // console.log({ ...formData[rowIndex] }, "check row");
     rows.splice(rowIndex + 1, 0, newRow);
     setRows([...rows]);
+
+    const newFormData = { ...formData[rowIndex] };
+    formData.splice(rowIndex + 1, 0, newFormData);
+    setFormData([...formData]);
+
+    // const newFormData = [...formData];
+    // console.log(newFormData, "check");
   };
+  // console.log(rows, "check2");
 
   const removeRow = (rowIndex: number) => {
     if (rowIndex >= 0) {
@@ -216,6 +230,8 @@ function Form({}: Props) {
     );
     setTotalPrice(0);
     setFormData([]);
+    setSearchTerm("");
+    setSelectedProduct({ name: "", price: 0, oriPrice: 0 });
   };
 
   // const deleteOldestDocuments = async () => {
@@ -229,6 +245,9 @@ function Form({}: Props) {
   // };
 
   const [formData, setFormData] = useState<FormDataItem[]>([]);
+
+  // console.log(formData, "check");
+  // console.log(rows, "check2");
 
   // console.log(formData[0] === undefined);
 
@@ -299,9 +318,9 @@ function Form({}: Props) {
 
     currentData.push(newQuote);
 
-    // Ensure we don't exceed 2000 quotes
-    if (currentData.length > 2000) {
-      currentData.splice(0, 1000); // Remove the oldest 500 quotes
+    // Ensure we don't exceed 20000 quotes
+    if (currentData.length > 20000) {
+      currentData.splice(0, 10000); // Remove the oldest 10000 quotes
     }
 
     queueWrite(currentData);
@@ -357,6 +376,91 @@ function Form({}: Props) {
 
   // console.log(rows.some((item) => item.totalPrice > 0 === true));
 
+  // ----- Search bar
+
+  const [searchTerm, setSearchTerm] = useState("");
+
+  type FlattenedProduct = {
+    category: string;
+    brandName: string;
+    option: OptionType;
+  };
+
+  const flattenProducts = (): FlattenedProduct[] => {
+    let flattened: FlattenedProduct[] = [];
+
+    initialProducts.forEach((product) => {
+      product.brands.forEach((brand) => {
+        brand.options.forEach((option) => {
+          flattened.push({
+            category: product.category,
+            brandName: brand.name,
+            option: option,
+          });
+        });
+      });
+    });
+
+    return flattened;
+  };
+
+  const flattened = flattenProducts();
+
+  const filteredProducts = flattened.filter((product) => {
+    const terms = searchTerm.split(" ");
+    return terms.every(
+      (term) =>
+        product.option.name.toLowerCase().includes(term.toLowerCase()) &&
+        searchTerm !== product.option.name
+    );
+  });
+
+  const handleSearchSelect = (term: string) => {
+    handleSearchSelectForm(term);
+    setSearchTerm(term);
+    // console.log(term, "search");
+  };
+
+  const handleSearchEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // console.log(e.key, "Check Key");
+    if (e.key == "Enter") {
+      const target = e.target as HTMLInputElement;
+      handleSearchSelectForm(target.value);
+      // console.log(target.value, "Entered");
+    }
+  };
+
+  const [selectedProduct, setSelectedProduct] = useState<OptionType>({
+    name: "",
+    oriPrice: 0,
+    price: 0,
+  });
+
+  const handleSearchSelectForm = (term: string) => {
+    initialProducts.forEach((product) => {
+      product.brands.forEach((brand) => {
+        brand.options.forEach((option) => {
+          if (term === option.name) {
+            setSelectedProduct({
+              ...option,
+              name: option.name,
+              price: option.price,
+              oriPrice: option.oriPrice,
+            });
+          }
+        });
+      });
+    });
+  };
+
+  const [searchFocus, setSearchFocus] = useState(false);
+
+  // console.log(selectedProduct, "check");
+
+  // console.log(filteredProducts, "after filter");
+
+  // console.log("pass");
+
   return (
     <div className="py-8">
       <div className="absolute top-0 h-[100%] left-0 w-full">
@@ -367,10 +471,10 @@ function Form({}: Props) {
           before:absolute before:w-full before:h-full before:content-[''] before:backdrop-blur-md before:top-0 before:-z-10`}
         >
           <div className="relative max-w-[1060px] mx-auto py-2">
-            <div className="w-4/5 mx-auto flex justify-between items-center sm:items-end">
+            <div className="w-4/5 mx-auto flex justify-between items-center ">
               <div className="flex flex-col sm:flex-row justify-center w-full">
-                <div className="flex items-center sm:items-end w-full justify-between">
-                  <div className="flex gap-8 items-center sm:items-end">
+                <div className="flex items-center  w-full justify-between">
+                  <div className="flex gap-8 items-center ">
                     <div>
                       <button
                         className="py-2 px-4 sm:py-4 sm:px-8 border-white border-[1px] rounded-lg text-xs"
@@ -382,17 +486,25 @@ function Form({}: Props) {
                       </button>
                     </div>
                     <div className="text-center sm:text-left hidden sm:block">
-                      <p className="text-[10px] text-gray-400">
-                        <b>
-                          <s>RM {totalOriPrice}</s>
-                        </b>
-                      </p>
+                      {totalOriPrice - totalPrice > 0 ? (
+                        <p className="text-[10px] text-gray-400">
+                          <b>
+                            <s>RM {totalOriPrice}</s>
+                          </b>
+                        </p>
+                      ) : (
+                        ""
+                      )}
                       <p>
                         <b>RM {totalPrice}</b>
                       </p>
-                      <p className="text-[10px] text-accent">
-                        <b>Save RM {totalOriPrice - totalPrice}</b>
-                      </p>
+                      {totalOriPrice - totalPrice > 0 ? (
+                        <p className="text-[10px] text-accent">
+                          <b>Save RM {totalOriPrice - totalPrice}</b>
+                        </p>
+                      ) : (
+                        ""
+                      )}
                     </div>
                     <div className="sm:flex hidden">
                       {totalPrice > 0 ? (
@@ -409,17 +521,25 @@ function Form({}: Props) {
                     </div>
                   </div>
                   <div className="text-center sm:text-left block sm:hidden">
-                    <p className="text-[10px] text-gray-400">
-                      <b>
-                        <s>RM {totalOriPrice}</s>
-                      </b>
-                    </p>
+                    {totalOriPrice - totalPrice > 0 ? (
+                      <p className="text-[10px] text-gray-400">
+                        <b>
+                          <s>RM {totalOriPrice}</s>
+                        </b>
+                      </p>
+                    ) : (
+                      ""
+                    )}
                     <p>
                       <b>RM {totalPrice}</b>
                     </p>
-                    <p className="text-[10px] text-accent">
-                      <b>Save RM {totalOriPrice - totalPrice}</b>
-                    </p>
+                    {totalOriPrice - totalPrice > 0 ? (
+                      <p className="text-[10px] text-accent">
+                        <b>Save RM {totalOriPrice - totalPrice}</b>
+                      </p>
+                    ) : (
+                      ""
+                    )}
                   </div>
                   <div>
                     <button
@@ -458,8 +578,45 @@ function Form({}: Props) {
             hideNavbar2 ? "top-0" : "top-[72px] sm:top-[102px]"
           } */}
       </div>
-      <div className="text-center mb-4">
+      <div className="text-center mb-4 relative">
         <h2>Choose your parts</h2>
+        <br />
+        <input
+          className="text-black max-w-[600px] w-full px-2 py-2 bg-secondary rounded-md text-xs"
+          type="text"
+          placeholder="Search for a product..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyDown={(e) => handleSearchEnter(e)}
+          onBlur={() => {
+            setTimeout(() => {
+              setSearchFocus(false);
+            }, 100);
+          }}
+          onFocus={() => setSearchFocus(true)}
+        />
+        <div
+          className="max-w-[600px] max-h-[200px] overflow-y-scroll w-full mx-auto bg-secondary text-black
+        absolute top-[100%] left-[50%] translate-x-[-50%] translate-y-[0%] z-[1] searchQuery"
+        >
+          {searchFocus &&
+            searchTerm &&
+            filteredProducts.map((product, index) => (
+              <React.Fragment key={index}>
+                <div
+                  className="
+                  mobilehover:hover:bg-slate-400 mobilehover:hover:text-white 
+                  cursor-pointer text-left px-2 py-[2px] border-[1px] border-zinc-400
+                  "
+                  onClick={() => handleSearchSelect(product.option.name)}
+                >
+                  <p style={{ fontSize: 12 }}>
+                    {product.option.name} | <b>RM {product.option.price}</b>
+                  </p>
+                </div>
+              </React.Fragment>
+            ))}
+        </div>
       </div>
       <form className="w-full">
         <table className="w-full">
@@ -504,6 +661,7 @@ function Form({}: Props) {
                     newFormData[rowIndex] = rowData;
                     setFormData(newFormData);
                   }}
+                  selectedProduct={selectedProduct}
                 />
               );
             })}

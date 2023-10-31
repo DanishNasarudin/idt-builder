@@ -242,16 +242,21 @@ function QuotePage({}: Props) {
 
   const emailHTMLRow = generateRows(listOutside);
 
-  function generateCopySpec(data: RowData[]): string {
+  function generateCopySpec(data: FormDataItem[]): string {
     return data
       .map(
         (item) =>
-          `${item.selectedOption.name}` +
+          `${item.category
+            .replace(/^--\s*\d+\.\s+/, "") // Removes "-- <number>. "
+            .replace(/-.+$/, "") // Removes "- and everything after it"
+            .replace(/\s+--$/, "") // Removes the trailing "--"
+            .trim()}: ` +
+          `${item.selectedOption.name.replace(/\([^)]*\)/g, "").trim()}` +
           ` | ` +
           `Qty: ${item.quantity}x` +
           ` | ` +
           `RM ${item.total}` +
-          `\n\n`
+          `\n`
       )
       .join("");
   }
@@ -260,13 +265,24 @@ function QuotePage({}: Props) {
     if (data2 === null) {
       return "";
     } else {
-      return String(data2.grandTotal);
+      return (
+        `${
+          data2.oriTotal - data2.grandTotal === 0
+            ? ""
+            : `Total: RM ${String(data2.oriTotal)}`
+        }` +
+        `${
+          data2.oriTotal - data2.grandTotal === 0
+            ? ""
+            : `\nDiscount: RM ${String(data2.oriTotal - data2.grandTotal)}`
+        }` +
+        `\nGrand Total: RM ${String(data2.grandTotal)}`
+      );
     }
   }
 
   let copySpec =
-    `${generateCopySpec(listOutside)}` +
-    `Grand Total: RM ${generateCopySpec2(listProp)}`;
+    `${generateCopySpec(listOutside)}\n` + `${generateCopySpec2(listProp)}`;
   // console.log(copySpec);
 
   function listPropDefine(data: ListData | null) {
@@ -752,7 +768,7 @@ function QuotePage({}: Props) {
   if (formData.some((item) => item.id === quoteId) === false) {
     return (
       <h2 className="flex flex-col justify-center items-center h-[100vh] text-center text-red-400">
-        Quote Does not Exists
+        Quote Does not Exists OR <br /> have been Deleted.
       </h2>
     );
   }
