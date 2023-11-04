@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node app.js",
+    "dev": "next dev",
     "build": "next build",
-    "start": "NODE_ENV=production node app.js"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
     "@tiptap/pm": "^2.0.3",
