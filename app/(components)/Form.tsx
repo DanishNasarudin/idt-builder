@@ -18,7 +18,12 @@ import { v4 as uuidv4 } from "uuid";
 import { ScrollContext, useScrollListener } from "../(hooks)/useScrollListener";
 import FormItem from "./FormItem";
 import readFileAndParse from "./TxtToProduct";
-import { queueWrite, readData, writeData } from "./QuoteDataJSON";
+import {
+  deleteOldestFiles,
+  queueWrite,
+  readData,
+  writeData,
+} from "./QuoteDataJSON";
 import React from "react";
 
 type OptionType = {
@@ -293,6 +298,8 @@ function Form({}: Props) {
 
   const [createQuoteLoad, setCreateQuoteLoad] = useState(false);
 
+  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+
   const createNewQuoteJSON = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -300,13 +307,19 @@ function Form({}: Props) {
 
     setCreateQuoteLoad(true);
 
+    let quoteWindow;
+    if (isSafari) {
+      // Open a blank window immediately on user interaction for Safari
+      quoteWindow = window.open("about:blank", "_blank");
+    }
+
     // Filter out undefined values from formData
     const filteredFormData = formData.filter(
       (item) => item !== undefined && item.selectedOption.name !== ""
     );
 
     const id = uuidv4();
-    const currentData = await readData();
+    // const currentData = await readData();
 
     const newQuote = {
       id,
@@ -316,24 +329,36 @@ function Form({}: Props) {
       createdAt: new Date().toISOString(),
     };
 
-    currentData.push(newQuote);
+    // currentData.push(newQuote);
 
-    // Ensure we don't exceed 20000 quotes
-    if (currentData.length > 20000) {
-      currentData.splice(0, 10000); // Remove the oldest 10000 quotes
-    }
+    // // Ensure we don't exceed 20000 quotes
+    // if (currentData.length > 20000) {
+    //   currentData.splice(0, 10000); // Remove the oldest 10000 quotes
+    // }
 
-    queueWrite(currentData);
+    await queueWrite(newQuote, id);
+
+    // After writing the new quote file, call the cleanup function
+    await deleteOldestFiles(20000);
 
     setTimeout(() => {
       setCreateQuoteLoad(false);
     }, 1000);
 
+    const quoteUrl = `${window.location.protocol}//${window.location.host}/quote/${id}`;
+
+    if (isSafari && quoteWindow) {
+      quoteWindow.location.href = quoteUrl;
+    } else {
+      // For other browsers, open the window after the async operation
+      window.open(quoteUrl, "_blank");
+    }
+
     // Navigate to the new quote page
-    window.open(
-      `${window.location.protocol}//${window.location.host}/quote/${id}`,
-      "_blank"
-    );
+    // window.open(
+    //   `${window.location.protocol}//${window.location.host}/quote/${id}`,
+    //   "_blank"
+    // );
   };
 
   // ------ clear the link from google analytics

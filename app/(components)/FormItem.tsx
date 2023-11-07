@@ -288,6 +288,7 @@ function FormItem({
                 id="quantity__select"
                 className="flex sm:hidden mt-1  w-7 h-7 bg-secondary px-0 text-center appearance-none cursor-pointer rounded-md border-[2px] border-zinc-900 font-bold"
                 onChange={handleQuantityChange}
+                style={{ textAlignLast: "center" }}
               >
                 <option value={1}>1</option>
                 <option value={2}>2</option>
