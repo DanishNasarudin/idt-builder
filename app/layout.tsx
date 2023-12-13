@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import Footer from "./(components)/Footer";
 import "./globals.css";
 
@@ -50,6 +51,8 @@ export const metadata: Metadata = {
   },
 };
 
+const GTM_ID = "G-F1BXD9F7PC";
+
 export default function RootLayout({
   children,
 }: {
@@ -57,6 +60,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <Script src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`} />
+      <Script id="google-analytics">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', '${GTM_ID}');
+        `}
+      </Script>
       <body className={`${inter.className} relative`}>
         <Navbar />
         <div className="max-w-[1060px] mx-auto">{children}</div>

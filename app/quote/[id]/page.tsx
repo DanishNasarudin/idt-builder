@@ -270,8 +270,8 @@ function QuotePage({}: Props) {
             .replace(/\s+--$/, "") // Removes the trailing "--"
             .trim()}: ` +
           `${item.selectedOption.name.replace(/\([^)]*\)/g, "").trim()}` +
-          ` | ` +
-          `Qty: ${item.quantity}x` +
+          `${item.quantity > 1 ? " | " : ""}` +
+          `${item.quantity > 1 ? `Qty: ${item.quantity}x` : ""}` +
           ` | ` +
           `RM ${item.total}` +
           `\n`
