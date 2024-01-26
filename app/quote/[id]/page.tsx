@@ -1,7 +1,7 @@
 "use client";
 
 import { Inter } from "next/font/google";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { RiArrowDropDownFill, RiArrowDropLeftFill } from "react-icons/ri";
 
 import { db } from "@/firebase";
@@ -13,6 +13,8 @@ import { State } from "country-state-city";
 import React from "react";
 import Link from "next/link";
 import { readData } from "@/app/(components)/QuoteDataJSON";
+
+import html2pdf from "html2pdf.js";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -56,6 +58,7 @@ function QuotePage({}: Props) {
   const [formData, setQuotes] = useState<QuoteData[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  // console.log(formData[0].createdAt, "c");
 
   const MAX_RETRIES = 5; // maximum number of retries
   const RETRY_DELAY = 2000; // delay between retries in milliseconds (2 seconds)
@@ -242,12 +245,13 @@ function QuotePage({}: Props) {
   });
 
   // console.log(emailProp, "email prop");
+  // console.log(formData.length, "c");
 
   function generateRows(data: RowData[]): string {
     return data
       .map(
         (item) => `
-    <tr class="email__row" style="border-bottom: 1px solid gray;">
+    <tr class="email__row" style="border-bottom: 1px solid gray">
       <td style="width: 70%">${item.selectedOption.name}</td>
       <td style="width: 10%">${item.selectedOption.price}</td>
       <td style="width: 10%">${item.quantity}</td>
@@ -375,6 +379,7 @@ function QuotePage({}: Props) {
     }
     .email__table {
       width: 100%;
+      margin-top: 16px;
       /* background-color: gray; */
     }
     .email__table-head {
@@ -388,6 +393,9 @@ function QuotePage({}: Props) {
     }
     .email__row {
       border-bottom: 1px solid gray;
+    }
+    .email__row > td {
+      padding: 8px 0;
     }
     .email__install {
       width: 200px;
@@ -494,7 +502,7 @@ function QuotePage({}: Props) {
     </table>
     <br />
     <h2 style="text-align: center; margin-bottom: 0">Installment Options</h2>
-    <p style="text-align: center; margin-top: 0">(Walk-in Only)</p>
+    <p style="text-align: center; margin-top: 0; margin-bottom: 8px">(Walk-in Only)</p>
     <div
       class="email__install-main"
       style="
@@ -699,7 +707,38 @@ function QuotePage({}: Props) {
 
   useEffect(() => {
     listPropDefine(listProp);
-  }, [formValues]);
+  }, [formData]);
+
+  const pdfRef = useRef<HTMLDivElement>(null);
+  const [downloadPDFVisual, setDownloadPDFVisual] = useState(false);
+
+  const handlePDF = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+
+    setDownloadPDFVisual(true);
+
+    const element = document.createElement("div");
+    element.innerHTML = emailHTML;
+    element.style.color = "black";
+    document.body.appendChild(element);
+
+    var opt = {
+      margin: 8,
+      image: { type: "jpeg", quality: 1 },
+    };
+
+    html2pdf()
+      .from(element)
+      .set(opt)
+      .toPdf()
+      .save("IdealTechPC_Quote.pdf")
+      .then(() => {
+        document.body.removeChild(element);
+      });
+    setTimeout(() => {
+      setDownloadPDFVisual(false);
+    }, 1000);
+  };
 
   const onSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -1013,6 +1052,19 @@ function QuotePage({}: Props) {
             onClick={(event) => handleCopySpec(event)}
           >
             <p>{copySpecVisual ? "Copied!" : "Copy Specs"}</p>
+          </button>
+          <button
+            className={`
+            ${
+              downloadPDFVisual
+                ? "bg-green-600 text-white mobilehover:hover:bg-green-600/80"
+                : "bg-secondary"
+            }
+          py-2 px-4  text-black font-bold rounded-xl
+          mobilehover:hover:bg-secondary/80 transition-all`}
+            onClick={(event) => handlePDF(event)}
+          >
+            <p>{downloadPDFVisual ? "Downloading PDF..." : "Download PDF"}</p>
           </button>
         </div>
         <div className="flex gap-4 flex-col max-w-[340px] w-full text-center">

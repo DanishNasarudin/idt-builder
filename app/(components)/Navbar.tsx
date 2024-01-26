@@ -32,12 +32,13 @@ function Navbar({}: Props) {
       <nav
         className={`
     bg-primary/80 sticky border-b-[1px] border-[#323232] z-50 transition-all top-0
+    before:absolute before:w-full before:h-full before:content-[''] before:backdrop-blur-md before:top-0 before:-z-10
     ${hideNavbar ? "translate-y-[-100%]" : ""}
     `}
       >
         <div
           className="
-        before:absolute before:w-full before:h-full before:content-[''] before:backdrop-blur-md before:top-0 before:-z-10
+        
       relative max-w-[1060px] mx-auto"
         >
           <ul
