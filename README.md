@@ -12,7 +12,7 @@ The company already have the part picker page previously, however, it was made s
 | -- | -- | -- |
 | <img alt="" src= "https://static-00.iconduck.com/assets.00/nextjs-icon-512x512-y563b8iq.png" height="13"> | Next JS 13 | React Framework |
 | <img alt="" src= "https://cdn-icons-png.flaticon.com/512/5968/5968381.png" height="13"> | Typescript | JS Syntax |
-| <img alt="" src= "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/512px-Tailwind_CSS_Logo.svg.png?20230715030042" height="13"> | Tailwind CSS | CSS Framework |
+| <img alt="" src= "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Tailwind_CSS_Logo.svg/512px-Tailwind_CSS_Logo.svg.png?20230715030042" height="10"> | Tailwind CSS | CSS Framework |
 | <img alt="" src= "https://i0.wp.com/community.nodemailer.com/wp-content/uploads/2015/10/n2-2.png?w=422&ssl=1" height="13"> | Nodemailer | Form to Email Handling |
 | <img alt="" src= "https://bestofjs.org/logos/jspdf.dark.svg" height="13"> | jsPDF | PDF Generation |
 | <img alt="" src= "https://cpanel.net/wp-content/themes/cPbase/assets/img/logos/cp_orange.svg" height="10"> | cPanel | Deployment |
