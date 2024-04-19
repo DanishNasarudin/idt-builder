@@ -26,6 +26,7 @@ yarn-error.log*
 
 # local env files
 .env*.local
+.*
 
 # vercel
 .vercel
@@ -36,3 +37,5 @@ next-env.d.ts
 
 *.zip
 *.json
+
+builder_db.session.sql

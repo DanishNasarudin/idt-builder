@@ -1,15 +1,24 @@
+import { inter } from "@/lib/font";
+import { Providers } from "@/lib/providers/providers";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
-import { Inter } from "next/font/google";
 import Script from "next/script";
-import Footer from "./(components)/Footer";
+import { Suspense } from "react";
+import { Toaster } from "sonner";
 import "./globals.css";
 
-const Navbar = dynamic(() => import("./(components)/Navbar"), { ssr: false });
+const Navbar = dynamic(() => import("./(main-components)/Navbar"), {
+  ssr: false,
+});
 
-const inter = Inter({ subsets: ["latin"] });
+// const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NODE_ENV === "production"
+      ? `https://${process.env.HOSTNAME}`
+      : "http://localhost:3000",
+  ),
   title: "Ideal Tech PC Builder",
   description:
     "Custom PC, Desktop PC, Gaming PC, Workstation PC built for your needs in Malaysia. Fully Customizable.",
@@ -66,15 +75,21 @@ export default function RootLayout({
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
- 
+          
           gtag('config', '${GTM_ID}');
-        `}
+          `}
       </Script>
       <body className={`${inter.className} relative`}>
-        <Navbar />
-        <div className="max-w-[1060px] mx-auto">{children}</div>
-        <div className="h-[200px]"></div>
-        <Footer />
+        <Suspense>
+          <Providers>
+            {/* <Navbar />
+          <div className="max-w-[1060px] mx-auto">{children}</div>
+          <div className="h-[200px]"></div>
+          <Footer /> */}
+            {children}
+            <Toaster richColors closeButton theme="dark" />
+          </Providers>
+        </Suspense>
       </body>
     </html>
   );

@@ -1,0 +1,7 @@
+-- SQL Template for inserting JSON data into MySQL
+INSERT INTO quotes (id, quote_data)
+VALUES ('<id_value>', '<json_value>');
+
+-- Note:
+-- Replace <id_value> with the actual ID from your JSON file.
+-- Replace <json_value> with the stringified JSON object, making sure to escape any single quotes within the JSON string.

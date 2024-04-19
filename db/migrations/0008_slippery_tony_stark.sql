@@ -1,0 +1,1 @@
+ALTER TABLE `product` ADD `is_soldout` boolean DEFAULT false;

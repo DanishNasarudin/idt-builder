@@ -1,11 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-    // serverActions: true,
-  },
   images: {
-    domains: ["idealtech.com.my"],
+    domains: ["idealtech.com.my", "img.clerk.com"],
     unoptimized: true,
   },
   webpack: (config, { isServer }) => {
@@ -15,16 +11,8 @@ const nextConfig = {
         fs: false,
       };
     }
-
     return config;
   },
-  // api: {
-  //   bodyParser: {
-  //     sizeLimit: "10mb",
-  //   },
-  //   responseLimit: "10mb",
-  // },
-  // output: "export",
 };
 
 module.exports = nextConfig;

@@ -1,0 +1,28 @@
+1,"01. INTEL Processor",0
+2,"02. AMD Ryzen Processor",1
+3,"03. Cooler",2
+4,"04. Motherboard (Intel)",3
+5,"05. Motherboard (AMD)",4
+6,"06. RAM",5
+7,"07. Graphic Card",6
+8,"08. PowerSupplyUnit (PSU)",7
+9,"09. Case",8
+10,"10. SSD",9
+11,"11. HDD",10
+12,"12. Monitor & Accessories",11
+13,"13. Peripherals-Keyboard",12
+14,"14. Peripherals-Mouse",13
+15,"15. Peripherals-Combo (Keyboard and Mouse)",14
+16,"16. Peripherals-Headsets",15
+17,"17. Peripherals-Mousepad",16
+18,"18. Speaker",17
+19,"19. Accessories-Fans",18
+20,"20. Networking (WIFI Receiver)",19
+21,"21. Networking (WIFI Router)",20
+22,"22. Optical Drive",21
+23,"23. Software (Optional)",22
+24,"24. Accessories-Other",23
+25,"25. Accessories -MIC, Webcam, Capture Card, Streaming, Sound Card",24
+26,"26. Gaming Chair",25
+27,"27. Gaming Desk",26
+28,"28. New PC Accessories (Recommended)",27

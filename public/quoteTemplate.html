@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  </head>
+  <style>
+    body {
+      padding: 0 200px;
+    }
+    table {
+      border-collapse: collapse;
+    }
+    .email__head {
+      text-align: center;
+    }
+    .email__table {
+      width: 100%;
+      margin-top: 16px;
+      /* background-color: gray; */
+    }
+    .email__table-head {
+      text-align: start;
+    }
+    .email__table-body {
+      text-align: start;
+    }
+    .email__table-foot {
+      margin-top: 8px;
+    }
+    .email__row {
+      border-bottom: 1px solid gray;
+    }
+    .email__row > td {
+      padding: 8px 0;
+    }
+    .email__install {
+      width: 200px;
+      /* background-color: gray; */
+      border: 1px solid black;
+      margin: 0 20px;
+      text-align: center;
+      padding: 16px 32px;
+    }
+    .email__grand {
+      display: flex;
+    }
+    .email__install-main {
+      display: flex;
+      max-width: 400px;
+      max-height: 400px;
+      width: 100%;
+      margin: 0 auto;
+    }
+    .email__install-left {
+      width: 100%;
+      height: 100%;
+      padding: 0 4px;
+    }
+    .email__install-right {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .email__install-right > div {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 4px;
+    }
+  </style>
+  <body>
+    <div class="email__head">
+      <h1>Quotation from Ideal Tech PC</h1>
+      <p>Thank you for using Ideal Tech PC Builder.</p>
+      <p>We will contact you to proceed with the order soon.</p>
+      <p>Quotation generated on: {{quoteDate}}</p>
+    </div>
+    <table class="email__table">
+      <thead>
+        <tr>
+          <th class="email__table-head" style="width: 70%">
+            <label htmlFor="product__label">
+              <p>Product</p>
+            </label>
+          </th>
+          <th class="email__table-head" style="width: 10%">
+            <label htmlFor="quantity__label">
+              <p>Price</p>
+            </label>
+          </th>
+          <th class="email__table-head" style="width: 10%">
+            <label htmlFor="quantity__label">
+              <p>Quantity</p>
+            </label>
+          </th>
+          <th class="email__table-head" style="width: 10%">
+            <label htmlFor="total__label">
+              <p>Total</p>
+            </label>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {{emailHTMLRow}}
+      </tbody>
+      <tfoot>
+        <tr>
+          <td style="color: transparent">.</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Price</td>
+          <td>RM {{oriPrice}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td>Discount</td>
+          <td>RM {{discount}}</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td><b>Total Price</b></td>
+          <td><b>RM {{totalPrice}}</b></td>
+        </tr>
+        <tr>
+          <td style="color: transparent">.</td>
+        </tr>
+      </tfoot>
+    </table>
+    <br />
+    <div style="text-align: center">
+      <h2>Quotation Link</h2>
+      <a href="{{link}}">{{link}}</a>
+    </div>
+    <br />
+    <div style="text-align: center">
+      <h2>Customer Information</h2>
+      <p><b>Name: </b>{{name}}</p>
+      <p><b>Email: </b>{{email}}</p>
+      <p><b>Contact Number: </b>{{contact}}</p>
+      <p><b>State: </b>{{state}}</p>
+      <p><b>PC Usage: </b>{{reason}}</p>
+      <p><b>Other Requirements: </b>{{requirements}}</p>
+    </div>
+    <br />
+    <br />
+    <h2 style="text-align: center; margin-bottom: 0">Installment Options</h2>
+    <p style="text-align: center; margin-top: 0; margin-bottom: 8px">
+      (Walk-in Only)
+    </p>
+    <div
+      class="email__install-main"
+      style="
+        display: flex;
+        max-width: 400px;
+        max-height: 400px;
+        width: 100%;
+        margin: 0 auto;
+      "
+    >
+      <div
+        class="email__install-left"
+        style="
+          border: solid;
+          border-width: 1px;
+          width: 100%;
+          height: 100%;
+          padding: 0 4px;
+        "
+      >
+        <p><b>List of Bank</b></p>
+        <p>Public Bank</p>
+        <p>AEON Credit Card</p>
+        <p>Affin Bank</p>
+        <p>RHB Bank</p>
+        <p>AMBANK</p>
+        <p>HSBC</p>
+        <p>Standard Chartered Bank</p>
+        <p>Bank Simpanan Nasional</p>
+        <p>OCBC</p>
+        <p>UOB</p>
+      </div>
+      <div
+        class="email__install-right"
+        style="
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        "
+      >
+        <div
+          style="
+            border: solid;
+            border-width: 1px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 4px;
+          "
+        >
+          <p>Installment with <b>12 months</b> period</p>
+        </div>
+        <div
+          style="
+            border: solid;
+            border-width: 1px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 0 4px;
+          "
+        >
+          <p>Starting from <b>RM {{monthly}}/mo</b> with listed Bank</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
