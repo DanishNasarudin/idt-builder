@@ -1,0 +1,331 @@
+HYPERX:
+HYPERX ALLOY CORE RGB, 239, 239
+HYPERX ALLOY MKW100 - TTC Red Switch, 349, 349
+HYPERX ALLOY ORIGINS - HyperX Aqua Switch, 499, 499
+HYPERX ALLOY ORIGINS - HyperX Blue Switch, 499, 499
+HYPERX ALLOY ORIGINS - HyperX Red Switch, 499, 499
+HYPERX ALLOY ORIGINS PBT - HyperX Aqua Switch, 519, 519
+HYPERX ALLOY ORIGINS PBT - HyperX Blue Switch, 519, 519
+HYPERX ALLOY ORIGINS PBT - HyperX Red Switch, 519, 519
+HYPERX ALLOY ELITE II RGB - HyperX Red Switch, 599, 599
+HYPERX ALLOY ORIGINS CORE TKL - HyperX Aqua Switch, 449, 449
+HYPERX ALLOY ORIGINS CORE TKL - HyperX Blue Switch, 449, 449
+HYPERX ALLOY ORIGINS CORE TKL - HyperX Red Switch, 449, 449
+HYPERX ALLOY ORIGINS CORE PBT TKL - HyperX Aqua Switch, 459, 459
+HYPERX ALLOY ORIGINS CORE PBT TKL - HyperX Blue Switch, 459, 459
+HYPERX ALLOY ORIGINS CORE PBT TKL - HyperX Red Switch, 459, 459
+HYPERX ALLOY ORIGINS 60 (60% Form Factor) - HyperX Aqua Switch, 499, 499
+HYPERX ALLOY ORIGINS 60 (60% Form Factor) - HyperX Red Switch, 499, 499
+HYPERX ALLOY ORIGINS 65 (65% Form Factor) - HyperX Aqua Switch, 519, 519
+HYPERX ALLOY ORIGINS 65 (65% Form Factor) - HyperX Red Switch, 519, 519
+
+MSI:
+MSI VIGOR GK50 LOW PROFILE Keyboard,559,559
+MSI VIGOR GK50 Elite LL Keyboard,369,369
+MSI VIGOR GK30 Keyboard ,190,190
+MSI VIGOR GK20 Keyboard ,150,150
+MSI FORCE GC20 Gamepad Controller,169,169
+MSI FORCE GC30 Gamepad Controller,239,239
+
+AORUS:
+AORUS K9 Gaming Keyboard, 639, 639
+AORUS K7 Gaming Keyboard (Red Switch), 449, 449
+AORUS K1 Gaming Keyboard (Red Switch), 389, 389
+AORUS Force K85 Gaming Keyboard, 199, 199
+
+EVGA:
+EVGA Z20 RGB Optical Mechanical Gaming Keyboard/Optical Mechanical Switches (Linear),739,739
+EVGA Z15 RGB Gaming Keyboard Hot Swappable Mechanical Kailh Speed Silver Switches (Linear),549,549
+EVGA Z15 RGB Gaming Keyboard Hot Swappable Mechanical Kailh Speed Bronze Switches (Clicky),549,549
+
+ASUS (2 YEAR WARRANTY) :
+ASUS MA02 ROG CLAYMORE II (Wireless / RX Optical RED Switch), 1000 , 1000
+ASUS MA02 ROG CLAYMORE II (Wireless / RX Optical BLUE Switch),  1000 , 1000
+(PROMO!) ASUS M701 ROG AZOTH (Wireless / NX RED Switch) (N/P: RM1070), 990, 1070
+(PROMO!) ASUS M701 ROG AZOTH (Wireless / NX BLUE Switch) (N/P: RM1070), 990, 1070
+(PROMO!) ASUS M701 ROG AZOTH (Wireless / NX BROWN Switch) (N/P: RM1070), 990, 1070
+(PROMO!) ASUS M701 ROG AZOTH (Wireless / NX SNOW Switch)(Refined Linear) (N/P: RM1070), 990, 1070
+(PROMO!) ASUS M701 ROG AZOTH (Wireless / NX STORM Switch)(Clicky) (N/P: RM1070), 990, 1070
+(PROMO!)ASUS M701 ROG AZOTH WHITE (Wireless / NX SNOW Switch)(Refined Linear)(N/P: RM1120),1040,1120
+(PROMO!)ASUS M701 ROG AZOTH WHITE (Wireless / NX RED Switch) (Linear)(N/P: RM1120),1040,1120
+(PROMO!)ASUS M701 ROG AZOTH WHITE (Wireless / NX STORM Switch ) (Clicky)(N/P: RM1120),1040,1120
+(SOLD OUT) ASUS XA07 STRIX FLARE II ANI (Wired / NX RED Switch) (N/P: RM799), 750, 799
+(SOLD OUT) ASUS XA07 STRIX FLARE II ANI (Wired / NX BLUE Switch) (N/P: RM799), 750, 799
+(SOLD OUT) ASUS XA07 STRIX FLARE II ANI (Wired / NX BROWN Switch) (N/P: RM799), 750, 799
+ASUS XA08 STRIX FLARE II (Wired / NX RED Switch) (N/P: RM679), 560, 679
+ASUS XA08 STRIX FLARE II (Wired / NX BLUE Switch) (N/P: RM679), 560, 679
+ASUS XA08 STRIX FLARE II (Wired / NX BROWN Switch) (N/P: RM679), 560, 679
+(PROMO!) ASUS M602 FALCHION ACE (Wired / NX RED Switch) (N/P: RM530), 500, 530
+(PROMO!) ASUS M602 FALCHION ACE (Wired / NX BLUE Switch) (N/P: RM530), 500, 530
+(PROMO!) ASUS M602 FALCHION ACE (Wired / NX BROWN Switch) (N/P: RM530), 500, 530
+(SOLD OUT) ASUS M601 ROG FALCHION (Wireless / CHEERY MX RED Switch), 675, 675
+(SOLD OUT) ASUS M601 ROG FALCHION (Wireless / CHEERY MX BLUE Switch), 675, 675
+(SOLD OUT) ASUS M601 ROG FALCHION (Wireless / NX RED Switch), 675, 675
+(SOLD OUT) ASUS M601 ROG FALCHION (Wireless / NX BLUE Switch), 675, 675
+(NEW!) ASUS M603 ROG FALCHION RX LOW PROFILE (Wireless / RX Optical Red Switch), 800 ,800
+(NEW!) ASUS M603 ROG FALCHION RX LOW PROFILE (Wireless / RX Optical Blue Switch), 800 ,800
+ASUS X807 STRIX SCOPE RX TKL (Wireless / RX Optical RED Switch) (N/P: RM679), 629, 679
+ASUS X807 STRIX SCOPE RX TKL (Wireless / RX Optical BLUE Switch) (N/P: RM679), 629, 679
+ASUS X803 STRIX SCOPE TKL (Wired / CHEERY MX RED Switch), 645, 645
+ASUS X801 STRIX SCOPE TKL (Wired / CHEERY MX BLUE Switch), 538, 538
+ASUS XA12 ROG STRIX SCOPE II (Wired / NX RED Switch), 575, 575
+(PROMO!) ASUS X901 STRIX SCOPE II 96 (Wireless / NX Storm Switch Clicky) (N/P: RM780), 740, 780
+(PROMO!) ASUS X901 STRIX SCOPE II 96 (Wireless / NX Snow Switch Linear) (N/P: RM780), 740, 780
+(NEW)ASUS XA11 ROG STRIX SCOPE II ( Wired / NX  Snow Switch Linear), 495, 495
+(NEW)ASUS XA11 ROG STRIX SCOPE II ( Wired / NX  Storm Switch Clicky), 495, 495
+(PROMO!) ASUS XA09 STRIX SCOPE NX WIRELESS DELUXE (Wireless / NX RED Switch) (N/P: RM640), 549, 640
+(PROMO!) ASUS XA09 STRIX SCOPE NX WIRELESS DELUXE (Wireless / NX BLUE Switch) (N/P: RM640), 549, 640
+ASUS XA09 STRIX SCOPE NX (Wireless / NX BROWN Switch) (N/P: RM550), 520, 550
+(SOLD OUT) ASUS XA04 STRIX SCOPE NX (Wired / NX RED Switch) (N/P: RM599), 430, 599
+(SOLD OUT) ASUS XA04 STRIX SCOPE NX (Wired / NX BLUE Switch) (N/P: RM599), 430, 599
+(PROMO) ASUS XA04 STRIX SCOPE NX (Wired / NX BROWN Switch) (N/P: RM599), 430, 599
+(PROMO) ASUS XA05 STRIX SCOPE RX (Wired / RX Optical RED Switch) (N/P: RM449), 405, 449
+(PROMO)ASUS XA05 STRIX SCOPE RX (Wired / RX Optical BLUE Switch) (N/P: RM449), 405, 449
+ASUS RA05 TUF GAMING K3 (Wired / RED Mechanical Switch) (N/P: RM279), 265, 279
+ASUS RA05 TUF GAMING K3 (Wired / BLUE Mechanical Switch) (N/P: RM279), 265, 279
+[SOLD OUT]ASUS RA04 TUF GAMING K1(Wired / Membrane Switch), 185, 185
+ASUS AC03 ROG PBT KEYCAP SET, 140
+
+CORSAIR* (2 YEAR WARRANTY):
+(PROMO)CORSAIR K55 CORE RGB Gaming Keyboard Backlit RGB LED,199,199
+CORSAIR Vengeance K57 Wireless RGB Keyboard Gaming Keyboard, 459, 459
+CORSAIR Vengeance K100 RGB Mechanical Gaming Keyboard (Backlit RGB LED/CHERRY MX SPEED/Black/Black PBT Keycaps),999,999
+CORSAIR Vengeance K100 RGB Optical-Mechanical (RGB LED/CORSAIROPX RAPIDFIRE/Black/Black PBT Keycaps),999,999
+CORSAIR Vengeance K100 RGB Midnight Gold (Black PBT Keycaps),1099,1099
+CORSAIR Vengeance K100 AIR WIRELESS RGB Ultra-Thin Mechanical Gaming Keyboard (CHERRY MX Ultra Low Profile Tactile),1449,1449
+CORSAIR K60 PRO Mechanical Gaming Keyboard Black (Backlit RGB LED CHERRY VIOLA),419,419
+CORSAIR K60 PRO Mechanical Gaming Keyboard Black (Backlit Red LED CHERRY VIOLA),369,369
+CORSAIR K60 TKL RGB Optical-Mechanical Gaming Keyboard (CORSAIR OPX Switch),549,549
+(PROMO!) CORSAIR K65 LUX TKL RGB Compact Mechanical Gaming Keyboard (CHERRY MX RGB Red) (N/P: RM429), 299,429
+CORSAIR K70 MAX RGB Magnetic-Mechanical Gaming Keyboard (CORSAIR MGX Switches), 1049, 1049
+(PROMO!) CORSAIR Vengeance K70 RGB MK.2 MECHANICAL Gaming Keyboard(CHERRY MX RED) (N/P: RM599), 399, 599
+CORSAIR Vengeance K70 RGB MK.2 MECHANICAL Gaming Keyboard(CHERRY MX BLUE), 689, 689
+(NEW!) CORSAIR K70 MAX RGB (CORSAIR MGX SWITCHES) - Steel Grey,1049,1049
+(NEW!) CORSAIR K70 CORE RGB Mechanical Gaming Keyboard -Black,499,499
+CORSAIR K70 RGB MK.2 SE Mechanical Gaming Keyboard (CHERRY MX Speed), 739, 739
+CORSAIR K70 RGB MK.2 Low Profile Mechanical Gaming Keyboard(MX Low Profile Red), 709, 709
+CORSAIR Vengeance K70 RGB MK.2 Low Profile RAPIDFIRE Mechanical Gaming Keyboard (MX Low Profile Speed), 709, 709
+CORSAIR K70 RGB PRO Mechanical Gaming Keyboard with Polycarbonate Keycaps (CHERRY MX Red), 689, 689
+CORSAIR K70 RGB PRO Mechanical Gaming Keyboard with Polycarbonate Keycaps (CHERRY MX Blue), 689, 689
+CORSAIR K70 RGB PRO Mechanical Gaming Keyboard with Polycarbonate Keycaps (CHERRY MX Brown), 689, 689
+CORSAIR K70 RGB PRO Mechanical Gaming Keyboard with Polycarbonate Keycaps (CHERRY MX Speed), 709, 709
+CORSAIR K70 PRO RGB Optical-Mechanical Gaming Keyboard with PBT DOUBLE SHOT PRO Keycaps (CORSAIR OPX Switch),729,729
+CORSAIR K70 PRO RGB Optical-Mechanical Gaming Keyboard with PBT DOUBLE SHOT PRO Keycaps White (CORSAIR OPX Switch),759,759
+CORSAIR K70 RGB TKL CHAMPION SERIES Mechanical Gaming Keyboard (Backlit RGB LED CORSAIR OPX Switch/Black PBT), 659, 659
+CORSAIR K70 RGB TKL CHAMPION SERIES Mechanical Gaming Keyboard (Backlit RGB LED CHERRY MX SPEED/Black PBT), 649, 649
+CORSAIR Vengeance STRAFE RGB MK.2 Mechanical Gaming Keyboard(CHERRY MX Silent), 659, 659
+CORSAIR Vengeance K65 RGB MINI 60% Mechanical Gaming Keyboard Black (CHERRY MX Speed),479,479
+CORSAIR K70 PRO MINI WIRELESS 60% Mechanical Keyboard with RGB Backlighting Black (CHERRY MX Red),779,779
+CORSAIR K70 PRO MINI WIRELESS 60% Mechanical Keyboard with RGB Backlighting White (CHERRY MX Red),779,779
+:
+CORSAIR iCUE NEXUS Companion Touch Screen,609,609
+CORSAIR PBT DOUBLE-SHOT PRO Keycap Mod Kit — ORIGIN Red,119,119
+CORSAIR PBT DOUBLE-SHOT PRO Keycap Mod Kit — Elgato Blue,119,119
+CORSAIR PBT DOUBLE-SHOT PRO Keycap Mod Kit — Arctic White,119,119
+CORSAIR PBT DOUBLE-SHOT PRO Keycap Mod Kit — Onyx Black,119,119
+CORSAIR PBT DOUBLE-SHOT PRO Keycap Mod Kit — Rogue Pink,119,119
+CORSAIR PBT DOUBLE-SHOT PRO Keycap Mod Kit — Mint Green,119,119
+
+COOLER MASTER* (2 YEAR WARRANTY):
+COOLER MASTER CK350 - LK Optical Blue Switch,99,99
+COOLER MASTER CK350 - LK Optical Brown Switch,99,99
+COOLER MASTER CK350 - LK Optical Red Switch,99,99
+(SOLD OUT) COOLER MASTER SK622 (60%) - Blue Switch (Wireless-Black),289,289
+COOLER MASTER SK622 (60%) - Red Switch (Wireless-Black),289,289
+(SOLD OUT) COOLER MASTER SK620 (60%) - Blue Switch (Low Profile-Black),249,249
+(SOLD OUT) COOLER MASTER SK620 (60%) - Brown Switch (Low Profile-Black),249,249
+(SOLD OUT) COOLER MASTER MK730 - Cherry MX Brown Switch,329,329
+(SOLD OUT) COOLER MASTER MK730 - Cherry MX Red Switch,329,329
+COOLER MASTER WR531 Wrist Rest - Full Size,29,29
+COOLER MASTER WR531 Wrist Rest - TKL,25,25
+COOLER MASTER WR510 Wrist Rest - 60% Low Profile,25,25
+
+
+LOGITECH* (2 YEAR WARRANTY)
+Gaming:
+LOGITECH G PRO TKL LIGHTSPEED Wireless Mechinical Gaming Keyboard (TACTILE) - BLACK, 799, 799
+LOGITECH G PRO TKL LIGHTSPEED Wireless Mechinical Gaming Keyboard (TACTILE) - WHITE, 799, 799
+LOGITECH G PRO TKL LIGHTSPEED Wireless Mechinical Gaming Keyboard (TACTILE) - MAGENTA, 799, 799
+LOGITECH G PRO X Gaming Keyboard, 499, 499
+LOGITECH G PRO Gaming Keyboard, 499, 499
+LOGITECH G913 LIGHTSPEED Wireless RGB Mechanical Gaming Keyboard - TACTILE, 869, 869
+LOGITECH G913 LIGHTSPEED Wireless RGB Mechanical Gaming Keyboard - LINEAR, 869, 869
+LOGITECH G913 LIGHTSPEED Wireless RGB Mechanical Gaming Keyboard - CLICKY, 869, 869
+LOGITECH G913 TKL Tenkeyless LIGHTSPEED Wireless RGB Mechanical Gaming Keyboard - TACTILE, 799, 799
+LOGITECH G913 TKL Tenkeyless LIGHTSPEED Wireless RGB Mechanical Gaming Keyboard - LINEAR, 799, 799
+LOGITECH G913 TKL Tenkeyless LIGHTSPEED Wireless RGB Mechanical Gaming Keyboard - CLICKY, 799, 799
+LOGITECH G813 LIGHTSYNC RGB Mechanical Gaming Keyboard - TACTILE, 637, 637
+LOGITECH G813 LIGHTSYNC RGB Mechanical Gaming Keyboard - LINEAR, 637, 637
+LOGITECH G813 LIGHTSYNC RGB Mechanical Gaming Keyboard - CLICKY, 637, 637
+LOGITECH G715 Wireless Gaming Keyboard - TACTILE, 799, 799
+LOGITECH G715 Wireless Gaming Keyboard - LINEAR, 799, 799
+LOGITECH G713 Wired Gaming Keyboard - TACTILE, 743, 743
+LOGITECH G713 Wired Gaming Keyboard - LINEAR, 743, 743
+LOGITECH G512 CARBON LIGHTSYNC RGB Mechanical Gaming Keyboard - GX BROWN TACTILE, 393, 393
+LOGITECH G512 CARBON LIGHTSYNC RGB Mechanical Gaming Keyboard - GX RED LINEAR, 393, 393
+LOGITECH G512 CARBON LIGHTSYNC RGB Mechanical Gaming Keyboard - GX BLUE CLICKY, 393, 393
+(PROMO!) LOGITECH G413 TKL SE Mechinical Backlit Gaming Keyboard (N/P: RM285), 199, 285
+(PROMO!) LOGITECH G413 SE Mechinical Backlit Gaming Keyboard (N/P: RM329), 299, 329
+LOGITECH G413 CARBON Mechinical Backlit Gaming Keyboard, 285, 285
+LOGITECH G213 PRODIGY Gaming Keyboard, 202, 202
+:
+LOGITECH PRO X Switch Kit - GX Blue Clicky Switches, 199, 199
+LOGITECH PRO X Switch Kit - GX Blue Tactile Switches, 199, 199
+LOGITECH PRO X Switch Kit - GX Blue Linear Switches, 199, 199
+Lifestyle/Work:
+LOGITECH POP KEYS - DAYDREAM MINT (1 Year Warranty), 489, 489
+LOGITECH POP KEYS - COSMOS LAVENDER (1 Year Warranty), 489, 489
+LOGITECH POP KEYS - MIST SAND (1 Year Warranty) ,489 ,489
+LOGITECH MX MECHANICAL WIRELESS KEYBOARD [CLICKY] (1 Year Warranty), 979, 979
+LOGITECH MX MECHANICAL WIRELESS KEYBOARD [TACTILE] (1 Year Warranty), 979, 979
+LOGITECH MX KEYS S - GRAPHITE (1 Year Warranty), 599, 599
+LOGITECH MX KEYS S - PALE GREY (1 Year Warranty), 599, 599
+LOGITECH MX KEYS MINI - GRAPHITE (1 Year Warranty), 599, 599
+LOGITECH MX KEYS MINI - ROSE (1 Year Warranty), 599, 599
+LOGITECH K580 SLIM MULTI-DEVICE Keyboard - GRAPHITE (1 Year Warranty), 275, 275
+LOGITECH K580 SLIM MULTI-DEVICE Keyboard - OFF WHITE (1 Year Warranty), 275, 275
+LOGITECH K580 SLIM MULTI-DEVICE Keyboard - ROSE (1 Year Warranty), 275, 275
+LOGITECH K480 Bluetooth Multi-Device KB - Black (1 Year Warranty), 169, 169
+LOGITECH K480 Bluetooth Multi-Device KB - White (1 Year Warranty), 169, 169
+LOGITECH K400 Plus Wireless Touch Keyboard - Black (1 Year Warranty), 199, 199
+LOGITECH K400 Plus Wireless Touch Keyboard - White (1 Year Warranty), 199, 199
+LOGITECH K270 Wireless Keyboard (3 Years Warranty), 85, 85
+LOGITECH K120 USB Keyboard (3 Years Warranty), 40, 40
+LOGITECH K100-PS/2 Classic Keyboard (3 Years Warranty), 34, 34
+LOGITECH MX PALM REST, 109, 109
+			
+RAZER* (1 YEAR WARRANTY):
+RAZER DeathStalker V2 Pro - White (Clicky Low-Profile Optical Switch / 2.4Ghz & BT & Wired / Hybrid O.B MEM / Media Keys & Roller), 959, 959
+RAZER DeathStalker V2 Pro (Clicky Low-Profile Optical Switch / 2.4Ghz & BT & Wired / Hybrid O.B MEM / Media Keys & Roller), 959, 959
+RAZER DeathStalker V2 Pro (Linear Low-Profile Optical Switch / 2.4Ghz & BT & Wired / Hybrid O.B MEM / Media Keys & Roller), 959, 959
+RAZER DeathStalker V2 Pro TKL - White (Linear Low-Profile Optical Switch / 2.4Ghz & BT & Wired / Hybrid O.B MEM / Media Keys & Roller), 889, 889
+RAZER DeathStalker V2 Pro TKL (Linear Low-Profile Optical Switch / 2.4Ghz & BT & Wired / Hybrid O.B MEM / Media Keys & Roller), 889, 889
+RAZER DeathStalker V2 (Clicky Low-Profile Optical Switch / Hybrid O.B MEM / Media Keys & Roller), 759, 759
+RAZER DeathStalker V2 (Linear Low-Profile Optical Switch / Hybrid O.B MEM / Media Keys & Roller), 759, 759
+RAZER Huntsman V3 Pro - Analog (Analog Optical Switch Gen-2 / Quick Onboard Adj / Multi-func Dial / DS PBT Keycaps / Leath. Wrist Rest), 1179, 1179
+RAZER Huntsman V3 Pro TKL - Analog (Analog Optical Switch Gen-2 / Quick Onboard Adj / Multi-func Dial / DS PBT Keycaps / Leath. Wrist Rest), 1019, 1019
+RAZER Huntsman V3 Pro Mini - 60% Analog - White (Analog Optical Switch Gen-2 / Quick Onboard Adj / DS PBT Keycaps), 819, 819
+RAZER Huntsman V3 Pro Mini - 60% Analog (Analog Optical Switch Gen-2 / Quick Onboard Adj / DS PBT Keycaps), 819, 819
+RAZER Huntsman V2 Analog (Analog Optical Switch / Hybrid O.B MEM / Digital dial + Media Keys / DS PBT Keycaps / Chroma Underglow), 1309, 1309
+RAZER Huntsman V2 (Linear Optical Switch / Hybrid On-Board MEM / Digital dial + Media Keys / Doubleshot PBT / Sound Damp. Foam), 979, 979
+RAZER Huntsman V2 (Clicky Optical Switch / Hybrid On-Board MEM / Digital dial + Media Keys / Doubleshot PBT / Sound Damp. Foam), 949, 949
+RAZER Huntsman V2 TKL (Linear Optical Switch / Hybrid On-Board MEM / Detachable Type-C / Doubleshot PBT / Sound Damp. Foam), 789, 789
+RAZER Huntsman V2 TKL (Clicky Optical Switch / Hybrid On-Board MEM / Detachable Type-C / Doubleshot PBT / Sound Damp. Foam), 669, 669
+RAZER Huntsman Mini Analog 60% (Analog Optical Switch / Hybrid On-Board MEM / Detachable Type-C / Doubleshot PBT), 699, 699
+(SOLD OUT) RAZER Huntsman Mini - 60% (Linear Optical Switch / Hybrid On-Board MEM / Doubleshot PBT / Detachable USB-C), 589, 589
+RAZER Huntsman Mini - 60% (Clicky Optical Switch / Hybrid On-Board MEM / Doubleshot PBT / Detachable USB-C), 549, 549
+RAZER BlackWidow V4 Pro - Green Switch (Command Dial & 8 Macro Keys / Hybrid on-board MEM / Doubleshot ABS / Underglow RGB), 1079, 1079
+RAZER BlackWidow V4 Pro - Yellow Switch (Command Dial & 8 Macro Keys / Hybrid on-board MEM / Doubleshot ABS / Underglow RGB), 1079, 1079
+RAZER BlackWidow V4 75% White - Orange Switch (Hot-swappable design / Compact 75% Layout / Optimized Typing Experience), 929, 929
+RAZER BlackWidow V4 75% - Orange Switch (Hot-swappable design / Compact 75% Layout / Optimized Typing Experience), 889, 889
+RAZER BlackWidow V4 - Green Switch (2-side Underglow / 6 Dedicated Macro Keys / Magnetic Plush Leath.Wrist Rest / D.S ABS Keycaps), 789, 789
+RAZER BlackWidow V4 - Yellow Switch (2-side Underglow / 6 Dedicated Macro Keys / Magnetic Plush Leath.Wrist Rest / D.S ABS Keycaps), 789, 789
+RAZER BlackWidow V4 X - Green Switch (6 Dedicated Macro Keys / Multi-function Roller / DoubleShot ABS Keycaps), 599, 599
+RAZER BlackWidow V4 X - Yellow Switch (6 Dedicated Macro Keys / Multi-function Roller / DoubleShot ABS Keycaps), 599, 599
+RAZER BlackWidow V3 Mini HyperSpeed 65% - Green Switch (2.4GHz & BT & Wired / Hybrid on-board MEM / Doubleshot ABS), 839, 839
+RAZER BlackWidow V3 Mini HyperSpeed 65% - Yellow Switch (2.4GHz & BT & Wired / Hybrid on-board MEM / Doubleshot ABS), 839, 839
+(PROMO!) RAZER BlackWidow V3 Tenkeyless - Green Switch (Aluminum matte top plate / Cable Routing) (N/P: RM399), 329, 399
+(PROMO!) RAZER BlackWidow V3 Tenkeyless - Yellow Switch (Aluminum matte top plate / Cable Routing) (N/P: RM399), 329, 399
+RAZER BlackWidow Lite - Orange Switch (Silent Keys w/o-rings / Individually White Backlit Keys / Detachable Braided Cable), 399, 399
+(PROMO!) RAZER Ornata V3 (Low Profile Mecha-Membrane UV-Coated Keycaps / Media Keys / Magnetic Soft-Touch Wrist Rest / 10 Zones RGB) (N/P: RM339), 269, 339
+RAZER Ornata V3 Tenkeyless (Low Profile Mecha-Membrane / UV-Coated Keycaps / Media Keys / Magnetic Soft-Touch Wrist Rest / 8 Zones RGB), 309, 309
+(PROMO!) RAZER Ornata V3 X (Silent Membrane / UV-Coated Keycaps / Spill-Resistant Design / Ergo. Wrist Rest) (N/P: RM199), 169, 199
+
+STEELSERIES* (1 YEAR WARRANTY):
+SteelSeries Apex Pro TKL WL (2023) US ( Wireless ) 64865,1369,1369
+SteelSeries Apex Pro TKL (2023) US 64856,1039,1039
+SteelSeries Apex Pro Mini WL US ( Wireless ) 64842,1039,1039
+SteelSeries Apex Pro Mini US 64820,1039,1039
+SteelSeries Apex Pro US 64626,989,989
+SteelSeries Apex Pro TKL US 64734,899,899
+SteelSeries Apex 9 TKL US 64847,799,799
+SteelSeries Apex 9 Mini US 64837,709,709
+SteelSeries Apex 7  (Red Switch) US 64636,799,799
+SteelSeries Apex 7  (Blue Switch) US 64774,799,799
+SteelSeries Apex 7 TKL - Ghost - US 64656,899,899
+SteelSeries Apex 7 TKL (Red Switch) US 64646,659,659
+SteelSeries Apex 7 TKL (Blue Switch) US 64758,659,659
+SteelSeries Apex 5 64532,569,569
+SteelSeries Apex 3 64795,329,329
+SteelSeries Apex 3 TKL 64831,289,289
+
+Keychron* (1 YEAR WARRANTY):
+Fully Assembled:
+Keychron Q8 (Alice Layout) Hot-Swap RGB Fully Assembled Knob Navy Blue - Gateron G Pro Blue, 759, 759
+Keychron Q8 (Alice Layout) Hot-Swap RGB Fully Assembled Silver Grey - Gateron G Pro Brown, 729, 729
+Keychron S1 RGB Low Profile Keyboard (Hot-Swappable) - Gateron Red, 559, 559
+Keychron K3 Pro Ultra-Slim Aluminum Wireless RGB Low Profile Keyboard (Hot-Swappable) - Gateron Brown, 499, 499
+Keychron K3 Pro Ultra-Slim Aluminum Wireless RGB Low Profile Keyboard (Hot-Swappable) - Gateron Red, 499, 499
+Keychron K1 Pro Ultra-Slim Aluminum Wireless RGB Low Profile Keyboard (Hot-Swappable) - Gateron Brown, 499, 499
+Keychron K1 Pro Ultra-Slim Aluminum Wireless RGB Low Profile Keyboard (Hot-Swappable) - Gateron Red, 499, 499
+Keychron K2 Pro Hot-Swap RGB Aluminum Wireless Mechanical Keyboard (White) - Keychron K Pro Red, 459, 459
+Keychron K4 Pro Hot-Swap RGB Wireless Mechanical Keyboard - Keychron K Pro Red, 449, 449
+Keychron K4 Pro Hot-Swap RGB Wireless Mechanical Keyboard (White) - Keychron K Pro Brown, 449, 449
+Keychron K4 Pro Hot-Swap RGB Wireless Mechanical Keyboard - Keychron K Pro Brown, 449, 449
+Keychron K4 Pro Hot-Swap RGB Wireless Mechanical Keyboard (White) - Keychron K Pro Red, 449, 449
+Keychron K10 Pro Hot-Swap RGB Wireless Mechanical Keyboard - Keychron K Pro Red, 439, 439
+Keychron K10 Pro Hot-Swap RGB Wireless Mechanical Keyboard - Keychron K Pro Brown, 439, 439
+Keychron K6 Pro Hot-Swap RGB Aluminum Wireless Mechanical Keyboard - Keychron K Pro Red, 429, 429
+Keychron K6 Pro Hot-Swap RGB Aluminum Wireless Mechanical Keyboard - Keychron K Pro Brown, 429, 429
+Keychron K8 Pro Hot-Swap RGB Aluminum Wireless Mechanical Keyboard - Gateron Brown, 429, 429
+Keychron K8 Pro Hot-Swap RGB Aluminum Wireless Mechanical Keyboard (White) - Keychron K Pro Red, 429, 429
+Keychron K8 Pro Hot-Swap RGB Aluminum Wireless Mechanical Keyboard (White) - Keychron K Pro Brown, 429, 429
+Keychron V5 Hot-Swap RGB Fully Assembled Knob Frosted Black (Translucent) - Keychron K Pro Red, 419, 419
+Keychron V5 Hot-Swap RGB Fully Assembled Knob Carbon Black - Keychron K Pro Red, 419, 419
+Keychron V5 Hot-Swap RGB Fully Assembled Knob Carbon Black - Keychron K Pro Brown, 419, 419
+Keychron V5 Hot-Swap RGB Fully Assembled Knob Frosted Black (Translucent) - Keychron K Pro Brown, 419, 419
+Keychron V2 Hot-Swap RGB Fully Assembled Knob Frosted Black (Translucent) - Keychron K Pro Brown, 389, 389
+Keychron V2 Hot-Swap RGB Fully Assembled Knob Carbon Black - Keychron K Pro Red, 389, 389
+Keychron V3 Hot-Swap RGB Fully Assembled Knob Frosted Black (Translucent) - Keychron K Pro Brown, 389, 389
+Keychron V3 Hot-Swap RGB Fully Assembled Knob Carbon Black - Keychron K Pro Red, 389, 389
+Keychron V3 Hot-Swap RGB Fully Assembled Knob Carbon Black - Keychron K Pro Brown, 389, 389
+Keychron V1 Hot-Swap RGB Fully Assembled Knob Carbon Black - Keychron K Pro Red, 389, 389
+Keychron V2 Hot-Swap RGB Fully Assembled Knob Carbon Black - Keychron K Pro Brown, 389, 389
+Keychron V1 Hot-Swap RGB Fully Assembled Knob Frosted Black (Translucent) - Keychron K Pro Red, 389, 389
+Keychron V2 Hot-Swap RGB Fully Assembled Knob Frosted Black (Translucent) - Keychron K Pro Red, 389, 389
+Keychron V1 Hot-Swap RGB Fully Assembled Knob Shell White - Keychron K Pro Red, 389, 389
+Keychron V1 Hot-Swap RGB Fully Assembled Knob Shell White - Keychron K Pro Brown, 389, 389
+Keychron Q1 Hot-Swap RGB Fully Assembled Blue Frame (Version 1) - Gateron Phantom Brown, 379, 379
+Keychron Q1 Hot-Swap RGB Fully Assembled Blue Frame (Version 1) - Gateron Phantom Blue, 379, 379
+Keychron Q1 Hot-Swap RGB Fully Assembled Blue Frame (Version 1) - Gateron Phantom Red, 379, 379
+Keychron Q1 Hot-Swap RGB Fully Assembled Black Frame (Version 1) - Gateron Phantom Blue, 379, 379
+Keychron Q1 Hot-Swap RGB Fully Assembled Black Frame (Version 1) - Gateron Phantom Brown, 379, 379
+Keychron Q1 Hot-Swap RGB Fully Assembled Grey Frame (Version 1) - Gateron Phantom Blue, 379, 379
+Keychron Q1 Hot-Swap RGB Fully Assembled Grey Frame (Version 1) - Gateron Phantom Brown, 379, 379
+Keychron Q0 Hot Swap RGB Fully Assembled Grey Frame Numpad Mechanical Keyboard - Gateron Brown, 289, 289
+Keychron Q0 Hot Swap RGB Fully Assembled Blue Frame Numpad Mechanical Keyboard - Gateron Brown, 289, 289
+Barebone:
+Keychron Q8 (Alice Layout) Hot-Swap RGB Barebone Knob Mechanical Keyboard - Silver Grey, 679, 679
+Keychron Q8 (Alice Layout) Hot-Swap RGB Barebone Knob Mechanical Keyboard - Carbon Black, 679, 679
+Keychron Q8 (Alice Layout) Hot-Swap RGB Barebone Knob Mechanical Keyboard - Navy Blue, 679, 679
+Keychron K8 Pro Hot-Swap RGB Barebone Mechanical Keyboard - Black, 319, 319
+Keychron Q1 Hot-Swap RGB Barebone Mechanical Keyboard (Version 1) - Navy Blue, 299, 299
+Keychron Q1 Hot-Swap RGB Barebone Mechanical Keyboard (Version 1) - Space Grey , 299, 299
+Keychron Q1 Hot-Swap RGB Barebone Mechanical Keyboard (Version 1) - Carbon Black , 299, 299
+Keychron Q0 Hot Swap RGB Blue Frame Barebone Mechanical Keyboard, 269, 269
+Keychron Q0 Hot Swap RGB Grey Frame Barebone Mechanical Keyboard, 269, 269
+Keychron Q0 Hot Swap RGB Black Frame Barebone Mechanical Keyboard, 269, 269
+:
+Keychron Q2 Brass Plate, 149, 149
+Keychron Q1 Brass Plate, 149, 149
+Keychron K6 XDA Profile PBT Retro Keycaps Set, 119, 119
+Keychron Gateron Switch Opener - Silvery, 118, 118
+Keychron Q1/K2 OEM Dye-Sub PBT Keycaps Set - Christmas Tree, 109, 109
+Keychron Q1/K2 OEM Dye-Sub PBT Keycaps Set - Forest, 109, 109
+Keychron K10/C2 Wooden Palmrest, 105, 105
+Keychron K12 OEM Profile PBT Retro Keycaps Set, 99, 99
+Keychron K12 OEM Profile PBT Retro Keycaps Set, 99, 99
+Keychron K2 OEM Profile PBT Retro Keycaps Set, 99, 99
+Keychron K8 OEM Profile PBT Retro Keycaps Set, 99, 99
+Keychron K3/K7 Wooden Palmrest, 95, 95
+Keychron K12 Wooden Palmrest, 95, 95
+Keychron Low Profile Optical MX 87pcs Switch Set - White, 89, 89
+Keychron Low Profile Optical MX 87pcs Switch Set - Black, 89, 89
+Keychron Low Profile Optical MX 87pcs Switch Set - Brown, 89, 89
+Keychron Low Profile Optical MX 87pcs Switch Set - Blue, 89, 89
+Keychron Low Profile Optical MX 87pcs Switch Set - Red, 89, 89
+Keychron K7 Leather Travel Pouch - Black, 89, 89
+Keychron K3/K3 Pro/K12/S1 Leather Travel Pouch - Grey, 89, 89
+Keychron K3/K3 Pro/K12/S1 Leather Travel Pouch - Orange, 89, 89
+Keychron K3/K3 Pro/K12/S1 Leather Travel Pouch - Black, 89, 89
+Keychron Q2 Aluminum Plate, 59, 59

@@ -1,12 +1,13 @@
 LED STRIP:
-Lamptron Flexmulti RGB PRO (2x0.5m/without controller/addressable), 169, 169
+Lamptron Flexmulti RGB PRO (2x0.5m/Without controller/Addressable RGB), 119, 119
 
 Sleeeved Cables:
-Full Set Sleeved Cable - Black, 199, 199
-Full Set Sleeved Cable - Black Red, 199, 199
-Full Set Sleeved Cable - Grey White, 199, 199
-Full Set Sleeved Cable - Purple Black, 199, 199
-Full Set Sleeved Cable - Purple White, 199, 199
+Full Set Sleeved Cable - Full Black, 99, 99
+Full Set Sleeved Cable - Black Red, 99, 99
+Full Set Sleeved Cable - Full White, 99, 99
+Full Set Sleeved Cable - Black White, 99, 99
+Full Set Sleeved Cable - Purple Black, 99, 99
+Full Set Sleeved Cable - Purple White, 99, 99
 16AWG 12VHPWR Male to Male Cable - Black, 99, 99
 16AWG 12VHPWR Male to Male Cable - White, 99, 99
 16AWG 12VHPWR Male to Male Cable - Black Red, 99, 99

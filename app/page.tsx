@@ -151,6 +151,7 @@ const NewForm = async ({ searchParams }: Props) => {
             <p className="text-zinc-400">
               Price list last updated:{" "}
               {new Date(
+                timeUpdated[0] !== undefined &&
                 timeUpdated[0].updatedAt !== null
                   ? timeUpdated[0].updatedAt
                   : 0,

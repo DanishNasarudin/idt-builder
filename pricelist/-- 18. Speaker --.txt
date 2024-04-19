@@ -5,13 +5,17 @@ CREATIVE T60 Compact Hi-Fi 2.0, 369, 369
 CREATIVE Stage V2 2.1, 619, 619
 CREATIVE Stage Air V2, 229, 229
 CREATIVE Pebble Plus, 189, 189
+CREATIVE Pebble USB Desktop Speakers -Black, 90,90
+CREATIVE Pebble USB Desktop Speakers -White, 90,90
 
 EDIFIER*:
 EDIFIER D12 (RMS: 70W/BT/AUX), 539, 539
 EDIFIER MS50A (RMS: 40W/BT/AUX), 939, 939
 EDIFIER QD35 (RMS: 40W/AUX), 1199, 1199
 EDIFIER R1580MB (RMS: 42W/BT/AUX), 499, 499
-EDIFIER R1700BT (RMS: 66W/BT/AUX), 759, 759
+EDIFIER R1700BT  (RMS: 66W/BT/AUX BLACK), 759, 759
+EDIFIER R1700BT  (RMS: 66W/BT/AUX WHITE), 759, 759
+EDIFIER R1700BT  (RMS: 66W/BT/AUX BROWN), 759, 759
 EDIFIER R2000DB (RMS: 120W/BT/AUX), 1069, 1069
 EDIFIER S350DB (RMS: 150W/BT/AUX), 1869, 1869
 EDIFIER S360DB (RMS: 150W/BT/AUX), 2269, 2269
@@ -27,9 +31,15 @@ EDIFIER A300 (RMS: 160W/BT/USB/AUX/2.0), 5339, 5339
 EDIFIER M601DB (RMS: 110W/BT/AUX/2.1), 1339, 1339
 EDIFIER M1360 (RMS: 10W/BT/AUX/2.1), 199, 199
 EDIFIER G1500 (RMS: 10W/BT/USB/AUX), 269, 269
-EDIFIER G2000 (RMS: 16W/BT/USB/AUX), 399, 399
+EDIFIER G1500 MAX (RMS: 30W/BT/USB), 359, 359
+EDIFIER G2000 BLACK (RMS: 16W/BT/USB/AUX), 399, 399
 EDIFIER MG300 (RMS: 5W/USB), 239, 239
 EDIFIER X230 (RMS: 5W/BT/AUX), 389, 389
+EDIFIER MG250 (RMS : 5W/USB), 179, 179
+EDIFIER MP230 (RMS : 20W/BT/AUX/MICROSD/ USB), 539, 539
+EDIFIER MP260 (RMS : 20W/BT/AUX/TF CARD/AUX/ U-DISK), 339, 339
+EDIFIER MP85 (RMS : 20W/BT V5.3 / BLACK / GREY / WHITE), 119, 119
+
 
 LOGITECH*:
 LOGITECH G560 LIGHTSYNC Gaming Speakers, 899, 899
@@ -44,8 +54,9 @@ LOGITECH Z213 SPEAKER (2 Year Warranty), 159, 159
 LOGITECH S150 SPEAKERS (2 Year Warranty), 59, 59
 
 RAZER*:
-RAZER Leviathan V2 Soundbar (Multi-driver Soundbar & Subwoofer/THX Spatial Audio/Bluetooth 5.2/USB Audio/Chroma RGB),1239,1239
+RAZER Leviathan V2 Soundbar (Multi-driver Soundbar &amp; Subwoofer/THX Spatial Audio/Bluetooth 5.2/USB Audio/Chroma RGB),1239,1239
 RAZER Leviathan V2 X (Full range racetrack drivers/Type-C w/Power Delivery/BT 5.0/Type C Audio/Chroma RGB),509,509
-RAZER Nommo Chroma 2.0 Gaming Speaker (Custom woven glass fiber 3-inch drivers/USB/AUX Connection),669,669
-RAZER Nommo 2.0 Gaming Speaker (Custom woven glass fiber 3-inch drivers/AUX Connection),469,469
+(NEW!) RAZER Nommo V2 Pro (3” Full-Range Drivers with Aluminum Phase Plugs/ WLS Down-Firing Subwoofer/ Razer WLS Control Pod Ready),1899,1899
+(NEW!) RAZER Nommo V2 (3” Full-Range Drivers with Aluminum Phase Plugs/ Down-Firing Subwoofer with 5.5” Driver/ Razer Chroma RGB),1199,1199
+(NEW!) RAZER Nommo V2 X ((Two 3” Full-Range Drivers/ THX Spatial Audio/ Max Sound Pressure Level of 96 dB),719,719
 

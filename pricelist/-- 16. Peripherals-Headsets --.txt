@@ -1,0 +1,186 @@
+HYPERX*:
+HYPERX Cloud Stinger 2 Core, 179, 179
+HYPERX Cloud Stinger 2, 219, 219
+HYPERX Cloud Stinger Core Wireless, 359, 359
+HYPERX Cloud Stinger 2 Wireless, 459, 459
+HYPERX Cloud III (DTS Spatial Audio) [BLACK], 399, 399
+HYPERX Cloud III (DTS Spatial Audio) [BLACK / RED], 399, 399
+HYPERX Cloud III Wireless (DTS Spatial Audio) [BLACK], 709, 709
+HYPERX Cloud III Wireless (DTS Spatial Audio) [BLACK / RED], 709, 709
+HYPERX Cloud Alpha [RED], 419, 419
+HYPERX Cloud Alpha S [BLUE / BLACK], 539, 539
+HYPERX Cloud Alpha S [BLACK], 539, 539
+HYPERX Cloud Alpha Wireless, 849, 849
+HYPERX Cloud MIX, 999, 999
+HYPERX Cloud MIX Buds Wireless, 659, 659
+
+MSI*:
+MSI HS01 HEADSET STAND,199,199
+MSI IMMERSE GH10 HEADSET,200,200
+MSI IMMERSE GH20 HEADSET,189,189
+MSI IMMERSE GH30 HEADSET,199,199
+MSI DS502 Headset, 325, 325
+MSI IMMERSE GH50 HEADSET,399,399
+MSI IMMERSE GH60 HEADSET,459,459
+MSI IMMERSE GH61 HEADSET,529,529
+MSI IMMERSE GH70 HEADSET,549,549
+
+CREATIVE*:
+CREATIVE SOUND BLASTERX H5 Tournament (Professional Analog Gaming Headset), 349, 349
+CREATIVE SOUND BLASTERX H3 (Professional Analog Gaming Headset), 199, 199
+CREATIVE OUTLIER (Ultra-light Wireless Sweat-proof In-ear Headphones), 239, 239
+
+LOGITECH* (2 Years Warranty)
+Gaming:
+LOGITECH PRO X 2 LIGHTSPEED Wireless Gaming Headset - BLACK, 1099, 1099
+LOGITECH PRO X 2 LIGHTSPEED Wireless Gaming Headset - WHITE, 1099, 1099
+LOGITECH PRO X 2 LIGHTSPEED Wireless Gaming Headset - MAGENTA, 1099, 1099
+LOGITECH PRO X LIGHTSPEED Wireless Gaming Headset, 913, 913
+LOGITECH PRO X Gaming Headset, 637, 637
+LOGITECH PRO Gaming Headset, 393, 393
+LOGITECH G735 Wireless Gaming Headset, 949, 949
+LOGITECH G733 LIGHTSPEED Wireless RGB Gaming Headset - BLACK, 637, 637
+LOGITECH G733 LIGHTSPEED Wireless RGB Gaming Headset - WHITE, 637, 637
+LOGITECH G535 LIGHTSPEED Wireless Gaming Headset, 499, 499
+LOGITECH G435 Ultra-Light LIGHTSPEED Wireless Gaming Headset - BLACK, 307, 307
+LOGITECH G435 Ultra-Light LIGHTSPEED Wireless Gaming Headset - WHITE, 307, 307
+LOGITECH G435 Ultra-Light LIGHTSPEED Wireless Gaming Headset - BLUE, 307, 307
+LOGITECH G433 7.1 Wired Surround Gaming Headset - RED, 470, 470
+LOGITECH G433 7.1 Wired Surround Gaming Headset - BLACK, 470, 470
+LOGITECH G433 7.1 Wired Surround Gaming Headset - BLUE, 470, 470
+LOGITECH G431 7.1 Surround Sound Wired Gaming Headset, 259, 259
+LOGITECH G335 Wired Gaming Headset - BLACK, 263, 263
+LOGITECH G335 Wired Gaming Headset - WHITE, 263, 263
+LOGITECH G331 Stereo Gaming Headset, 159, 159
+Lifestyle/Work:
+LOGITECH ZONE VIBE 100 Wireless Headset - GRAPHITE, 479, 479
+LOGITECH ZONE VIBE 100 Wireless Headset - OFF WHITE, 479, 479
+LOGITECH ZONE VIBE 100 Wireless Headset - ROSE, 479, 479
+LOGITECH H540 Wireless Headset, 239, 239
+LOGITECH H390 USB Headset - ROSE, 179, 179
+LOGITECH H390 USB Headset - OFF-WHITE, 179, 179
+LOGITECH H390 USB Headset - BLACK, 179, 179
+LOGITECH H370 USB Headset, 139, 139
+LOGITECH H151 STEREO Headset, 68, 68
+LOGITECH H150 STEREO Headset - SKY BLUE, 66, 66
+LOGITECH H150 STEREO Headset - CLOUD WHITE, 66, 66
+LOGITECH H111 STEREO Headset, 48, 48
+LOGITECH H110 STEREO Headset, 48, 48
+
+RAZER*:
+RAZER Barracuda Pro (TriF Bio-cellulose Drvs / Hybrid ANC / THX AAA / Beamform.Noise-C Mic / SmartSwitch / Audio App / Up to 40hrs Batt Life), 1289, 1289
+(PROMO!) RAZER Barracuda (Triforce Tit.Drvs / SmartSwitch / Beamforming Noise-C Mic / Audio App / Up to 40hrs Batt Life)(N/P: RM859),659, 859
+RAZER Barracuda X (2022) (Triforce Tit.Drvs / SmartSwitch / Detachable HyperClear Cardioid Mic / 250g / Up to 50hrs Batt Life), 519, 519
+RAZER BlackShark V2 Pro (2023) - White (HS Wireless &amp; BT / HyperClear Super Wideband Mic / THX Spatial Audio / Up to 70hrs Batt Life), 1029, 1029
+RAZER BlackShark V2 Pro (2023) - Black (HS Wireless &amp; BT / HyperClear Super Wideband Mic / THX Spatial Audio / Up to 70hrs Batt Life), 1029, 1029
+RAZER BlackShark V2 HyperSpeed (HS Wireless &amp; BT &amp; USB Wired / Triforce Tit. Drivers / HyperClear Mic / THX Spatial Audio / Up to 70hrs Batt Life), 669 ,669
+RAZER BlackShark V2 (Triforce Titanium Drivers / HyperClear Mic / THX Spatial Audio / Ultra-soft Mem-foam Ear Cushions / USB Sound.C), 439, 439
+RAZER BlackShark V2 X USB (Triforce Titanium Drivers / HyperClear Mic / 7.1 Surround / Hybrid Mem-foam Ear Cushions), 319, 319
+(PROMO!) RAZER BlackShark V2 X - White (Triforce Titanium Drivers / HyperClear Mic / 7.1 Surround / Hybrid Mem-foam Ear Cushions) (N/P: RM269), 189, 269
+(PROMO!) RAZER BlackShark V2 X - Green (Triforce Titanium Drivers / HyperClear Mic / 7.1 Surround / Hybrid Mem-foam Ear Cushions) (N/P: RM269), 189, 269
+(PROMO!) RAZER BlackShark V2 X (Triforce Titanium Driver / HyperClear Mic / 7.1 Surround / Leatherette Mem-foam Ear Cushions) (N/P: RM269), 189, 269
+RAZER Kraken Kitty V2 Pro - Quartz (Interchangeable Kitty &amp; Bear &amp; Bunny Ears / Detachable Mic / Chroma RGB / Cosplay Mode), 999, 999
+RAZER Kraken Kitty V2 Pro - Black (Interchangeable Kitty &amp; Bear &amp; Bunny Ears / Detachable Mic / Chroma RGB / Cosplay Mode), 999, 999
+Kraken Kitty V2 - Quartz (Kitty Ears / Stream Reactive Lighting / HyperClear Cardioid Mic / Hybrid Fabric &amp; Leath. Cushions), 489, 489
+Kraken Kitty V2 - Black (Kitty Ears / Stream Reactive Lighting / HyperClear Cardioid Mic / Hybrid Fabric &amp; Leath. Cushions), 489, 489
+RAZER Kraken Kitty - Quartz (Chroma Kitty Ears &amp; Earcups / Stream-reactive Lighting / ANC Mic / THX Spatial Audio / Cooling-gel Cushions), 889, 889
+RAZER Kraken Kitty - Black (Chroma Kitty Ears &amp; Earcups / Stream-reactive Lighting / ANC Mic / THX Spatial Audio / Cooling-gel Cushions), 889, 889
+RAZER Kraken V3 Pro - Wireless HyperSense (2.4GHz &amp; 3.5m /  HyperSense / Tri.Tit.Drivers / H.Clear Mic / THX Spatial / Chroma RGB), 1059, 1059
+RAZER Kraken V3 HyperSense (USB connection / Triforce Tit.Drivers / Hyperclear Mic / THX Spatial / On-headset Controls / Chroma RGB), 599, 599
+RAZER Kraken V3 (USB connection / Triforce Tit.Drivers / Hyperclear Mic / THX Spatia / On-headset Controls / Chroma RGB), 529, 529
+RAZER Kraken V3 X (USB connection / Triforce Titanium Drivers / Hyperclear Mic / 7.1 Surround / On-headset Controls / Chroma RGB), 259, 259
+(PROMO!) RAZER Moray (Hybrid Dual-driver Acoustic Design / Ergonomic Low-profile Shape / Superior Passive Noise Isolation / THX Certified Sound) (N/P: RM649), 459, 649
+RAZER Hammerhead Pro HyperSpeed (Cross-platform TWS  / HyperSpeed Wireless &amp; BT /  Adj. ANC / Fast WLS Charging Case / Chroma RGB), 979, 979
+RAZER Hammerhead True Wireless 2021 (10 mm Drivers / ANC / 60ms Low Latency / Razer Chroma RGB / Earbds: 6.5hrs + CC: 26hrs), 629, 629
+
+CORSAIR*:
+CORSAIR Virtuoso RGB Wireless 7.1 Virtual Surround High-Fidelity Headphone SE/ Gun Metal,1099,1099
+CORSAIR Virtuoso RGB Wireless 7.1 Virtual Surround High-Fidelity Headphone/ Black,799,799
+CORSAIR Virtuoso RGB Wireless 7.1 Virtual Surround High-Fidelity Headphone/ White,799,799
+CORSAIR Virtuoso RGB Wireless XT Bluetooth High-Fidelity Gaming Headset with Spatial Audio, 1349, 1349
+CORSAIR VOID RGB ELITE Wireless Premium Gaming Headset with 7.1 SurroundSound — Carbon,529,529
+CORSAIR VOID RGB ELITE Wireless Premium Gaming Headset with 7.1 SurroundSound — White,529,529
+CORSAIR VOID RGB ELITE USB Premium Gaming Headset with 7.1 Surround Sound — Carbon,419,419
+CORSAIR VOID RGB ELITE USB Premium Gaming Headset with 7.1 Surround Sound — White,419,419
+CORSAIR VOID ELITE SURROUND Premium Gaming Headset with 7.1 Surround Sound — Carbon,359,359
+CORSAIR VOID ELITE SURROUND Premium Gaming Headset with 7.1 Surround Sound — Cherry,359,359
+(NEW!) CORSAIR HS80 MAX WIRELESS Gaming Headset - Steel Grey,799,799
+(NEW!) WCORSAIR HS80 MAX WIRELESS Gaming Headset - White,799,799
+CORSAIR HS80 RGB WIRELESS Premium Gaming Headset with Spatial Audio — Carbon,739,739
+CORSAIR HS80 RGB WIRELESS Premium Gaming Headset with Spatial Audio — White,739,739
+CORSAIR HS80 RGB USB 7.1 Surround Wired Gaming Headset — Carbon, 499, 499
+CORSAIR HS80 RGB USB 7.1 Surround Wired Gaming Headset — White, 499, 499
+CORSAIR HS60 PRO SURROUND Gaming Headset — Carbon,329,329
+CORSAIR HS60 PRO SURROUND Gaming Headset — Yellow,329,329
+CORSAIR HS60 HAPTIC Stereo Gaming Headset with Haptic Bass,559,559
+(PROMO!) CORSAIR HS65 SURROUND Wired Gaming Headset — Carbon (N/P: RM369), 329, 369
+CORSAIR HS65 SURROUND Wired Gaming Headset — White, 369, 369
+(NEW!) CORSAIR HS65  Wireless Gaming Headset — Carbon, 589, 589
+(NEW!) CORSAIR HS65  Wireless Gaming Headset — White, 589, 589
+(PROMO!) CORSAIR HS55 STEREO Wired Gaming Headset — Carbon (N/P: RM199), 169, 199
+CORSAIR HS55 STEREO Wired Gaming Headset — White, 199, 199
+(PROMO!) CORSAIR HS55 SURROUND Wired Gaming Headset — Carbon (N/P: RM269), 169, 269
+CORSAIR HS55 SURROUND Wired Gaming Headset — White 
+(PROMO) CORSAIR HS55 Wireless Gaming Headset — Carbon (N/P: RM499) , 349, 499
+(PROMO) CORSAIR HS55 Wireless Gaming Headset — White (N/P : RM499), 349, 499
+CORSAIR HS45 7.1 Virtual Surround Sound Gaming Headset/Carbon,259,259
+CORSAIR HS35 Stereo Gaming Headset Carbon,169,169
+CORSAIR HS35 Stereo Gaming Headset Blue,169,169
+CORSAIR HS35 Stereo Gaming Headset Green,169,169
+CORSAIR HS35 Stereo Gaming Headset Red,169,169
+CORSAIR ST100 RGB Premium Headset Stand with 7.1 Surround Sound, 329, 329
+
+ASUS*:
+ASUS ROG DELTA S EVA Edition (Wired) (N/P: RM1159),990, 1159
+(SOLD OUT) ASUS ROG DELTA S (Wired) (N/P: RM829), 720, 720
+ASUS ROG DELTA S (Wireless) (N/P: RM780), 750, 780
+ASUS ROG DELTA S Core (N/P: RM380), 365, 380
+ASUS ROG FUSION II 500 (N/P: RM1075), 969, 1075
+ASUS ROG FUSION II 300 (N/P: RM640), 559, 640
+ASUS TUF GAMING H3 (Wireless) (N/P: RM379), 335, 379
+ASUS TUF GAMING H3 (Red) (N/P: RM149), 135, 149
+ASUS TUF GAMING H3 (Gun-Metal) (N/P: RM149), 135, 149
+ASUS TUF GAMING H3 (Silver) (N/P: RM149), 135, 149
+ASUS TUF GAMING H1 (Wireless) (N/P: RM319), 290, 319
+ASUS TUF GAMING H1 (N/P: RM159), 150, 159
+ ASUS ROG CETRA TRUE Wireless [BLACK] (N/P: RM519),459, 529
+ASUS ROG CETRA TRUE Wireless [WHITE] (N/P: RM529), 488, 529
+
+:
+ASUS AI-Noice Cancelling Mic Apdater (35mm to USB-C), 208, 208
+ASUS ROG THRONE (Headset Stand / Built-In DAC AMP / USB3.1x2) (N/P: RM442), 379, 442
+(SOLD OUT) ASUS ROG THRONE Qi (Headset Stand / Built-In DAC AMP / USB3.1x2, Qi Wireless Charging), 588, 588
+
+COOLERMASTER*:
+COOLER MASTER MH670 (Wireless/Virtual 7.1 Surround Sound),349,349
+COOLER MASTER MH650 (USB/Virtual 7.1 Surround Sound),239,239
+COOLER MASTER MH630 (3.5mm),169,169
+COOLER MASTER CH331 (3.5mm),149,149
+COOLER MASTER MH710 (Earbud/Bass FX),189,189
+
+STEELSERIES*  :
+SteelSeries - Arctis Nova Pro Wireless X 61521, 1999, 1999
+SteelSeries - Arctis Nova Pro Wireless 61520, 1899, 1899
+SteelSeries - Arctis Nova Pro X 61528, 1319, 1319
+SteelSeries - Arctis Nova Pro 61527, 1319, 1319
+SteelSeries - Arctis Nova 1 61606, 329, 329
+SteelSeries - Arctis Nova 1 - White 61607, 329, 329
+SteelSeries - Arctis Nova 1P 61611, 329, 329
+SteelSeries - Arctis Nova 1P White 61612, 329, 329
+SteelSeries - Arctis Nova 1X 61616, 329, 329
+SteelSeries - Arctis Nova 3 61631, 519, 519
+SteelSeries - Arctis Nova 7P (PS5) 61559, 949, 949
+SteelSeries - Arctis Nova 7X (XBOX) 61565, 949, 949
+SteelSeries - Arctis Nova 7 61553, 949, 949
+SteelSeries - TUSQ In-ear mobile gaming headset	61650, 189, 189
+SteelSeries - Arctis Prime 61487, 499, 499
+SteelSeries - Arctis 1 Wireless (XBOX) ( Support PC &amp; PS5 ) 61502, 569, 569
+SteelSeries - Arctis 5 Black ( 2019 Edition ) 61504, 459, 459
+SteelSeries - Arctis 5 White ( 2019 Edition ) 61507, 459, 459
+SteelSeries - Arctis 7P+ (PS5) 61471, 899, 899
+SteelSeries - Arctis 7+ Black WIRELESS ( 2022 Edition ) 61470, 799, 799
+SteelSeries - Arctis 7+ White WIRELESS ( 2022 Edition )	61461, 799, 799
+SteelSeries - Arctis Pro (RGB)	61486, 939, 939
+SteelSeries - Arctis Pro Wireless 61473, 1619,1619
+SteelSeries - Arctis Pro Black (RGB) with Game DAC 61453, 1159, 1159
+SteelSeries - Arctis Pro White (RGB) with Game DAC 61454, 1159, 1159

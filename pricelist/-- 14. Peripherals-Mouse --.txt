@@ -7,26 +7,41 @@ MSI CLUTCH GM41 Gaming Mouse, 189, 189
 MSI CLUTCH GM60 Gaming Mouse, 435, 435
 MSI CLUTCH GM70 Gaming Mouse, 590, 590
 
+KEYCHRON:
+Keychron M3 Mini Wireless Mouse - White, 189, 189
+Keychron M3 Mini Wireless Mouse - Black, 189, 189
+
 EVGA:
 EVGA X17 Gaming Mouse - Grey,349,349
 EVGA X17 Gaming Mouse - Black,349,349
 
-KINGSTON HyperX:
-HyperX Pulsefire Surge RGB FPS Gaming Mouse (HX-MC002B), 299, 299
-HyperX Pulsefire Pro FPS Gaming Mouse (HX-MC003B), 259, 259
-HyperX PulseFire Core FPS Gaming Mouse (HX-MC004B), 149, 149
-HyperX PulseFire Raid FPS Gaming Mouse (HX-MC005B), 209, 209
-HyperX PulseFire Dart Gaming Mouse (HX-MC006B), 389, 389
+HYPERX:
+HYPERX Pulsefire Core [BLACK], 149, 149
+HYPERX Pulsefire Core [WHITE / PINK], 149, 149
+HYPERX Pulsefire Raid, 209, 209
+HYPERX Pulsefire Haste Wireless (2 Modes(2.4Ghz & Wired)) [WHITE / PINK], 349, 349
+HYPERX Haste 2 [BLACK], 219, 219
+HYPERX Haste 2 [WHITE], 219, 219
+HYPERX Haste 2 Wireless (3 Modes(2.4Ghz & BT & Wired)) [BLACK], 379, 379
+HYPERX Haste 2 Wireless (3 Modes(2.4Ghz & BT & Wired)) [WHITE], 379, 379
+HYPERX Pulsefire Pro, 259, 259
+HYPERX Pulsefire Surge, 299, 299
+HYPERX Pulsefire Dart Wireless (2 Modes (Qi Wireless & Wired)), 389, 389
 
-ASUS (2 Year Warranty):
-ASUS P707 SPATHA X (WIRELESS) (Normal Price: RM625), 576, 576
-ASUS P708 ROG CHAKRAM X O (WIRELESS) (Normal Price: RM579), 530, 530
-ASUS P711 ROG GLADIUS III AIMPOINT [BLACK] (WIRELESS) (Normal Price: RM479), 440, 440
-ASUS P711 ROG GLADIUS III AIMPOINT [WHITE] (WIRELESS) (Normal Price: RM479), 440, 440
-ASUS P709 ROG KERIS AIMPOINT [BLACK] (WIRELESS) (Normal Price: RM339), 325, 325
-ASUS P509 ROG KERIS (WIRED) (Normal Price: RM165), 150, 150
-ASUS P307 TUF GAMING M4 AIR (WIRED) (Normal Price: RM115), 95, 95
-ASUS P309 TUF GAMING M3 GEN III (WIRED) (Normal Price: RM99), 86, 86
+ASUS* (2 YEARS WARRANTY):
+ASUS P707 SPATHA X (WIRELESS) (N/P: RM625), 576, 675
+ ASUS P708 ROG CHAKRAM X O (WIRELESS) (N/P: RM579), 530, 579
+(PROMO) ASUS P713 ROG HARPE ACE AIM LAB EDITION [BLACK] (WIRELESS) (N/P: 550), 520, 550
+(PROMO) ASUS P713 ROG HARPE ACE AIM LAB EDITION [WHITE] (WIRELESS) (N/P: 550), 520, 550
+(PROMO) ASUS P711 ROG GLADIUS III AIMPOINT [BLACK] (WIRELESS) (N/P: RM460), 435, 460
+(PROMO) ASUS P711 ROG GLADIUS III AIMPOINT [WHITE] (WIRELESS) (N/P: RM460), 435, 460
+(PROMO) ASUS P709 ROG KERIS AIMPOINT [BLACK] (WIRELESS) (N/P: RM380), 360, 380
+(PROMO) ASUS P709 ROG KERIS AIMPOINT [WHITE] (WIRELESS) (N/P: RM380), 360, 380
+(NEW) ASUS P520 ROG STRIX IMPACT III (WIRELESS) , 295, 295
+(PROMO) ASUS P509 ROG KERIS (WIRED) (N/P: RM195), 180, 195
+ASUS P309 TUF GAMING M3 GEN II (WIRED) (N/P: RM99), 86, 99
+
+
 
 AORUS:
 AORUS M2 Gaming Mouse, 109, 109
@@ -34,13 +49,13 @@ AORUS M3 Gaming Mouse, 199, 199
 AORUS M4 Gaming Mouse, 179, 179
 AORUS M5 Gaming Mouse, 269, 269
 
-CORSAIR* (2 Years Warranty):
-CORSAIR KATAR PRO Ultra-Light Gaming Mouse, 89, 89
-CORSAIR KATAR PRO Wireless Gaming Mouse (AP), 199, 199
-CORSAIR KATAR ELITE WIRELESS Gaming Mouse (26000 DPI/Wirless/Bluetooth/69g), 379, 379
-CORSAIR HARPOON PRO RGB Gaming Mouse(Backlit RGB LED/12000 DPI/Optical), 109, 109
-CORSAIR HARPOON RGB Wireless Gaming Mouse(Backlit RGB LED/10000 DPI/Optical), 229, 229
-CORSAIR SABRE RGB PRO CHAMPION SERIES FPS/MOBA Gaming Mouse Black Backlit RGB LED 18000 DPI Optical,269,269
+CORSAIR* (2 YEARS WARRANTY):
+(PROMO!) CORSAIR KATAR PRO Ultra-Light Gaming Mouse (N/P: RM89), 69, 89
+(PROMO!) CORSAIR KATAR PRO Wireless Gaming Mouse (AP) (N/P: RM189), 149, 189
+(PROMO!) CORSAIR KATAR ELITE WIRELESS Gaming Mouse (26000 DPI/Wirless/Bluetooth/69g)  (N/P: RM379), 209, 379
+(PROMO!) CORSAIR HARPOON RGB PRO Gaming Mouse(Backlit RGB LED/12000 DPI/Optical) (N/P: RM109), 89, 109
+(PROMO!) CORSAIR HARPOON RGB Wireless Gaming Mouse(Backlit RGB LED/10000 DPI/Optical) (N/P: RM229), 189, 229
+(PROMO)! CORSAIR SABRE RGB PRO CHAMPION SERIES FPS/MOBA Gaming Mouse Black Backlit RGB LED 18000 DPI Optical (N/P: RM269), 199, 269
 CORSAIR SABRE RGB PRO WIRELESS CHAMPION SERIES Ultra-lightweight FPS/MOBA Wireless Gaming Mouse,499,499
 CORSAIR IRONCLAW RGB FPS/MOBA (BLACK/RGB/OPTICAL/1800DPI), 269, 269
 CORSAIR SCIMITAR RGB ELITE Optical MOBA/MMO Gaming Mouse, 399, 399
@@ -54,77 +69,88 @@ CORSAIR M55 RGB PRO Ambidextrous Multi-Grip Gaming Mouse(Black),169,169
 CORSAIR DARK CORE RGB PRO Performance Wired/Wireless Gaming Mouse,419,419
 CORSAIR DARK CORE RGB PRO SE Performance Wired/Wireless Qi Wireless Charging,449,449
 
-RAZER (2 Years Warranty):
+RAZER* (2 YEARS WARRANTY):
 RAZER Naga V2 Pro (3 Modes (2.4GHz/BT/Wired) / On-board MEM / Up to 300 hours Batt Life), 869, 869
 RAZER Naga V2 HyperSpeed (2 Modes (2.4GHz & BT) / On-board MEM / Up to 400 hours Batt Life), 479, 479
-RAZER Naga X (2nd-gen Optical Mouse Switch / 85g midweight / Speedflex Cable ), 369, 369
-RAZER Orochi V2 (2nd-gen Mech. Mouse Switch / <60g ultra-lightweight / Up to 950 hrs Batt Life ), 339, 339
-RAZER Orochi V2 White (2nd-gen Mech. Mouse Switch / <60g ultra-lightweight / Up to 950 hrs Batt Life), 339, 339
-RAZER Cobra Pro (3 Modes (2.4GHz & BT & Wired) / Optical M.Switches Gen-3 / Up to 170 hrs Batt Life / 11-Zone RGB), 599, 599
+(PROMO!) RAZER Orochi V2 (2nd-gen Mech. Mouse Switch / &lt;60g ultra-lightweight / Up to 950 hrs Batt Life ) (N/P: RM339), 199, 339
+(PROMO!) RAZER Orochi V2 White (2nd-gen Mech. Mouse Switch / &lt;60g ultra-lightweight / Up to 950 hrs Batt Life) (N/P: RM339), 199, 339
+(PROMO!) RAZER Cobra Pro (3 Modes (2.4GHz & BT & Wired) / Optical M.Switches Gen-3 / Up to 170 hrs Batt Life / 11-Zone RGB), 599, 599
 RAZER Cobra (Optical Mouse Switches Gen-3 / 58g / 1-Zone Chroma Lighting w/Gradient Underglow ), 189, 189
+RAZER Viper V3 HyperSpeed (HyperSpeed WS / Mech. Gen-2 M.S / 82g Lightweight (6 buttons / 30000dpi Optical)), 329, 329
 RAZER Viper V2 Pro - White (Optical Mouse Switches Gen-3 / 59g / Up to 80 hrs Batt Life ), 699, 699
 RAZER Viper V2 Pro - Black (Optical Mouse Switches Gen-3 / 58g / Up to 80 hrs Batt Life ), 699, 699
-RAZER Viper 8KHz (2nd-gen Optical M.Switch / 8 On-board MEM / Lightweight 71g / Speedflex Cable), 369, 369
 RAZER Basilisk V3 Pro (Optical MS Switches Gen-3 / On-board MEM / HyperScroll TW / Chroma UnderGlow ), 769, 769
 RAZER Basilisk V3 Pro - White (Optical MS Switches Gen-3 / On-board MEM / HyperScroll TW ), 769, 769
-RAZER Basilisk V3 (2nd-G Opt M.S / On-board MEM / 4-W Razer HyperScroll TW / Notched & FreeSpin Mode ), 319, 319
+(PROMO!) RAZER Basilisk V3 (2nd-G Opt M.S / On-board MEM / 4-W Razer HyperScroll TW / Notched & FreeSpin Mode ) (N/P: RM319), 229, 319
 RAZER Basilisk V3 X HyperSpeed (HyperSpeed WS / Dual-mode WS(2.4GHz and BLE) / Chroma RGB ), 319, 319
-RAZER DeathAdder V3 Pro - Black (Optical MS Switches Gen-3 / On-board MEM / Up to 90 hrs Batt Life (5 btns / 30K dpi Focus Pro Opt)), 719, 719
-RAZER DeathAdder V3 Pro - White (Optical MS Switches Gen-3 / On-board MEM / Up to 90 hrs Batt Life (5 btns / 30K dpi Focus Pro Opt)), 719, 719
-RAZER DeathAdder V2 Pro (3 Modes (2.4GHz & BT & Wired) / On-board MEM / 70 hours Batt Life / 88g ), 529, 529
+(PROMO!)RAZER DeathAdder V3 Pro - Black (Optical MS Switches Gen-3 / On-board MEM / Up to 90 hrs Batt Life (5 btns / 30K dpi Focus Pro Opt))(N/P:719),499, 719
+(PROMO!) RAZER DeathAdder V3 Pro - White (Optical MS Switches Gen-3 / On-board MEM / Up to 90 hrs Batt Life (5 btns / 30K dpi Focus Pro Opt))(N/P:719), 499, 719
+(PROMO!) RAZER DeathAdder V2 Pro (3 Modes (2.4GHz & BT & Wired) / On-board MEM / 70 hours Batt Life / 88g ) (N/P: 529), 339, 529
 RAZER DeathAdder V3 (Optical MS Switches Gen-3 / On-board MEM / 59g Ultra-light (5 btns / 30K dpi Focus Pro Opt)), 309, 309
 RAZER DeathAdder V2 X HyperSpeed (Mech. Gen-2 M.S / On-board DPI / Dual-mode WS(2.4GHz and BLE) (7 buttons / 14Kdpi 5G Optical)), 279, 279
 
-COOLERMASTER* (2 Years Warranty):
+COOLERMASTER* (2 YEARS WARRANTY):
 COOLER MASTER MM831 (Wireless/Qi Charging),289,289
 COOLER MASTER MM731 (White/59g/Wireless),239,239
 COOLER MASTER MM730 (Black/48g),169,169
 COOLER MASTER MM730 (White/48g),169,169
-COOLER MASTER MM720 (White/49g),119,119
+COOLER MASTER MM720 (White/49g),129,129
 COOLER MASTER MM711 (Blue/60g),99,99
 COOLER MASTER MM711 (White/60g),99,99
 COOLER MASTER MM711 (Black/60g),99,99
 COOLER MASTER CM310,109,109
 COOLER MASTER CM110,89,89
 
-STEELSERIES* (1 Year Warranty):				
-SteelSeries Aerox 3 Black Wireless (RGB)	62604,459,459
-SteelSeries Aerox 3 Black (RGB)	62599,299,299
-SteelSeries RIVAL 3 Wireless (RGB)	62521,249,249
-SteelSeries RIVAL 3 (RGB)	62513,159,159
-SteelSeries SENSEI TEN (RGB)	62527,279,279
-SteelSeries RIVAL 310 (RGB) Custom TrueMove3 optical sensor	62433,269,269
-SteelSeries SENSEI 310 (RGB) Custom TrueMove3 optical sensor	62432,269,269
-SteelSeries Rival 500 (RGB)	62051,359,359
-SteelSeries Rival 600 Dual Sensor (RGB)	62446,399,399
-SteelSeries Rival 650 Dual Sensor (RGB) Wireless	62456,549,549
-SteelSeries Rival 710 (RGB)	62334,429,429
+STEELSERIES* (1 YEAR WARRANTY):	
+(PROMO!) Steelseries Prime Mini 62421 (N/P: RM289),129,289			
+(PROMO!) SteelSeries Prime 62533(N/P:RM279),149,279
+SteelSeries Prime+ 62490,379,379
+SteelSeries Prime Wireless 62593,589,589
+(PROMO!) SteelSeries Prime Mini 62593 (N/P:289),239,289
+SteelSeries Prime Mini Wireless 62426,589,589
+SteelSeries Aerox 3 (2022) Snow 62603,329,329
+SteelSeries Aerox 3 (2022) Onyx 62611,329,329
+(PROMO!) SteelSeries Aerox 3 (RGB) 62599(N/P:299),169,299
+SteelSeries Aerox 3 Wireless (2022) Ghost 62610,509,509
+SteelSeries Aerox 3 Wireless (2022) Snow 62608,509,509
+SteelSeries Aerox 3 Wireless (2022) Onyx 62612,509,509
+SteelSeries Aerox 3 Wireless (RGB) 62604,459,459
+SteelSeries Aerox 5 62401,429,429
+SteelSeries Aerox 5 Wireless 62406,699,699
+SteelSeries Aerox 9 Wireless 62618,749,749
+(PROMO!) SteelSeries RIVAL 3 Wireless (RGB) 62521 (N/P:279),229,279
+SteelSeries RIVAL 3 (RGB) 62513,189,189
+SteelSeries RIVAL 5 (RGB) 62551,329,329
+SteelSeries Rival 600 Dual Sensor (RGB) 62446,379,379
+SteelSeries Rival 650 Dual Sensor (RGB) Wireless 62456,419,419
+(PROMO!) SteelSeries SENSEI TEN (RGB) 62527(N/P:319),159,319
 
 LOGITECH* (2 YEARS WARRANTY)
 Gaming:
-LOGITECH G PRO X SUPERLIGHT LIGHTSPEED Wireless Gaming Mouse - Black, 649, 649
-LOGITECH G PRO X SUPERLIGHT LIGHTSPEED Wireless Gaming Mouse - White, 649, 649
-LOGITECH G PRO X SUPERLIGHT LIGHTSPEED Wireless Gaming Mouse - Magenta, 649, 649
-LOGITECH G PRO LIGHTSPEED Wireless Gaming Mouse, 499, 499
+LOGITECH G PRO X SUPERLIGHT 2 LIGHTSPEED Wireless Gaming Mouse - Black, 689, 689
+LOGITECH G PRO X SUPERLIGHT 2 LIGHTSPEED Wireless Gaming Mouse - White, 689, 689
+LOGITECH G PRO X SUPERLIGHT 2 LIGHTSPEED Wireless Gaming Mouse - Magenta, 689, 689
+(PROMO!) LOGITECH G PRO X SUPERLIGHT LIGHTSPEED Wireless Gaming Mouse - Black (N/P: RM690), 499, 690
+(PROMO!) LOGITECH G PRO X SUPERLIGHT LIGHTSPEED Wireless Gaming Mouse - White (N/P: RM690), 499, 690
+(PROMO!) LOGITECH G PRO X SUPERLIGHT LIGHTSPEED Wireless Gaming Mouse - Magenta (N/P: RM690), 499, 690
+(PROMO!) LOGITECH G PRO LIGHTSPEED Wireless Gaming Mouse (N/P: RM531), 339, 531
 LOGITECH G903 LIGHTSPEED Wireless, 659, 659
-LOGITECH G705 Wireless Gaming Mouse, 419, 419
-LOGITECH G703 HERO LIGHTSPEED Wireless Gaming Mouse, 369, 369
-LOGITECH G604 LIGHTSPEED Gaming Mouse, 279, 279
+LOGITECH G705 Wireless Gaming Mouse, 446, 446
+LOGITECH G703 HERO LIGHTSPEED Wireless Gaming Mouse, 393, 393
 LOGITECH G502X LIGHTSPEED Wireless Gaming Mouse - Black, 549, 549
-LOGITECH G502X Plus Wireless Gaming Mouse - Black, 689, 689
-LOGITECH G502X Plus Wireless Gaming Mouse - White, 689, 689
-LOGITECH G502X Wired Gaming Mouse - Black, 319, 319
-LOGITECH G502X Wired Gaming Mouse - White, 319, 319
-LOGITECH G502 HERO Light Performance Mouse, 179, 179
-LOGITECH G502 HERO LIGHTSPEED Wireless Gaming Mouse, 499, 499
+(PROMO!) LOGITECH G502X Plus Wireless Gaming Mouse - Black (N/P: RM733), 599, 733
+(PROMO!) LOGITECH G502X Plus Wireless Gaming Mouse - White (N/P: RM733), 599, 733
+(PROMO!) LOGITECH G502X Wired Gaming Mouse - Black (N/P: RM339), 289, 339
+(PROMO!) LOGITECH G502X Wired Gaming Mouse - White (N/P: RM339), 289, 339
+(PROMO!) LOGITECH G502 HERO Light Performance Mouse (N/P: RM202), 169, 202
+LOGITECH G502 HERO LIGHTSPEED Wireless Gaming Mouse, 531, 531
 LOGITECH G403 PRODIGY Wired Gaming Mouse, 300, 300
-LOGITECH G402 Hyperion Fury FPS Gaming Mouse, 119, 119
-LOGITECH G304 LIGHTSPEED Wireless Gaming Mouse - Black, 149, 149
-LOGITECH G304 LIGHTSPEED Wireless Gaming Mouse - White, 149, 149
-LOGITECH G103 PRODIGY Mouse, 109, 109
-LOGITECH G102 LIGHTSNYC Mouse - Black, 79, 79
-LOGITECH G102 LIGHTSNYC Mouse - White, 79, 79
-LOGITECH G Pro Gaming Mouse (HERO), 159, 159
+LOGITECH G402 Hyperion Fury FPS Gaming Mouse, 131, 131
+(PROMO!) LOGITECH G304 LIGHTSPEED Wireless Gaming Mouse - Black (N/P: RM164), 139, 164
+(PROMO!) LOGITECH G304 LIGHTSPEED Wireless Gaming Mouse - White (N/P: RM164), 139, 164
+(PROMO!) LOGITECH G102 LIGHTSNYC Mouse - Black (N/P: RM87), 73, 87
+(PROMO!) LOGITECH G102 LIGHTSNYC Mouse - White (N/P: RM87), 73, 87
+LOGITECH G Pro Wired Gaming Mouse (HERO), 179, 179
 Lifestyle/Work:
 LOGITECH POP MOUSE WITH EMOJI - BLAST YELLOW (1 Year Warranty), 159, 159
 LOGITECH POP MOUSE WITH EMOJI - DAYDREAM MINT (1 Year Warranty), 159, 159
@@ -183,6 +209,7 @@ LOGITECH M105 Mouse - Red (3 Years Warranty), 45, 45
 LOGITECH B175 Wireless Mouse (3 Years Warranty), 47, 47
 LOGITECH B100 USB Mouse (3 Years Warranty), 27, 27
 LOGITECH TrackMan Marble-USB (3 Years Warranty), 112, 112
+:
 LOGITECH Professional Presenter R800-USB (3 Years Warranty), 356, 356
 LOGITECH Wireless Presenter R400-USB (3 Years Warranty), 134, 134
 LOGITECH Extreme 3D PRO Joystick, 209, 209

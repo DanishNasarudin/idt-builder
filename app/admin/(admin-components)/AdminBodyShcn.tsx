@@ -45,6 +45,7 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { Virtuoso } from "react-virtuoso";
 import { toast } from "sonner";
 import { z } from "zod";
 import AdminAddBulkPop from "./AdminAddBulkPop";
@@ -273,12 +274,34 @@ const AdminBodyShcn = ({ content }: Props) => {
 
   // console.log(listItemHeight.current);
 
+  const itemHeight = 32;
+  const windowHeight = 400;
+  const overscan = 10;
+
+  const [scrollTop, setScrollTop] = React.useState(0);
+
+  const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
+
+  // const generateRows = () => {
+  //   return finalListRender
+  //     .slice(startIndex, renderedNodesCount)
+  //     .map((item) => (
+  //       <SortableItem
+  //         key={item.sort_val}
+  //         item={item}
+  //         renderCell={renderCell}
+  //         columns={columns}
+  //         selectColumn={selectColumn}
+  //       />
+  //     ));
+  // };
+
   // Handle Pages -------------------------------------------------------------
 
   const [renderDataAgain, setRenderDataAgain] = React.useState(false);
   const [page, setPage] = React.useState(1);
 
-  const [rowsPerPage, setRowsPerPage] = React.useState<number | "Max">(60);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number | "Max">(120);
   //   const rowsPerPage = 30;
   let pages: number = 0;
   const finalListRender = React.useMemo(() => {
@@ -297,16 +320,13 @@ const AdminBodyShcn = ({ content }: Props) => {
       .sort((a, b) => a.sort_val - b.sort_val);
 
     // The dependencies now accurately reflect what finalListRender relies on
-  }, [
-    data,
-    rowsPerPage,
-    page,
-    selectColumn,
-    selectedKeys,
-    setSize,
-    listItemHeight,
-    listRef,
-  ]);
+  }, [data, rowsPerPage, page, selectColumn, selectedKeys, startIndex]);
+
+  let renderedNodesCount = Math.floor(windowHeight / itemHeight) + 2 * overscan;
+  renderedNodesCount = Math.min(
+    finalListRender.length - startIndex,
+    renderedNodesCount,
+  );
 
   // console.log(pages, "check");
 
@@ -780,30 +800,6 @@ const AdminBodyShcn = ({ content }: Props) => {
   // console.log(listToRender);
   // console.log(finalListRender);
 
-  const calcListToRender = function () {
-    console.log("pass");
-    const screenHeight = window.innerHeight;
-    const scrollTop =
-      document.documentElement.scrollTop || document.body.scrollTop;
-    const startIndex = Math.max(0, Math.floor(scrollTop / 32) - 5);
-    const endIndex = Math.min(
-      finalListRender.length - startIndex,
-      Math.floor(screenHeight / 32 + 2 * 5),
-    );
-
-    let renderedNodesCount = Math.floor(screenHeight / 32) + 2 * 5;
-    renderedNodesCount = Math.min(
-      finalListRender.length - startIndex,
-      renderedNodesCount,
-    );
-    console.log(finalListRender.length - startIndex, renderedNodesCount);
-
-    setListToRender({
-      start: startIndex,
-      end: renderedNodesCount,
-    });
-  };
-
   return (
     <div>
       {/* <DragSelection /> */}
@@ -913,12 +909,25 @@ const AdminBodyShcn = ({ content }: Props) => {
             </>
           )}
         </div>
-        <Table
-          className="mt-4 overflow-y-scroll"
-          style={{
-            height: `${finalListRender.length * 32}px`,
+        {/* <div
+          className="mt-4 w-full overflow-y-scroll"
+          style={{ height: `${windowHeight}px` }}
+          onScroll={(e) => {
+            setScrollTop(e.currentTarget.scrollTop);
           }}
         >
+          <div
+            style={{
+              height: `${finalListRender.length * itemHeight}px`,
+            }}
+            className=""
+          >
+            <div
+              style={{
+                transform: `translateY(${startIndex * itemHeight}px)`,
+              }}
+            > */}
+        <Table>
           <TableHeader>
             <TableRow className="sticky top-[72px] z-[20] bg-[rgb(20,20,20)]">
               {columns
@@ -933,14 +942,9 @@ const AdminBodyShcn = ({ content }: Props) => {
                 ))}
             </TableRow>
           </TableHeader>
-          <TableBody
-            className="relative !h-[500px] w-full overflow-y-scroll"
-            style={{
-              height: `${finalListRender.length * 32}px`,
-            }}
-          >
+          <TableBody className=" w-full">
             {/* <AutoSizer>
-              {({ height, width }) => ( */}
+                {({ height, width }) => ( */}
             <DndContext
               collisionDetection={closestCenter}
               onDragEnd={onDragEnd}
@@ -952,9 +956,41 @@ const AdminBodyShcn = ({ content }: Props) => {
                 items={sortProps}
                 strategy={verticalListSortingStrategy}
               >
-                {finalListRender
-                  .slice(listToRender.start, listToRender.end)
-                  .map((item) => (
+                {/* {finalListRender
+                        .slice(startIndex, renderedNodesCount)
+                        .map((item) => (
+                          <SortableItem
+                            key={item.sort_val}
+                            item={item}
+                            renderCell={renderCell}
+                            columns={columns}
+                            selectColumn={selectColumn}
+                          />
+                        ))} */}
+                <Virtuoso
+                  className="table-row-group !h-[500px]"
+                  components={{
+                    // Item: (props) => <TableRow {...props} />,
+                    Item: ({ children, ...props }) => (
+                      <div {...props} className="check">
+                        {children}
+                      </div>
+                    ),
+                    List: React.forwardRef(
+                      ({ children, ...props }, listRef) => (
+                        <div
+                          {...props}
+                          ref={listRef}
+                          className="table-row-group"
+                        >
+                          {children}
+                        </div>
+                      ),
+                    ),
+                  }}
+                  // style={{ width: "100%" }}
+                  data={finalListRender}
+                  itemContent={(index, item) => (
                     <SortableItem
                       key={item.sort_val}
                       item={item}
@@ -962,40 +998,84 @@ const AdminBodyShcn = ({ content }: Props) => {
                       columns={columns}
                       selectColumn={selectColumn}
                     />
-                  ))}
+                  )}
+                />
+                {/* {generateRows()} */}
                 {/* <List
-                        ref={listRef}
-                        itemData={finalListRender}
-                        height={height}
-                        width={width}
-                        itemCount={finalListRender.length}
-                        itemSize={getItemHeight}
-                      >
-                        {({ index, style, data }) => {
-                          const item = data[index];
-                          console.log(style);
-                          // setRenderDataAgain((prev) => !prev);
-                          return (
-                            <SortableItem
-                              index={index}
-                              key={item.sort_val}
-                              item={item}
-                              renderCell={renderCell}
-                              columns={columns}
-                              selectColumn={selectColumn}
-                              sty={style}
-                              setSize={setSize}
-                              windowWidth={windowWidth}
-                            />
-                          );
-                        }}
-                      </List> */}
+                          ref={listRef}
+                          itemData={finalListRender}
+                          height={height}
+                          width={width}
+                          itemCount={finalListRender.length}
+                          itemSize={getItemHeight}
+                        >
+                          {({ index, style, data }) => {
+                            const item = data[index];
+                            console.log(style);
+                            // setRenderDataAgain((prev) => !prev);
+                            return (
+                              <SortableItem
+                                index={index}
+                                key={item.sort_val}
+                                item={item}
+                                renderCell={renderCell}
+                                columns={columns}
+                                selectColumn={selectColumn}
+                                sty={style}
+                                setSize={setSize}
+                                windowWidth={windowWidth}
+                              />
+                            );
+                          }}
+                        </List> */}
               </SortableContext>
             </DndContext>
             {/* )}
-            </AutoSizer> */}
+              </AutoSizer> */}
           </TableBody>
         </Table>
+        {/* <TableVirtuoso
+          className="h-full w-full"
+          data={finalListRender}
+          components={{
+            Table: (props) => <Table {...props} />,
+            TableHead: (props) => (
+              <TableHeader {...props} className="bg-background" />
+            ),
+            TableBody: (props) => (
+              <TableBody {...props}>
+                <DndContext
+                  collisionDetection={closestCenter}
+                  onDragEnd={onDragEnd}
+                  onDragStart={onDragStart}
+                  onDragOver={onDragOver}
+                  sensors={sensors}
+                >
+                  <SortableContext
+                    items={sortProps}
+                    strategy={verticalListSortingStrategy}
+                  ></SortableContext>
+                </DndContext>
+              </TableBody>
+            ),
+          }}
+          fixedHeaderContent={() => (
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Description</TableHead>
+            </TableRow>
+          )}
+          itemContent={(index, item) => <><SortableItem
+            key={item.sort_val}
+            item={item}
+            renderCell={renderCell}
+            columns={columns}
+            selectColumn={selectColumn}
+          /></>}
+        /> */}
+        {/* </div>
+          </div>
+        </div> */}
         {/* <TableSample /> */}
         <div className="mx-auto mt-4 flex justify-center gap-4">
           <Select
@@ -1135,7 +1215,7 @@ const SortableItem = ({
           selectColumn && "bg-zinc-950",
           item.is_label && "bg-zinc-900",
           selectColumn && item.is_label && "bg-zinc-900",
-          // "absolute w-full",
+          "w-full",
         )}
       >
         {columns

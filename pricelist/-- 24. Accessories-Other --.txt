@@ -1,4 +1,7 @@
 Casing Accessories* :
+ANTEC PCI-E 4.0 RISER CABLE WITH BRACKET (BLACK),  259
+ANTEC PCI-E 4.0 RISER CABLE WITH BRACKET (WHITE), 269
+-----------------------------------------------------------------------------------------:
 PHANTEKS DIGITAL RGB LED STARTER KIT, 189, 189
 PHANTEKS VERTICAL GPU Bracket & 16X Riser PH-VGPUKT_02, 179, 179
 PHANTEKS VERTICAL GPU RISER PREMIUM(PH-CBRS_PR22)-FOR EVOLV X AND P600S, 179, 179
@@ -22,9 +25,9 @@ NZXT HUE+ Extension Kit (For HUE+ Accessories), 93, 93
 NZXT HUE 2 LED STRIPS, 99, 99
 NZXT HUE 2 CABLE COMB, 129, 129
 NZXT SENTRY MIX 2 (CHANNEL:6/MAX WATT:50), 145, 145
-NZXT Internal USB Expansion IU02, 99, 99
+NZXT INTERNAL USB HUB GEN3 , 99, 99
 NZXT Grid+ V3 (CAM-powered 6-Channel Digital Fan Controller), 219  219 
-NZXT RGB & Fan Controller, 115, 115
+NZXT RGB & Fan Controller, 119, 119
 NZXT VERTICAL GPU KIT-WHITE, 299, 299
 NZXT VERTICAL GPU KIT-BLACK,299,299
 -----------------------------------------------------------------------------------------:
@@ -73,19 +76,23 @@ THERMALTAKE Pacific Lumi Plus LED Strip 3Pack/Accessory/LEDStrip/12LED-30cm//LED
 THERMALTAKE Commander FP-10 Port Hub for PWM, 79, 79
 THERMALTAKE Commander FX-10 Port Hub, 69, 69
 -----------------------------------------------------------------------------------------:
-CoolerMaster ARGB TUBE SLEEVE A1 MFX-ATHN-12NNN-R1, 199, 199
-CoolerMaster Mini ARGB Controller MFW-ACHN-NNNNN-R1, 49, 49
-CoolerMaster ARGB LED Small Controller MFX-ACBN-NNUNN-R1, 99, 99
-CoolerMaster ARGB & PWM HUB 1 to 6 Port ARGB & PWM HUB 1 to 6 Port, 79, 79
-CoolerMaster ARGB 1to5 Splitter Cable MFX-AWHN-1NNN5-R1, 35, 35
-CoolerMaster Vertical Graphics Card Holder Kit, 199, 199
-CoolerMaster PCI-E 3.0 x16 Riser Cable V2 (200mm), 139, 139
-CoolerMaster PCI-E 3.0 x16 Riser Cable V2 (300mm), 179, 179
-CoolerMaster Releases 16AWG Sleeved PSU Extension Cable Kits, 159, 159
-CoolerMaster Universal Riser Card, 219, 219
-CoolerMaster PCI-E x16 Riser Card (200mm), 149, 149
-CoolerMaster ATX 24 Pin 90' Adapter with Capacitors, 99, 99
-CoolerMaster ARGB GPU Bracket (TG), 119, 119
+COOLERMASTER PCI-E 4.0 x16 Riser Cable V2 (200mm), 249, 249
+COOLERMASTER PCI-E 4.0 x16 Riser Cable V2 (300mm), 269, 269
+COOLERMASTER PCI-E 4.0 x16 Riser Cable V2 - WHITE (200mm), 249, 249
+COOLERMASTER PCI-E 4.0 x16 Riser Cable V2 - WHITE (300mm), 269, 269
+COOLERMASTER Vertical Graphics Card Holder V3 PCI-E 4.0, 299, 299
+COOLERMASTER Vertical Graphics Card Holder V3 PCI-E 4.0 - WHITE, 299, 299
+COOLERMASTER ARGB TUBE SLEEVE A1, 199, 199
+COOLERMASTER Mini ARGB Controller, 49, 49
+COOLERMASTER ARGB LED Small Controller, 99, 99
+COOLERMASTER ARGB & PWM HUB 1 to 6 Port, 79, 79
+COOLERMASTER ARGB 1 to 5 Splitter Cable, 35, 35
+COOLERMASTER Releases 16AWG Sleeved PSU Extension Cable Kits, 159, 159
+COOLERMASTER Universal Riser Card, 219, 219
+COOLERMASTER ATX 24 Pin 90' Adapter with Capacitors, 99, 99
+COOLERMASTER ELV8 Graphic Card Holder, 119, 119
+COOLERMASTER ARGB GPU Bracket (TG), 129, 129
+COOLERMASTER GEM MULTI SURFACE MOUNT, 129,129
 -----------------------------------------------------------------------------------------:
 CORSAIR RGB LED Lighting PRO Expansion Kit, 169, 169
 CORSAIR Commander Pro, 359, 359
@@ -213,7 +220,7 @@ JCreate USB 3.0 to DVI/HDMI/VGA Display Adapter 	JUA330U	,239,239
 JCreate USB 3.0 to HDMI Slim Display Adapter	JUA355	,215,215
 JCreate USB3.0 to HDMI & VGA Dual Display Adapter	JUA360	,276,276
 JCreate USB3.0 to 4K HDMI & 2K HDMI Dual Display Adapter	JUA365	,315,315
-JCreate USB 3.0 Wormhole Switch DSS KVM Swap & File Transfer	JUC700	,109,109
+JCreate USB 3.0 Wormhole Switch DSS KVM Swap &; File Transfer	JUC700	,109,109
 JCreate J5 Type-C Coaxial USB 3.1 Cable (USB-IF Certified)	JUCX01	,49,49
 JCreate USB 3.1 Type-C to Type-C Cable	JUCX03	,49,49
 JCreate USB 3.1 Type-C to Type-A Adapter	JUCX05	,49,49
@@ -228,7 +235,7 @@ JCreate USB Type-C to USB 2.0 Cable (Red)	JUCX12R	,50,50
 JCreate USB 2.0 Newport Station 	JUD200	,199,199
 JCreate USB 3.0 Mini Dock w/HDMI & VGA Dual Display/Gigabit Ethernet/USB Hub	JUD380	,409,409
 JCreate USB3.0 Boomerang Station HDMI & VGA Dual Display (Mac/Windows)	JUD481	,499,499
-JCreate USB3.0 Mini Ultra Station HDMI & VGA Dual Display (Mac/Windows)	JUD531	,599,599
+JCreate USB3.0 Mini Ultra Station HDMI &VGA Dual Display (Mac/Windows)	JUD531	,599,599
 JCreate USB 2.0 Ethernet Adapter 	JUE125	,58,58
 JCreate USB 3.0 Gigabit Ethernet Adapter 	JUE130	,118,118
 JCreate Wormhole Station USB3.0	JUH320V2	,299,299

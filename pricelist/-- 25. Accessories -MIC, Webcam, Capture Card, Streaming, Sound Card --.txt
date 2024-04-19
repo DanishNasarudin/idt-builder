@@ -3,13 +3,25 @@ RAPOO C280 WEBCAM (FULL HD), 169, 169
 ----------------------------------------------------------------------
 
 ASUS:
-ASUS ROG EYE S (Normal Price: RM299), 280, 280
-ASUS Webcam C3 (Normal Price: RM169), 130, 130
+ASUS ROG EYE S (N/P: RM299), 280
+ASUS Webcam C3 (N/P: RM169), 130
+
+HYPERX:
+HYPERX Solocast (USB-C) [BLACK], 269, 269
+HYPERX Solocast (USB-C) [WHITE], 269, 269
+HYPERX Duocast (USB-C), 449, 449
+HYPERX Quadcast (USB-B), 629, 629
+HYPERX Quadcast S (USB-B) [BLACK], 719, 719
+HYPERX Quadcast S (USB-B) [WHITE], 719, 719
+HYPERX ProCast (XLR), 1149, 1149
 
 EVGA:
 EVGA XR1 Capture Device, 839, 839
 
 LOGITECH :
+LOGITECH Yeti GX Dynamic RGB Gaming Mic with LIGHTSYNC, 659, 659
+LOGITECH Yeti Orb RGB Gaming Mic with LIGHTSYNC, 269, 269
+:
 LOGITECH VC- C930E WEBCAM  (3 Year Warranty), 649, 649
 LOGITECH VC- C925e WEBCAM  (3 Year Warranty), 549, 549
 LOGITECH VC- C525 WEBCAM HD   (3 Year Warranty), 239, 239
@@ -23,12 +35,12 @@ LOGITECH BRIO 300 WEBCAM - ROSE (1 Year Warranty), 309, 309
 LOGITECH BRIO 100 WEBCAM - GRAPHITE (1 Year Warranty), 179, 179
 LOGITECH BRIO 100 WEBCAM - OFF WHITE (1 Year Warranty), 179, 179
 LOGITECH BRIO 100 WEBCAM - ROSE (1 Year Warranty), 179, 179
-LOGITECH C922 PRO  STREAM WEBCAM  (1 Year Warranty), 489, 489
+LOGITECH C922 PRO  STREAM WEBCAM  (1 Year Warranty), 559, 558
 LOGITECH C615 PORTABLE HD WEBCAM  (2 Years Warranty), 318, 318
-LOGITECH C310 HD WEBCAM (2 Years Warranty), 210, 210
+LOGITECH C310 HD WEBCAM (2 Years Warranty), 189, 189
 LOGITECH C270 HD WEBCAM (2 Years Warranty), 139, 139
 LOGITECH C170 HD WEBCAM (2 Years Warranty), 87 , 87 
-
+:
 LOGITECH VC-BRIO 4K PRO WEBCAM (3 Years Warranty), 1099, 1099
 LOGITECH VC RALLY CAMERA - BLACK - USB - PLUGB  (2 Years Warranty), 6400, 6400
 LOGITECH VC- GROUP (2 Years Warranty), 5500, 5500
@@ -57,14 +69,14 @@ ELGATO StreamDeck +, 999, 999
 ELGATO StreamDeck XL (32 Keys LCD), 1299, 1299
 ELGATO StreamDeck MK.2 (15 Keys LCD), 799, 799
 ELGATO StreamDeck MK.2 (15 Keys LCD) White, 799, 799
-ELGATO StreamDeck Mini (6 Keys LCD), 529, 529
+ELGATO StreamDeck Mini (6 Keys LCD), 399, 399
 ELGATO Stream Deck Pedal, 449, 449
 Cam Capture:
 ELGATO CamLink PRO 4 HDMI Camera Capture PCIe Card, 2009, 2009
 ELGATO CamLink 4K USB Camera Capture, 559, 559
 Green Screen:
 ELGATO Green Screen XL, 849, 849
-ELGATO Green Screen, 809, 809
+ELGATO Green Screen, 599, 599
 ELGATO Green Screen MT (Mount), 799, 799
 ELGATO Green Screen Mouse Mat, 139, 139
 Multi Mount:
@@ -77,7 +89,7 @@ ELGATO Heavy Clamp (Heavy Duty G-Clamp and Ball Head), 189, 189
 Microphone:
 ELGATO Wave:3 (USB Condenser Microphone and Digital Mixer), 755, 755
 ELGATO Wave:3 - White (USB Condenser Microphone and Digital Mixer), 755, 755
-ELGATO Wave:1 (USB Condenser Microphone and Digital Mixer), 615, 615
+ELGATO Wave:1 (USB Condenser Microphone and Digital Mixer), 399, 399
 ELGATO Wave DX (Dynamic Microphone), 529, 529
 ELGATO Wave XLR, 829, 829
 ELGATO Wave XLR Cable - 3meter, 109, 109
@@ -87,12 +99,16 @@ ELGATO Shock Mount for Wave Series, 219, 219
 ELGATO Extension Rods for Wave Series, 49, 49
 Facecam:
 ELGATO Facecam (Premium 1080p60 Webcam), 859, 859
-ELGATO Key Light Air, 859, 859
+ELGATO Facecam Pro (Premium 4k60 Webcam), 1499, 1499
+ELGATO Key Light Air, 599, 599
 
-Razer Broadcaster Peripherals:
-Razer Kiyo Pro (High-Performance Adaptive Light Sensor/ Uncompressed 1080p 60FPS/ HDR-enabled 30FPS),819,819
-Razer Kiyo - Streaming Camera (High fps HD Video (720p 60fps/1080p 30fps/Multi-step ring light),459,459
-Razer Seiren Emote - Streaming Mic (8-bit Emoticon LED Display/Build-in Shock Mount/Interchangeable gooseneck),669,669
-Razer Seiren X - Streaming Mic (Condenser Microphone/Supercardioid Pick-Up Pattern/Build-in Shock Mount),419,419
-Razer Seiren Mini - Portable Mini Mic (Condenser Microphone/Supercardioid Pick-Up Pattern/Build-in Shock Mount),209,209
-Razer Ripsaw HD - Game Capture Card (1080p at 60FPS Stream/4K Passthrough/Full Audio Mixing Capabilities),659,659
+RAZER Broadcaster Peripherals:
+RAZER Kiyo Pro - USB Streaming Camera (High-Performance Adaptive Light Sensor / Uncompressed 1080p 60FPS / HDR-enabled 30FPS), 869, 869
+RAZER Kiyo X - Full HD USB Webcam (720p 60fps/1080p 30fps / 82° Field of View / Flexible Mounting Options), 369, 369
+(PROMO!) RAZER Kiyo - Streaming Camera with Ring light (720p 60fps/ 1080p 30 fps/ 81.6° Field of View / Flexible Mounting Options) (N/P: RM459), 209, 459
+RAZER Seiren V2 Pro - Professional USB Mic (Dynamic Microphone / Cardioid Pick-Up Pattern / Analog Gain Limiter / High Pass Filter), 799, 799
+(PROMO!) RAZER Seiren V2 X - USB Mic (Condenser Microphone/ Supercardioid Pick-Up Pattern / Analog Gain Limiter) (N/P: RM539), 399 , 539
+(NEW!) RAZER Seiren V3 Mini (Condenser Mic/  SuperCardioid Mic/ Tap-to-Mute Sensor/ Adj. Shock Mount), 239, 239
+RAZER Audio Mixer - Analog Mixer (Streamlined Audio Configuration / Centralized Audio Control / 4-channel interface / Mute Buttons), 1399, 1399
+RAZER Ripsaw X - USB Capture Card (4k 30FPS; 1080p 120FPS / Compatible with Hand-Held Cameras w/HDMI Output), 659, 659
+

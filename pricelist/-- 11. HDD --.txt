@@ -1,9 +1,8 @@
-Western Digital (3.5 Sata)*:
-WD 1TB Caviar Blue 7200RPM/64MB(2Years Warranty), 189, 189
-WD 2TB Caviar Blue 5400RPM/64MB(2Years Warranty), 269, 269
+Western Digital (3.5 SATA)*:
+WD 1TB Caviar Blue 7200RPM/64MB(2Years Warranty), 239, 239
+WD 2TB Caviar Blue 5400RPM/64MB(2Years Warranty), 309, 309
 WD 4TB Caviar Blue 5400RPM/64MB(2Years Warranty), 559, 559
 WD 6TB Caviar Blue 5400RPM/64MB(2Years Warranty), 879, 879
-WD 1TB Caviar Black 7200RPM/64MB (Heavy Duty)(5Years Warranty), 369, 369
 WD 2TB Caviar Black 7200RPM/64MB (Heavy Duty)(5Years Warranty), 599, 599
 WD 4TB Caviar Black 7200RPM/256MB (Heavy Duty)(5Years Warranty), 1000, 1000
 WD 6TB Caviar Black 7200RPM/128MB (Heavy Duty)(5Years Warranty), 1399, 1399
@@ -18,14 +17,14 @@ WD 10TB Caviar Red Plus (for NAS/Storage)(3Years Warranty), 2099, 2099
 WD 12TB Caviar Red Plus (for NAS/Storage)(3Years Warranty), 2719, 2719
 WD 14TB Caviar Red Plus (for NAS/Storage)(3Years Warranty), 2899, 2899
 
-SEAGATE (3.5 Sata)*:
-SEAGATE 1TB Barracuda ST1000DM010 (7200RPM/64MB/2 Years Warranty), 189, 189
-SEAGATE 2TB Barracuda ST2000DM008 (7200RPM/256MB/2 Years Warranty), 289, 289
-SEAGATE 4TB Barracuda ST4000DM004 (5900RPM/256MB/2 Years Warranty), 480, 480
+SEAGATE (3.5 SATA)*:
+SEAGATE 1TB Barracuda ST1000DM010 (7200RPM/64MB/2 Years Warranty), 239, 239
+SEAGATE 2TB Barracuda ST2000DM008 (7200RPM/256MB/2 Years Warranty), 309, 309
+SEAGATE 4TB Barracuda ST4000DM004 (5900RPM/256MB/2 Years Warranty), 559, 559
 SEAGATE 1TB Skyhawk (CCTV) (5900RPM/64MB/3 Years Warranty), 215, 215
 SEAGATE 2TB Skyhawk (CCTV) (5900RPM/64MB/3 Years Warranty), 309, 309
 SEAGATE 3TB Skyhawk (CCTV) (5900RPM/64MB/3 Years Warranty), 412, 412
-SEAGATE 4TB Skyhawk (CCTV) (5900RPM/64MB/3 Years Warranty), 509, 509
+SEAGATE 4TB Skyhawk (CCTV) (5900RPM/64MB/3 Years Warranty), 599, 599
 SEAGATE 6TB Skyhawk (CCTV) (7200RPM/128MB/3 Years Warranty), 880, 880
 SEAGATE 8TB Skyhawk (CCTV) (7200RPM/256MB/3 Years Warranty), 1219, 1219
 SEAGATE 10TB Skyhawk (CCTV) (7200RPM/256MB/3 Years Warranty), 1599, 1599
@@ -38,7 +37,7 @@ SEAGATE 8TB Ironwoft (NAS) (7200RPM/256MB/3 Years Warranty), 1279, 1279
 SEAGATE 10TB Ironwoft (NAS) (7200RPM/256MB/3 Years Warranty), 1699, 1699
 SEAGATE 12TB Ironwoft (NAS) (7200RPM/256MB/3 Years Warranty), 2069, 2069
 
-SEAGATE (2.5 Sata)*:
+SEAGATE (2.5 SATA)*:
 SEAGATE 1TB 2.5" Barracuda (5400RPM/128MB/2 Years Warranty), 229, 229
 SEAGATE 2TB 2.5" Barracuda (5400RPM/128MB/2 Years Warranty), 369, 369
 
