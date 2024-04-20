@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { cn, deepCopy, sortProducts, useWindowResize } from "@/lib/utils";
+import { cn, deepCopy, sortProducts } from "@/lib/utils";
 import {
   closestCenter,
   DndContext,
@@ -45,7 +45,7 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { Virtuoso } from "react-virtuoso";
+import { TableVirtuoso } from "react-virtuoso";
 import { toast } from "sonner";
 import { z } from "zod";
 import AdminAddBulkPop from "./AdminAddBulkPop";
@@ -255,33 +255,6 @@ const AdminBodyShcn = ({ content }: Props) => {
 
   // Custom Shad -----------------------------------------------
 
-  const setSize = React.useCallback((index: number, size: number) => {
-    listItemHeight.current = { ...listItemHeight.current, [index]: size };
-    // listRef.current.resetAfterIndex(index);
-  }, []);
-
-  const listItemHeight = React.useRef<number[]>([]);
-
-  // const getItemHeight = (index: number) => listItemHeight.current[index] || 32;
-  const getItemHeight = React.useCallback(
-    (index: number) => listItemHeight.current[index] || 32,
-    [],
-  );
-
-  const listRef = React.useRef<any>(null);
-
-  const [windowWidth] = useWindowResize();
-
-  // console.log(listItemHeight.current);
-
-  const itemHeight = 32;
-  const windowHeight = 400;
-  const overscan = 10;
-
-  const [scrollTop, setScrollTop] = React.useState(0);
-
-  const startIndex = Math.max(0, Math.floor(scrollTop / itemHeight) - overscan);
-
   // const generateRows = () => {
   //   return finalListRender
   //     .slice(startIndex, renderedNodesCount)
@@ -301,7 +274,7 @@ const AdminBodyShcn = ({ content }: Props) => {
   const [renderDataAgain, setRenderDataAgain] = React.useState(false);
   const [page, setPage] = React.useState(1);
 
-  const [rowsPerPage, setRowsPerPage] = React.useState<number | "Max">(120);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number | "Max">(30);
   //   const rowsPerPage = 30;
   let pages: number = 0;
   const finalListRender = React.useMemo(() => {
@@ -320,13 +293,7 @@ const AdminBodyShcn = ({ content }: Props) => {
       .sort((a, b) => a.sort_val - b.sort_val);
 
     // The dependencies now accurately reflect what finalListRender relies on
-  }, [data, rowsPerPage, page, selectColumn, selectedKeys, startIndex]);
-
-  let renderedNodesCount = Math.floor(windowHeight / itemHeight) + 2 * overscan;
-  renderedNodesCount = Math.min(
-    finalListRender.length - startIndex,
-    renderedNodesCount,
-  );
+  }, [data, rowsPerPage, page, selectColumn, selectedKeys]);
 
   // console.log(pages, "check");
 
@@ -571,16 +538,7 @@ const AdminBodyShcn = ({ content }: Props) => {
           return cellValue;
       }
     },
-    [
-      selectedKeys,
-      columns,
-      data,
-      setSize,
-      listRef,
-      getItemHeight,
-      windowWidth,
-      listItemHeight,
-    ],
+    [selectedKeys, columns, data],
   );
 
   // DND variables ----------------------------------------------------------------
@@ -927,48 +885,48 @@ const AdminBodyShcn = ({ content }: Props) => {
                 transform: `translateY(${startIndex * itemHeight}px)`,
               }}
             > */}
-        <Table>
-          <TableHeader>
-            <TableRow className="sticky top-[72px] z-[20] bg-[rgb(20,20,20)]">
-              {columns
-                .filter((col) => col.visible)
-                .map((col) => (
-                  <TableHead
-                    key={col.key}
-                    className={`whitespace-nowrap text-xs ${col.style}`}
-                  >
-                    {col.label}
-                  </TableHead>
-                ))}
-            </TableRow>
-          </TableHeader>
-          <TableBody className=" w-full">
-            {/* <AutoSizer>
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={onDragEnd}
+          onDragStart={onDragStart}
+          onDragOver={onDragOver}
+          sensors={sensors}
+        >
+          <SortableContext
+            items={sortProps}
+            strategy={verticalListSortingStrategy}
+          >
+            <Table className="hidden">
+              <TableHeader>
+                <TableRow className="sticky top-[72px] z-[20] bg-[rgb(20,20,20)]">
+                  {columns
+                    .filter((col) => col.visible)
+                    .map((col) => (
+                      <TableHead
+                        key={col.key}
+                        className={`whitespace-nowrap text-xs ${col.style}`}
+                      >
+                        {col.label}
+                      </TableHead>
+                    ))}
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {/* <AutoSizer>
                 {({ height, width }) => ( */}
-            <DndContext
-              collisionDetection={closestCenter}
-              onDragEnd={onDragEnd}
-              onDragStart={onDragStart}
-              onDragOver={onDragOver}
-              sensors={sensors}
-            >
-              <SortableContext
-                items={sortProps}
-                strategy={verticalListSortingStrategy}
-              >
-                {/* {finalListRender
-                        .slice(startIndex, renderedNodesCount)
-                        .map((item) => (
-                          <SortableItem
-                            key={item.sort_val}
-                            item={item}
-                            renderCell={renderCell}
-                            columns={columns}
-                            selectColumn={selectColumn}
-                          />
-                        ))} */}
-                <Virtuoso
-                  className="table-row-group !h-[500px]"
+
+                {finalListRender.map((item) => (
+                  <SortableItem
+                    key={item.sort_val}
+                    item={item}
+                    renderCell={renderCell}
+                    columns={columns}
+                    selectColumn={selectColumn}
+                  />
+                ))}
+                {/* <Virtuoso
+                  className="table-row "
+                  style={{ height: 500 }}
                   components={{
                     // Item: (props) => <TableRow {...props} />,
                     Item: ({ children, ...props }) => (
@@ -999,7 +957,7 @@ const AdminBodyShcn = ({ content }: Props) => {
                       selectColumn={selectColumn}
                     />
                   )}
-                />
+                /> */}
                 {/* {generateRows()} */}
                 {/* <List
                           ref={listRef}
@@ -1028,12 +986,97 @@ const AdminBodyShcn = ({ content }: Props) => {
                             );
                           }}
                         </List> */}
-              </SortableContext>
-            </DndContext>
-            {/* )}
+                {/* )}
               </AutoSizer> */}
-          </TableBody>
-        </Table>
+              </TableBody>
+            </Table>
+          </SortableContext>
+        </DndContext>
+        <DndContext
+          collisionDetection={closestCenter}
+          onDragEnd={onDragEnd}
+          onDragStart={onDragStart}
+          onDragOver={onDragOver}
+          sensors={sensors}
+        >
+          <SortableContext
+            items={sortProps}
+            strategy={verticalListSortingStrategy}
+          >
+            {/* <Table>
+              <TableHeader>
+                <TableRow className="sticky top-[72px] z-[20] bg-[rgb(20,20,20)]">
+                  {columns
+                    .filter((col) => col.visible)
+                    .map((col) => (
+                      <TableHead
+                        key={col.key}
+                        className={`whitespace-nowrap text-xs ${col.style}`}
+                      >
+                        {col.label}
+                      </TableHead>
+                    ))}
+                </TableRow>
+              </TableHeader>
+              <TableBody className=" w-full">
+                {finalListRender.map((item) => (
+                  <SortableItem
+                    key={item.sort_val}
+                    item={item}
+                    renderCell={renderCell}
+                    columns={columns}
+                    selectColumn={selectColumn}
+                  />
+                ))}
+              </TableBody>
+            </Table> */}
+            <TableVirtuoso
+              className=""
+              style={{ height: 500, width: "100%" }}
+              data={finalListRender}
+              components={{
+                Table: (props) => <Table {...props} />,
+                TableHead: React.forwardRef((props, ref) => (
+                  <TableHeader
+                    ref={ref}
+                    {...props}
+                    className="table-row-group"
+                  />
+                )),
+                TableBody: React.forwardRef((props, ref) => (
+                  <TableBody ref={ref} {...props} />
+                )),
+                TableRow: (props) => <div {...props} />, // Here needs to be SortableItem
+              }}
+              fixedHeaderContent={() => (
+                <TableRow className="sticky top-0 z-[20] bg-[rgb(20,20,20)]">
+                  {columns
+                    .filter((col) => col.visible)
+                    .map((col) => (
+                      <TableHead
+                        key={col.key}
+                        className={cn(`whitespace-nowrap text-xs`, col.style)}
+                      >
+                        {col.label}
+                      </TableHead>
+                    ))}
+                </TableRow>
+              )}
+              itemContent={(index, item, props) => (
+                <>
+                  <SortableItem
+                    {...props}
+                    key={item.sort_val}
+                    item={item}
+                    renderCell={renderCell}
+                    columns={columns}
+                    selectColumn={selectColumn}
+                  />
+                </>
+              )}
+            />
+          </SortableContext>
+        </DndContext>
         {/* <TableVirtuoso
           className="h-full w-full"
           data={finalListRender}
@@ -1134,6 +1177,7 @@ const SortableItem = ({
   renderCell,
   columns,
   selectColumn,
+  ...props
 }: {
   item: AdminBodyProductType[0];
   renderCell: (
@@ -1156,41 +1200,14 @@ const SortableItem = ({
       }
   )[];
   selectColumn: boolean;
+  [key: string]: any;
 }) => {
-  const { attributes, listeners, setNodeRef, transform, transition, node } =
+  const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: item.sort_val });
-
-  const [rendered, setRendered] = React.useState(false);
-  const [heightOri, setHeightOri] = React.useState<number | undefined>(
-    undefined,
-  );
-
-  const rowRef = React.useRef<HTMLTableRowElement | null>(null);
-
-  // React.useEffect(() => {
-  //   if (rowRef.current) {
-  //     const height = rowRef.current.getBoundingClientRect().height;
-  //     setHeightOri(height);
-  //     setSize(index, height);
-  //   }
-  // }, [rowRef, setSize, windowWidth, index]);
-
-  // const height = React.useMemo(() => {
-  //   if (typeof window !== "undefined" && node.current !== undefined) {
-  //     // console.log(node.current?.getBoundingClientRect().height);
-  //     if (node.current?.getBoundingClientRect().height !== undefined)
-  //       setSize(index, node.current?.getBoundingClientRect().height);
-  //     return node.current?.getBoundingClientRect().height;
-  //   }
-  // }, [sty, node.current, rendered]);
-
-  // const { top } = sty;
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    // top,
-    // heightOri,
   };
 
   const checkSortAvailable = columns.find(
@@ -1206,8 +1223,9 @@ const SortableItem = ({
   return (
     <React.Fragment key={item.sort_val}>
       <TableRow
+        {...props}
         key={item.sort_val}
-        ref={rowRef}
+        ref={setNodeRef}
         style={style}
         {...conditionalProps}
         onClick={selectColumn ? undefined : () => console.log("")}
@@ -1215,13 +1233,13 @@ const SortableItem = ({
           selectColumn && "bg-zinc-950",
           item.is_label && "bg-zinc-900",
           selectColumn && item.is_label && "bg-zinc-900",
-          "w-full",
+          // "w-full",
         )}
       >
         {columns
           .filter((item) => item.visible)
           .map((col) => (
-            <TableCell className={cn("font-medium", col.style)} key={col.key}>
+            <TableCell className={cn("font-medium")} key={col.key}>
               {renderCell(item, col.key, selectColumn)}
             </TableCell>
           ))}
