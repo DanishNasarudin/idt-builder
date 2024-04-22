@@ -69,6 +69,7 @@
     "react-hook-form": "^7.51.1",
     "react-icons": "^4.8.0",
     "react-pdf": "^7.6.0",
+    "react-resizable-panels": "^2.0.18",
     "react-virtualized-auto-sizer": "^1.0.24",
     "react-virtuoso": "^4.7.9",
     "react-window": "^1.8.10",

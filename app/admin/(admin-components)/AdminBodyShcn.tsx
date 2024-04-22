@@ -6,9 +6,13 @@ import {
   adminUpdateListing,
 } from "@/app/(serverActions)/adminActions";
 import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
+import {
   Table,
   TableBody,
-  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -28,10 +32,8 @@ import {
 } from "@dnd-kit/core";
 import {
   SortableContext,
-  useSortable,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -43,6 +45,14 @@ import {
   Switch,
   Textarea,
 } from "@nextui-org/react";
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable,
+  VisibilityState,
+} from "@tanstack/react-table";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { TableVirtuoso } from "react-virtuoso";
@@ -52,6 +62,9 @@ import AdminAddBulkPop from "./AdminAddBulkPop";
 import AdminDeletePop from "./AdminDeletePop";
 import AdminDeletePopBulk from "./AdminDeletePopBulk";
 import AdminSortValField from "./AdminSortValField";
+import CustCheckBox from "./CustCheckBox";
+import SortableItem from "./SortableItem";
+import SortableItemV2 from "./SortableItemV2";
 
 type Props = {
   content: AdminBodyType;
@@ -274,7 +287,7 @@ const AdminBodyShcn = ({ content }: Props) => {
   const [renderDataAgain, setRenderDataAgain] = React.useState(false);
   const [page, setPage] = React.useState(1);
 
-  const [rowsPerPage, setRowsPerPage] = React.useState<number | "Max">(30);
+  const [rowsPerPage, setRowsPerPage] = React.useState<number | "Max">(120);
   //   const rowsPerPage = 30;
   let pages: number = 0;
   const finalListRender = React.useMemo(() => {
@@ -541,6 +554,316 @@ const AdminBodyShcn = ({ content }: Props) => {
     [selectedKeys, columns, data],
   );
 
+  type ColumnType = {
+    id: number;
+    sort_val: number;
+    product_name: string;
+    ori_price: number;
+    dis_price: number;
+    is_available: boolean;
+    is_label: boolean;
+    is_soldout: boolean;
+    is_sale: boolean;
+  };
+
+  const columnsT = React.useMemo<ColumnDef<AdminBodyProductType[0]>[]>(() => {
+    return [
+      {
+        accessorKey: "select",
+        header: () => (
+          <Checkbox
+            icon={<MinusIcon />}
+            disableAnimation
+            radius="sm"
+            isSelected={
+              new Set(selectedKeys).size > 0 || selectedKeys === "all"
+            }
+            onValueChange={(e) =>
+              e ? setSelectedKeys("all") : setSelectedKeys(new Set([]))
+            }
+          />
+        ),
+        cell: ({ row }) => {
+          // console.log(row.getValue("ori_price"));
+          // const sort_val = row.getValue("sort_val");
+          const selected = new Set(selectedKeys);
+          return (
+            <Checkbox
+              radius="sm"
+              isSelected={
+                selected.has(row.getValue("sort_val")) || selectedKeys === "all"
+              }
+              onValueChange={(e) => {
+                onValueChangeSelect(e, row.getValue("sort_val"));
+              }}
+            />
+          );
+        },
+      },
+      {
+        accessorKey: "sort_val",
+        header: "SORT",
+        cell: ({ row }) => (
+          <AdminSortValField
+            isDisabled={selectColumn}
+            item={row.original}
+            setData={setData}
+          />
+        ),
+      },
+      {
+        accessorKey: "product_name",
+        header: () => <span className="w-full">PRODUCT</span>,
+        cell: ({ row }) => {
+          return (
+            <Textarea
+              isDisabled={selectColumn}
+              classNames={{
+                inputWrapper: "bg-transparent min-h-min p-1",
+                input: "text-xs",
+              }}
+              radius="sm"
+              minRows={1}
+              className=""
+              value={
+                row.getValue("product_name") !== null
+                  ? row.getValue("product_name")
+                  : ""
+              }
+              onValueChange={(e) =>
+                setData((prev) => {
+                  return prev.map((item) => {
+                    if (item.id === row.getValue("id")) {
+                      return {
+                        ...item,
+                        product_name: e,
+                      };
+                    }
+                    return item;
+                  });
+                })
+              }
+            />
+          );
+        },
+      },
+      {
+        accessorKey: "ori_price",
+        header: "ORI PRICE",
+        cell: ({ row }) => (
+          <Textarea
+            classNames={{
+              inputWrapper: "bg-transparent min-h-min p-1",
+              innerWrapper: "min-w-[50px] w-min",
+              input: "text-xs text-center",
+            }}
+            radius="sm"
+            minRows={1}
+            className=""
+            value={
+              row.getValue("ori_price") !== null
+                ? String(row.getValue("ori_price"))
+                : "null"
+            }
+            isDisabled={row.getValue("is_label") === true || selectColumn}
+            onValueChange={(e) =>
+              setData((prev) => {
+                return prev.map((item) => {
+                  if (item.id === row.getValue("id")) {
+                    return {
+                      ...item,
+                      ori_price: Number(e),
+                    };
+                  }
+                  return item;
+                });
+              })
+            }
+          />
+        ),
+      },
+      {
+        accessorKey: "dis_price",
+        header: "SALE PRICE",
+        cell: ({ row }) => (
+          <Textarea
+            classNames={{
+              inputWrapper: "bg-transparent min-h-min py-1",
+              innerWrapper: "min-w-[50px] w-min",
+              input: "text-xs text-center",
+            }}
+            radius="sm"
+            minRows={1}
+            className=""
+            value={
+              row.getValue("dis_price") !== null
+                ? String(row.getValue("dis_price"))
+                : "null"
+            }
+            isDisabled={row.getValue("dis_price") === null || selectColumn}
+            onValueChange={(e) =>
+              setData((prev) => {
+                return prev.map((item) => {
+                  if (item.id === row.getValue("id")) {
+                    return {
+                      ...item,
+                      dis_price: Number(e),
+                    };
+                  }
+                  return item;
+                });
+              })
+            }
+          />
+        ),
+      },
+      {
+        accessorKey: "is_sale",
+        header: "SALE?",
+        cell: ({ row }) => (
+          <Switch
+            isDisabled={selectColumn}
+            size="sm"
+            className="[&>span]:mr-0 [&>span]:data-[selected=true]:!bg-accent"
+            isSelected={row.getValue("dis_price") !== null ? true : false}
+            onValueChange={(e) =>
+              setData((prev) => {
+                return prev.map((item) => {
+                  if (item.id === row.getValue("id")) {
+                    return {
+                      ...item,
+                      dis_price: e ? 0 : null,
+                    };
+                  }
+                  return item;
+                });
+              })
+            }
+          />
+        ),
+      },
+      {
+        accessorKey: "is_label",
+        header: "LABEL",
+        cell: ({ row }) => (
+          <Switch
+            isDisabled={selectColumn}
+            size="sm"
+            className="[&>span]:mr-0 [&>span]:data-[selected=true]:!bg-accent"
+            isSelected={
+              row.getValue("is_label") !== null
+                ? row.getValue("is_label")
+                : false
+            }
+            onValueChange={(e) =>
+              setData((prev) => {
+                return prev.map((item) => {
+                  if (item.id === row.getValue("id")) {
+                    return {
+                      ...item,
+                      is_label: e,
+                    };
+                  }
+                  return item;
+                });
+              })
+            }
+          />
+        ),
+      },
+      {
+        accessorKey: "is_soldout",
+        header: "SOLD OUT",
+        cell: ({ row }) => (
+          <Switch
+            isDisabled={selectColumn}
+            size="sm"
+            className="items-center justify-center [&>span]:mr-0 [&>span]:data-[selected=true]:!bg-accent"
+            isSelected={
+              row.getValue("is_soldout") !== null
+                ? row.getValue("is_soldout")
+                : false
+            }
+            onValueChange={(e) =>
+              setData((prev) => {
+                return prev.map((item) => {
+                  if (item.id === row.getValue("id")) {
+                    return {
+                      ...item,
+                      is_soldout: e,
+                    };
+                  }
+                  return item;
+                });
+              })
+            }
+          />
+        ),
+      },
+      {
+        accessorKey: "is_available",
+        header: "ACTIVE",
+        cell: ({ row }) => (
+          <Switch
+            isDisabled={selectColumn}
+            size="sm"
+            className="items-center justify-center [&>span]:mr-0 [&>span]:data-[selected=true]:!bg-accent"
+            isSelected={
+              row.getValue("is_available") !== null
+                ? row.getValue("is_available")
+                : false
+            }
+            onValueChange={(e) =>
+              setData((prev) => {
+                return prev.map((item) => {
+                  if (item.id === row.getValue("id")) {
+                    return {
+                      ...item,
+                      is_available: e,
+                    };
+                  }
+                  return item;
+                });
+              })
+            }
+          />
+        ),
+      },
+      {
+        accessorKey: "actions",
+        header: "ACTIONS",
+        cell: ({ row }) => (
+          <div className="relative flex items-center justify-center gap-4">
+            <AdminDeletePop
+              isDisabled={selectColumn}
+              item={row.original}
+              setData={setData}
+              data={data}
+            />
+          </div>
+        ),
+      },
+    ];
+  }, [selectColumn, selectedKeys, data]);
+
+  const [columnVisibility, setColumnVisibility] =
+    React.useState<VisibilityState>({ ["select"]: false });
+
+  const table = useReactTable({
+    data: finalListRender,
+    columns: columnsT,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    onColumnVisibilityChange: setColumnVisibility,
+    state: {
+      columnVisibility,
+    },
+  });
+
+  const { rows } = table.getRowModel();
+
+  // console.log(table.getAllColumns().filter((col) => col.getIsVisible()));
+
   // DND variables ----------------------------------------------------------------
 
   const sortProps = React.useMemo(
@@ -766,6 +1089,10 @@ const AdminBodyShcn = ({ content }: Props) => {
           <CustCheckBox
             onValueChange={(e) => {
               setSelectColumn(e);
+              setColumnVisibility((prev) => ({
+                ...prev,
+                ["select"]: !prev["select"],
+              }));
               setSelectedKeys(new Set([]));
             }}
           />
@@ -896,230 +1223,140 @@ const AdminBodyShcn = ({ content }: Props) => {
             items={sortProps}
             strategy={verticalListSortingStrategy}
           >
-            <Table className="hidden">
-              <TableHeader>
-                <TableRow className="sticky top-[72px] z-[20] bg-[rgb(20,20,20)]">
-                  {columns
-                    .filter((col) => col.visible)
-                    .map((col) => (
-                      <TableHead
-                        key={col.key}
-                        className={`whitespace-nowrap text-xs ${col.style}`}
-                      >
-                        {col.label}
-                      </TableHead>
-                    ))}
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {/* <AutoSizer>
-                {({ height, width }) => ( */}
-
-                {finalListRender.map((item) => (
-                  <SortableItem
-                    key={item.sort_val}
-                    item={item}
-                    renderCell={renderCell}
-                    columns={columns}
-                    selectColumn={selectColumn}
-                  />
-                ))}
-                {/* <Virtuoso
-                  className="table-row "
-                  style={{ height: 500 }}
-                  components={{
-                    // Item: (props) => <TableRow {...props} />,
-                    Item: ({ children, ...props }) => (
-                      <div {...props} className="check">
-                        {children}
-                      </div>
-                    ),
-                    List: React.forwardRef(
-                      ({ children, ...props }, listRef) => (
-                        <div
-                          {...props}
-                          ref={listRef}
-                          className="table-row-group"
-                        >
-                          {children}
-                        </div>
+            <ResizablePanelGroup
+              direction="vertical"
+              className="min-h-[1000px] w-full"
+            >
+              <ResizablePanel defaultSize={50}>
+                {true ? (
+                  <TableVirtuoso
+                    style={{ height: "100%", width: "100%" }}
+                    // useWindowScroll
+                    className="mt-4"
+                    data={finalListRender}
+                    components={{
+                      Table: (props) => <Table {...props} />,
+                      TableHead: React.forwardRef(
+                        function TableHeadComponent(props, ref) {
+                          return (
+                            <TableHeader
+                              ref={ref}
+                              {...props}
+                              className="table-row-group"
+                            />
+                          );
+                        },
                       ),
-                    ),
-                  }}
-                  // style={{ width: "100%" }}
-                  data={finalListRender}
-                  itemContent={(index, item) => (
-                    <SortableItem
-                      key={item.sort_val}
-                      item={item}
-                      renderCell={renderCell}
-                      columns={columns}
-                      selectColumn={selectColumn}
-                    />
-                  )}
-                /> */}
-                {/* {generateRows()} */}
-                {/* <List
-                          ref={listRef}
-                          itemData={finalListRender}
-                          height={height}
-                          width={width}
-                          itemCount={finalListRender.length}
-                          itemSize={getItemHeight}
+                      TableBody: React.forwardRef(
+                        function TableBodyComponent(props, ref) {
+                          return <TableBody ref={ref} {...props} />;
+                        },
+                      ),
+                      TableRow: (props) => {
+                        const index = props["data-index"];
+                        const item = finalListRender[index];
+                        return (
+                          <SortableItem
+                            {...props}
+                            key={item.sort_val}
+                            item={item}
+                            renderCell={renderCell}
+                            columns={columns}
+                            selectColumn={selectColumn}
+                          />
+                        );
+                      },
+                    }}
+                    fixedHeaderContent={() => (
+                      <TableRow className="sticky top-0 z-[20] bg-[rgb(20,20,20)]">
+                        {columns
+                          .filter((col) => col.visible)
+                          .map((col) => (
+                            <TableHead
+                              key={col.key}
+                              className={cn(
+                                `whitespace-nowrap text-xs`,
+                                col.style,
+                              )}
+                            >
+                              {col.label}
+                            </TableHead>
+                          ))}
+                      </TableRow>
+                    )}
+                  />
+                ) : (
+                  <TableVirtuoso
+                    style={{ height: "100%", width: "100%" }}
+                    // useWindowScroll
+                    data={rows}
+                    components={{
+                      Table: (props) => <Table {...props} />,
+                      TableHead: React.forwardRef(
+                        function TableHeadComponent(props, ref) {
+                          return (
+                            <TableHeader
+                              ref={ref}
+                              {...props}
+                              className="table-row-group"
+                            />
+                          );
+                        },
+                      ),
+                      TableBody: React.forwardRef(
+                        function TableBodyComponent(props, ref) {
+                          return <TableBody ref={ref} {...props} />;
+                        },
+                      ),
+                      TableRow: (props) => {
+                        const index = props["data-index"];
+                        const item = rows[index];
+                        // console.log(item);
+                        return (
+                          <SortableItemV2
+                            {...props}
+                            item={item.original}
+                            row={item}
+                            renderCell={renderCell}
+                            columns={columns}
+                            selectColumn={selectColumn}
+                          />
+                        );
+                      },
+                    }}
+                    fixedHeaderContent={() =>
+                      table.getHeaderGroups().map((headerGroup) => (
+                        <TableRow
+                          className="sticky top-0 z-[200] bg-[rgb(20,20,20)]"
+                          key={headerGroup.id}
                         >
-                          {({ index, style, data }) => {
-                            const item = data[index];
-                            console.log(style);
-                            // setRenderDataAgain((prev) => !prev);
-                            return (
-                              <SortableItem
-                                index={index}
-                                key={item.sort_val}
-                                item={item}
-                                renderCell={renderCell}
-                                columns={columns}
-                                selectColumn={selectColumn}
-                                sty={style}
-                                setSize={setSize}
-                                windowWidth={windowWidth}
-                              />
-                            );
-                          }}
-                        </List> */}
-                {/* )}
-              </AutoSizer> */}
-              </TableBody>
-            </Table>
+                          {headerGroup.headers.map((header) => (
+                            <TableHead
+                              key={header.id}
+                              className={cn(
+                                `whitespace-nowrap text-xs`,
+                                header.id === "product" && "w-full",
+                              )}
+                            >
+                              {header.isPlaceholder
+                                ? null
+                                : flexRender(
+                                    header.column.columnDef.header,
+                                    header.getContext(),
+                                  )}
+                            </TableHead>
+                          ))}
+                        </TableRow>
+                      ))
+                    }
+                  />
+                )}
+              </ResizablePanel>
+              <ResizableHandle withHandle />
+              <ResizablePanel defaultSize={50}></ResizablePanel>
+            </ResizablePanelGroup>
           </SortableContext>
         </DndContext>
-        <DndContext
-          collisionDetection={closestCenter}
-          onDragEnd={onDragEnd}
-          onDragStart={onDragStart}
-          onDragOver={onDragOver}
-          sensors={sensors}
-        >
-          <SortableContext
-            items={sortProps}
-            strategy={verticalListSortingStrategy}
-          >
-            {/* <Table>
-              <TableHeader>
-                <TableRow className="sticky top-[72px] z-[20] bg-[rgb(20,20,20)]">
-                  {columns
-                    .filter((col) => col.visible)
-                    .map((col) => (
-                      <TableHead
-                        key={col.key}
-                        className={`whitespace-nowrap text-xs ${col.style}`}
-                      >
-                        {col.label}
-                      </TableHead>
-                    ))}
-                </TableRow>
-              </TableHeader>
-              <TableBody className=" w-full">
-                {finalListRender.map((item) => (
-                  <SortableItem
-                    key={item.sort_val}
-                    item={item}
-                    renderCell={renderCell}
-                    columns={columns}
-                    selectColumn={selectColumn}
-                  />
-                ))}
-              </TableBody>
-            </Table> */}
-            <TableVirtuoso
-              className=""
-              style={{ height: 500, width: "100%" }}
-              data={finalListRender}
-              components={{
-                Table: (props) => <Table {...props} />,
-                TableHead: React.forwardRef((props, ref) => (
-                  <TableHeader
-                    ref={ref}
-                    {...props}
-                    className="table-row-group"
-                  />
-                )),
-                TableBody: React.forwardRef((props, ref) => (
-                  <TableBody ref={ref} {...props} />
-                )),
-                TableRow: (props) => <div {...props} />, // Here needs to be SortableItem
-              }}
-              fixedHeaderContent={() => (
-                <TableRow className="sticky top-0 z-[20] bg-[rgb(20,20,20)]">
-                  {columns
-                    .filter((col) => col.visible)
-                    .map((col) => (
-                      <TableHead
-                        key={col.key}
-                        className={cn(`whitespace-nowrap text-xs`, col.style)}
-                      >
-                        {col.label}
-                      </TableHead>
-                    ))}
-                </TableRow>
-              )}
-              itemContent={(index, item, props) => (
-                <>
-                  <SortableItem
-                    {...props}
-                    key={item.sort_val}
-                    item={item}
-                    renderCell={renderCell}
-                    columns={columns}
-                    selectColumn={selectColumn}
-                  />
-                </>
-              )}
-            />
-          </SortableContext>
-        </DndContext>
-        {/* <TableVirtuoso
-          className="h-full w-full"
-          data={finalListRender}
-          components={{
-            Table: (props) => <Table {...props} />,
-            TableHead: (props) => (
-              <TableHeader {...props} className="bg-background" />
-            ),
-            TableBody: (props) => (
-              <TableBody {...props}>
-                <DndContext
-                  collisionDetection={closestCenter}
-                  onDragEnd={onDragEnd}
-                  onDragStart={onDragStart}
-                  onDragOver={onDragOver}
-                  sensors={sensors}
-                >
-                  <SortableContext
-                    items={sortProps}
-                    strategy={verticalListSortingStrategy}
-                  ></SortableContext>
-                </DndContext>
-              </TableBody>
-            ),
-          }}
-          fixedHeaderContent={() => (
-            <TableRow>
-              <TableHead>Name</TableHead>
-              <TableHead>Description</TableHead>
-            </TableRow>
-          )}
-          itemContent={(index, item) => <><SortableItem
-            key={item.sort_val}
-            item={item}
-            renderCell={renderCell}
-            columns={columns}
-            selectColumn={selectColumn}
-          /></>}
-        /> */}
-        {/* </div>
-          </div>
-        </div> */}
-        {/* <TableSample /> */}
         <div className="mx-auto mt-4 flex justify-center gap-4">
           <Select
             items={[
@@ -1171,107 +1408,3 @@ const AdminBodyShcn = ({ content }: Props) => {
 };
 
 export default AdminBodyShcn;
-
-const SortableItem = ({
-  item,
-  renderCell,
-  columns,
-  selectColumn,
-  ...props
-}: {
-  item: AdminBodyProductType[0];
-  renderCell: (
-    item: AdminBodyProductType[0],
-    columnKey: React.Key,
-    selectColumn: boolean,
-  ) => string | number | boolean | JSX.Element | null | undefined;
-  columns: (
-    | {
-        key: string;
-        label: JSX.Element;
-        visible: boolean;
-        style: string;
-      }
-    | {
-        key: string;
-        label: string;
-        visible: boolean;
-        style: string;
-      }
-  )[];
-  selectColumn: boolean;
-  [key: string]: any;
-}) => {
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: item.sort_val });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  const checkSortAvailable = columns.find(
-    (item) => item.key === "select",
-  )?.visible;
-
-  const conditionalProps = checkSortAvailable
-    ? { ...attributes, ...listeners }
-    : {};
-
-  // const isSelected = selectedKeys.has(item.id);
-
-  return (
-    <React.Fragment key={item.sort_val}>
-      <TableRow
-        {...props}
-        key={item.sort_val}
-        ref={setNodeRef}
-        style={style}
-        {...conditionalProps}
-        onClick={selectColumn ? undefined : () => console.log("")}
-        className={cn(
-          selectColumn && "bg-zinc-950",
-          item.is_label && "bg-zinc-900",
-          selectColumn && item.is_label && "bg-zinc-900",
-          // "w-full",
-        )}
-      >
-        {columns
-          .filter((item) => item.visible)
-          .map((col) => (
-            <TableCell className={cn("font-medium")} key={col.key}>
-              {renderCell(item, col.key, selectColumn)}
-            </TableCell>
-          ))}
-      </TableRow>
-    </React.Fragment>
-  );
-};
-
-const CustCheckBox = ({
-  onValueChange,
-}: {
-  onValueChange?: (isSelected: boolean) => void;
-}) => {
-  const [isSelected, setIsSelected] = React.useState(false);
-
-  const latestOnValueChange = React.useRef(onValueChange);
-
-  React.useEffect(() => {
-    latestOnValueChange.current = onValueChange;
-  }, [onValueChange]);
-
-  React.useEffect(() => {
-    if (latestOnValueChange.current) latestOnValueChange.current(isSelected);
-  }, [isSelected]);
-
-  return (
-    <Button
-      radius="sm"
-      onClick={() => setIsSelected((prev) => !prev)}
-      className={cn(isSelected && "bg-accent/50", "h-[56px]")}
-    >
-      Bulk
-    </Button>
-  );
-};
