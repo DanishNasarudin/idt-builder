@@ -1,3 +1,7 @@
+import {
+  AdminBodyProductType,
+  Selection,
+} from "@/app/admin/(admin-components)/AdminBodyShcn";
 import { ProductPublicData } from "@/app/page";
 import { create } from "zustand";
 
@@ -33,6 +37,178 @@ type TriggerStore = {
 export const useTriggerStore = create<TriggerStore>()((set) => ({
   trigger: false,
   setTrigger: (trigger) => set({ trigger }),
+}));
+
+type AdminStore = {
+  isInView: number[];
+  setInView: (index: number) => void;
+  delInView: (index: number) => void;
+  changeData: AdminBodyProductType;
+  initChangeData: (newVal: AdminBodyProductType) => void;
+  setChangeData: (
+    id: number,
+    col: string,
+    val: string | number | boolean,
+  ) => void;
+  selectColumn: boolean;
+  setSelectColumn: (newVal: boolean) => void;
+  selectedKeys: Selection;
+  setSelectedKeys: (newVal: React.SetStateAction<Selection>) => void;
+  rowsPerPage: number | "Max";
+  setRowsPerPage: (newVal: React.SetStateAction<number | "Max">) => void;
+};
+
+export const useAdminStore = create<AdminStore>()((set) => ({
+  isInView: [],
+  setInView: (index) =>
+    set((state) => {
+      let newState;
+      if (state.isInView.length === 0) {
+        newState = [...state.isInView, index].sort((a, b) => a - b);
+      } else {
+        const check = state.isInView.find((item) => item === index);
+        if (check) {
+          return state;
+        } else {
+          newState = [...state.isInView, index].sort((a, b) => a - b);
+        }
+      }
+      return { isInView: newState };
+    }),
+  delInView: (index) =>
+    set((state) => {
+      const sort = state.isInView.filter((item) => item !== index);
+      let lastIndex = 0;
+      for (let i = 0; i < sort.length - 1; i++) {
+        if (sort[i + 1] === sort[i] + 1) {
+          lastIndex = i + 1;
+        } else {
+          break;
+        }
+      }
+
+      // console.log(lastIndex + 1, sort.length - lastIndex, sort);
+
+      if (lastIndex + 1 < sort.length - lastIndex + 1) {
+        let newState = JSON.parse(JSON.stringify(sort));
+        newState = sort.slice(lastIndex + 1);
+        if (newState.length > 0) {
+          // console.log("pass newstate back");
+          return { isInView: newState };
+        } else {
+          if (sort.length > 1) {
+            // console.log("pass sort back");
+            return { isInView: sort };
+          } else {
+            // console.log("pass prev back");
+            return { isInView: state.isInView };
+          }
+        }
+      } else if (lastIndex + 1 === sort.length - lastIndex + 1) {
+        // console.log(sort, "CHECK");
+        if (sort.length > 1) {
+          return { isInView: sort };
+        } else {
+          return { isInView: state.isInView };
+        }
+      } else if (lastIndex + 1 > sort.length - lastIndex + 1) {
+        let newState = JSON.parse(JSON.stringify(sort));
+        newState = sort.slice(0, lastIndex + 1);
+        if (newState.length > 0) {
+          // console.log("pass newstate front");
+          return { isInView: newState };
+        } else {
+          if (sort.length > 1) {
+            // console.log("pass sort front");
+            return { isInView: sort };
+          } else {
+            // console.log("pass prev front");
+            return { isInView: state.isInView };
+          }
+        }
+      } else {
+        return { isInView: state.isInView };
+      }
+    }),
+  changeData: [],
+  initChangeData: (newVal) => set({ changeData: newVal }),
+  setChangeData: (id, col, val) =>
+    set((state) => {
+      const newData = state.changeData.map((row) => {
+        if (row.id === id) {
+          return {
+            ...row,
+            [col]: val,
+          };
+        }
+        return row;
+      });
+      return {
+        changeData: newData,
+      };
+    }),
+  selectColumn: false,
+  setSelectColumn: (newVal) => set({ selectColumn: newVal }),
+  selectedKeys: new Set<React.Key>(),
+  setSelectedKeys: (newVal) =>
+    set((state) => {
+      if (typeof newVal === "function") {
+        return { selectedKeys: newVal(state.selectedKeys) };
+      } else {
+        return { selectedKeys: newVal };
+      }
+    }),
+  rowsPerPage: "Max",
+  setRowsPerPage: (newVal) =>
+    set((state) => {
+      if (typeof newVal === "function") {
+        return { rowsPerPage: newVal(state.rowsPerPage) };
+      } else {
+        return { rowsPerPage: newVal };
+      }
+    }),
+}));
+
+type AdminStoreChangeData = {
+  changeData: AdminBodyProductType;
+  initChangeData: (newVal: AdminBodyProductType) => void;
+  setChangeData: (
+    id: number,
+    col: string,
+    val: string | number | boolean | null,
+  ) => void;
+};
+
+export const useAdminStoreChangeData = create<AdminStoreChangeData>()(
+  (set) => ({
+    changeData: [],
+    initChangeData: (newVal) => set({ changeData: newVal }),
+    setChangeData: (id, col, val) =>
+      set((state) => {
+        const newData = state.changeData.map((row) => {
+          if (row.id === id) {
+            return {
+              ...row,
+              [col]: val,
+            };
+          }
+          return row;
+        });
+        return {
+          changeData: newData,
+        };
+      }),
+  }),
+);
+
+type ScrollStore = {
+  isScrolling: boolean;
+  setScrolling: (isScrolling: boolean) => void;
+};
+
+export const useScrollStore = create<ScrollStore>()((set) => ({
+  isScrolling: false,
+  setScrolling: (isScrolling: boolean) => set({ isScrolling }),
 }));
 
 export type Products = {

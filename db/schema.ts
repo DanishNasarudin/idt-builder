@@ -34,7 +34,7 @@ export const product = mysqlTable("product", {
   is_soldout: boolean("is_soldout").default(false).notNull(),
   category_id: bigint("category_id", { mode: "bigint", unsigned: true })
     .notNull()
-    .references(() => product_category.id),
+    .references(() => product_category.id, { onDelete: "cascade" }),
   sort_val: int("sort_val").notNull(),
   createdAt: timestamp("created_at").default(sql`CURRENT_TIMESTAMP`),
   updatedAt: timestamp("updated_at").default(

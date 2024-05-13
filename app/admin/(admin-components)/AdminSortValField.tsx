@@ -6,10 +6,12 @@ const AdminSortValField = ({
   item,
   setData,
   isDisabled,
+  className,
 }: {
   item: AdminBodyProductType[0];
   setData: (value: React.SetStateAction<AdminBodyProductType>) => void;
   isDisabled?: boolean;
+  className?: string;
 }) => {
   const [sortValString, setSortValString] = React.useState("");
 
@@ -32,14 +34,14 @@ const AdminSortValField = ({
         }}
         radius="sm"
         // minRows={1}
-        className=""
+        className={className}
         value={sortValString}
         onValueChange={(e) => {
           setSortValString(e);
           toSortVal.current = Number(e);
         }}
         onFocusChange={(e) => {
-          if (!e) {
+          if (!e && toSortVal.current !== initSortVal.current) {
             setData((prev) => {
               let newItems = [...prev];
 
@@ -72,7 +74,7 @@ const AdminSortValField = ({
           }
         }}
         onKeyDown={(e) => {
-          if (e.key === "Enter") {
+          if (e.key === "Enter" && toSortVal.current !== initSortVal.current) {
             setData((prev) => {
               let newItems = [...prev];
 

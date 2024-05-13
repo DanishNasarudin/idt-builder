@@ -2,6 +2,7 @@ import {
   adminInsertListingBulk,
   adminUpdateListing,
 } from "@/app/(serverActions)/adminActions";
+import { useAdminStoreChangeData } from "@/lib/zus-store";
 import {
   Button,
   Input,
@@ -15,25 +16,24 @@ import {
 } from "@nextui-org/react";
 import React from "react";
 import { toast } from "sonner";
-import { AdminBodyProductType, Selection } from "./AdminBodyShcn";
+import { AdminBodyProductType } from "./AdminBodyShcn";
 
 const AdminAddBulkPop = ({
   catId,
-  setData,
+  // setData,
   data,
-  selectedKeys,
-  setSelectedKeys,
 }: {
   catId: number;
-  setData: (value: React.SetStateAction<AdminBodyProductType>) => void;
+  // setData: (value: React.SetStateAction<AdminBodyProductType>) => void;
   data: AdminBodyProductType;
-  selectedKeys: Selection;
-  setSelectedKeys: React.Dispatch<React.SetStateAction<Selection>>;
+  // selectedKeys: Selection;
+  // setSelectedKeys: React.Dispatch<React.SetStateAction<Selection>>;
 }) => {
   // const [isOpen, setIsOpen] = React.useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [sortVal, setSortVal] = React.useState("1");
   const [textVal, setTextVal] = React.useState("");
+  const { initChangeData } = useAdminStoreChangeData();
 
   return (
     <div className="relative">
@@ -117,6 +117,8 @@ const AdminAddBulkPop = ({
                             sort_val: index + 1,
                           }),
                         );
+                        // setData(sortedProducts);
+                        initChangeData(sortedProducts);
                         // console.log(sortedProducts);
                         toast.promise(adminUpdateListing(sortedProducts), {
                           loading: "Updating...",

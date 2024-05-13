@@ -26,6 +26,7 @@ import {
 } from "@nextui-org/react";
 
 import { deepCopy } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
 import { AdminCatProps } from "./AdminHead";
@@ -56,11 +57,11 @@ const columns = [
 
 function findUpdatedItems(
   originalItems: AdminCatProps,
-  currentItems: AdminCatProps
+  currentItems: AdminCatProps,
 ) {
   const updatedItems = currentItems.filter((currentItem) => {
     const originalItem = originalItems.find(
-      (oItem) => oItem?.db_id === currentItem?.db_id
+      (oItem) => oItem?.db_id === currentItem?.db_id,
     );
 
     // If an item with the same ID is not found, it's a new item (or handle accordingly)
@@ -83,6 +84,7 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
 
   const [editCatPop, setEditCatPop] = React.useState(false);
   const [addCat, setAddCat] = React.useState("");
+  const router = useRouter();
 
   const newLink = React.useMemo(() => {
     let newCat = addCat;
@@ -130,7 +132,7 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
           );
         case "actions":
           return (
-            <div className="flex gap-4 items-center">
+            <div className="flex items-center gap-4">
               <Popover
                 placement="left"
                 backdrop="transparent"
@@ -146,8 +148,8 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
                   <div>
                     <PopoverTrigger>
                       <Button
-                        className=" mobilehover:hover:bg-zinc-700 transition-all
-                    bg-transparent rounded-md min-w-[24px] w-[24px] h-[24px] flex justify-center items-center"
+                        className=" flex h-[24px]
+                    w-[24px] min-w-[24px] items-center justify-center rounded-md bg-transparent transition-all mobilehover:hover:bg-zinc-700"
                         startContent={<EditIcon size={16} />}
                         isIconOnly
                         onClick={() => {
@@ -167,10 +169,10 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
                     onValueChange={(e) => {
                       setItems((prev) => {
                         const definedItems = prev.filter(
-                          (item) => item !== undefined
+                          (item) => item !== undefined,
                         );
                         const row = definedItems.findIndex(
-                          (idx) => idx?.id === item?.id
+                          (idx) => idx?.id === item?.id,
                         );
 
                         if (row >= 0) {
@@ -183,26 +185,26 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
                   />
                 </PopoverContent>
               </Popover>
-              <div className="flex-col max-h-[40px] hidden">
+              <div className="hidden max-h-[40px] flex-col">
                 <Button
                   variant="bordered"
                   size="sm"
-                  className="p-1 rounded-lg border-[1px] min-w-[40px]"
+                  className="min-w-[40px] rounded-lg border-[1px] p-1"
                   onClick={() => {
                     setItems((prev) => {
                       const definedItems = prev.filter(
                         (
-                          item
+                          item,
                         ): item is {
                           name?: string;
                           link?: string;
                           id: number;
                           db_id?: number;
-                        } => item !== undefined
+                        } => item !== undefined,
                       );
 
                       const index = definedItems.findIndex(
-                        (idx) => idx?.id === item?.id
+                        (idx) => idx?.id === item?.id,
                       );
 
                       if (index > 0) {
@@ -223,22 +225,22 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
                 <Button
                   variant="bordered"
                   size="sm"
-                  className="p-1 rounded-lg border-[1px] min-w-[40px]"
+                  className="min-w-[40px] rounded-lg border-[1px] p-1"
                   onClick={() => {
                     setItems((prev) => {
                       const definedItems = prev.filter(
                         (
-                          item
+                          item,
                         ): item is {
                           name?: string;
                           link?: string;
                           id: number;
                           db_id?: number;
-                        } => item !== undefined
+                        } => item !== undefined,
                       );
 
                       const index = definedItems.findIndex(
-                        (idx) => idx.id === item?.id
+                        (idx) => idx.id === item?.id,
                       );
 
                       if (index >= 0 && index < prev.length - 1) {
@@ -274,8 +276,8 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
                     <PopoverTrigger>
                       <Button
                         color="danger"
-                        className=" mobilehover:hover:bg-zinc-700 transition-all
-                    bg-transparent rounded-md min-w-[24px] w-[24px] h-[24px] flex justify-center items-center text-danger"
+                        className=" flex h-[24px]
+                    w-[24px] min-w-[24px] items-center justify-center rounded-md bg-transparent text-danger transition-all mobilehover:hover:bg-zinc-700"
                         startContent={<DelIcon size={16} />}
                         isIconOnly
                       />
@@ -286,22 +288,23 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
                   <div className="flex gap-2">
                     Confirm ?
                     <Button
-                      className=" transition-all
-                    rounded-md h-[24px] flex justify-center items-center bg-danger"
+                      className=" flex
+                    h-[24px] items-center justify-center rounded-md bg-danger transition-all"
                       onClick={() => {
                         // console.log(item?.db_id);
                         if (item?.db_id === undefined) return;
                         toast.promise(
-                          adminDelCategory(item?.db_id).then(() =>
+                          adminDelCategory(item?.db_id).then(() => {
                             setItems((prev) =>
-                              prev.filter((p) => p?.db_id !== item?.db_id)
-                            )
-                          ),
+                              prev.filter((p) => p?.db_id !== item?.db_id),
+                            );
+                            router.push("/admin");
+                          }),
                           {
                             loading: "Deleting...",
                             success: "Deleted!",
                             error: (data) => `Error: ${data}`,
-                          }
+                          },
                         );
                       }}
                     >
@@ -316,7 +319,7 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
           return cellValue;
       }
     },
-    []
+    [],
   );
 
   const dragItem = React.useRef<number | null>(null);
@@ -398,7 +401,7 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
                         loading: "Adding...",
                         success: "Added!",
                         error: (data) => `Error: ${data}`,
-                      }
+                      },
                     );
                   }}
                 >
@@ -426,19 +429,19 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
                       draggable
                       onDragStart={() =>
                         (dragItem.current = Number(
-                          items.findIndex((idx) => idx?.id === item?.id)
+                          items.findIndex((idx) => idx?.id === item?.id),
                         ))
                       }
                       onDragEnter={() =>
                         (draggedOverItem.current = Number(
-                          items.findIndex((idx) => idx?.id === item?.id)
+                          items.findIndex((idx) => idx?.id === item?.id),
                         ))
                       }
                       onDragEnd={handleSort}
                       onDragOver={(e) =>
                         handleSortOver(
                           e,
-                          items.findIndex((idx) => idx?.id === item?.id)
+                          items.findIndex((idx) => idx?.id === item?.id),
                         )
                       }
                       className={`
@@ -447,7 +450,7 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
                           items.findIndex((idx) => idx?.id === item?.id)
                             ? "bg-zinc-500"
                             : "mobilehover:hover:bg-zinc-800"
-                        } transition-all cursor-grab
+                        } cursor-grab transition-all
                       `}
                     >
                       {(columnKey) => (
@@ -455,7 +458,7 @@ const AdminModalCategory = ({ category, modalCategory }: Props) => {
                           {renderCell(
                             item,
                             columnKey,
-                            items.findIndex((idx) => idx?.id === item?.id)
+                            items.findIndex((idx) => idx?.id === item?.id),
                           )}
                         </TableCell>
                       )}

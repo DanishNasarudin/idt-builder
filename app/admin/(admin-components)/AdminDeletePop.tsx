@@ -20,11 +20,13 @@ import { AdminBodyProductType } from "./AdminBodyShcn";
 const AdminDeletePop = ({
   item,
   setData,
+  initChangeData,
   data,
   isDisabled,
 }: {
   item: AdminBodyProductType[0];
   setData: (value: React.SetStateAction<AdminBodyProductType>) => void;
+  initChangeData: (newVal: AdminBodyProductType) => void;
   data: AdminBodyProductType;
   isDisabled?: boolean;
 }) => {
@@ -71,6 +73,7 @@ const AdminDeletePop = ({
 
                         deleteEntry = sortProducts(deleteEntry);
                         setData(deleteEntry);
+                        initChangeData(deleteEntry);
 
                         toast.promise(adminUpdateListing(deleteEntry), {
                           loading: "Updating...",

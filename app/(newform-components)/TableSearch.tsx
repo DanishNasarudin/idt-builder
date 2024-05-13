@@ -12,6 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useSelectStore } from "@/lib/zus-store";
 import { Kbd } from "@nextui-org/react";
@@ -201,41 +202,45 @@ const TableSearch = ({ disabledKeys, data }: Props) => {
               ref={keyRef}
             />
             <CommandEmpty>No product found.</CommandEmpty>
-            <CommandList className="w-full max-w-[30vw] font-bold sm:max-w-[90vw]">
-              {searchData.slice(0, 30).map((item) => {
-                return (
-                  <CommandItem
-                    aria-label={item.product_name as string}
-                    key={`${item.category_id}_${item.product_id}`}
-                    // showDivider
-                    className={`whitespace-pre-wrap py-0 !text-left !text-[10px] ${
-                      disabledKeys.find((dk) => dk === String(item.product_id))
-                        ? "text-accent opacity-100"
-                        : ""
-                    }`}
-                    disabled={
-                      item.is_label === null ? undefined : item.is_label
-                    }
-                    value={`${item.category_id}_${item.product_id}`}
-                    onSelect={(e) => {
-                      // console.log(e);
-                      const [category_id, product_id] = String(e).split("_");
-                      setSearchDisplay(`${item.product_name}`);
-                      setDataClient(Number(category_id), product_id, 1);
-                      setOpen(false);
-                    }}
-                  >
-                    {item.product_name}{" "}
-                    {item.is_label
-                      ? ``
-                      : `| RM${
-                          item.dis_price !== null
-                            ? item.dis_price
-                            : item.ori_price
-                        }`}
-                  </CommandItem>
-                );
-              })}
+            <CommandList className="max-h-[500px] w-full max-w-[30vw] font-bold sm:max-w-[90vw]">
+              <ScrollArea className="rounded-md border">
+                {searchData.slice(0, searchTerm ? 200 : 30).map((item) => {
+                  return (
+                    <CommandItem
+                      aria-label={item.product_name as string}
+                      key={`${item.category_id}_${item.product_id}`}
+                      // showDivider
+                      className={`whitespace-pre-wrap py-0 !text-left !text-[10px] ${
+                        disabledKeys.find(
+                          (dk) => dk === String(item.product_id),
+                        )
+                          ? "text-accent opacity-100"
+                          : ""
+                      }`}
+                      disabled={
+                        item.is_label === null ? undefined : item.is_label
+                      }
+                      value={`${item.category_id}_${item.product_id}`}
+                      onSelect={(e) => {
+                        // console.log(e);
+                        const [category_id, product_id] = String(e).split("_");
+                        setSearchDisplay(`${item.product_name}`);
+                        setDataClient(Number(category_id), product_id, 1);
+                        setOpen(false);
+                      }}
+                    >
+                      {item.product_name}{" "}
+                      {item.is_label
+                        ? ``
+                        : `| RM${
+                            item.dis_price !== null
+                              ? item.dis_price
+                              : item.ori_price
+                          }`}
+                    </CommandItem>
+                  );
+                })}
+              </ScrollArea>
               {/* <CommandItem>Test</CommandItem> */}
             </CommandList>
           </Command>

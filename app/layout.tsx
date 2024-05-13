@@ -79,7 +79,7 @@ export default function RootLayout({
           gtag('config', '${GTM_ID}');
           `}
       </Script>
-      <body className={`${inter.className} relative`}>
+      <body className={`${inter.className} relative `}>
         <Suspense>
           <Providers>
             {/* <Navbar />

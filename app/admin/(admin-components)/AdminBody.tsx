@@ -26,7 +26,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 import { AdminBodyProductType, AdminBodyType } from "./AdminBodyShcn";
-import AdminDeletePop from "./AdminDeletePop";
 import AdminSortValField from "./AdminSortValField";
 
 type Props = {
@@ -459,7 +458,7 @@ const AdminBody = ({ content }: Props) => {
         case "actions":
           return (
             <div className="relative flex items-center gap-4">
-              <AdminDeletePop item={item} setData={setData} data={data} />
+              {/* <AdminDeletePop item={item} setData={setData} data={data} /> */}
             </div>
           );
         default:

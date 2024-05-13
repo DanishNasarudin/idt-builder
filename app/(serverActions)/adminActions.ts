@@ -11,7 +11,7 @@ async function adminInsertCategory(name: string, sort_val: number) {
     await db
       .insert(product_category)
       .values({ name: name, sort_val: sort_val });
-    revalidatePath("/admin");
+    revalidatePath("/");
     return true;
   } catch (error: any) {
     throw new Error(`${error.message}`);
@@ -21,7 +21,7 @@ async function adminInsertCategory(name: string, sort_val: number) {
 async function adminDelCategory(id: number) {
   try {
     await db.delete(product_category).where(eq(product_category.id, id));
-    revalidatePath("/admin");
+    revalidatePath("/");
     return true;
   } catch (error: any) {
     throw new Error(`${error.message}`);
@@ -40,7 +40,7 @@ async function adminUpdateCategory(updatedItems: AdminCatProps) {
         .set({ sort_val: item?.id })
         .where(eq(product_category.id, Number(item?.db_id)));
     }
-    revalidatePath("/admin");
+    revalidatePath("/");
     return true;
   } catch (error: any) {
     throw new Error(`${error.message}`);
@@ -210,7 +210,7 @@ async function adminUpdateListing(updatedItems: AdminBodyProductType) {
         id: Number(item?.id),
       });
     }
-    revalidatePath("/admin");
+    revalidatePath("/");
     // console.log("pass");
     return true;
   } catch (error: any) {
@@ -231,7 +231,7 @@ async function adminDelListing(id: number) {
 async function adminDelListingBulk(ids: number[], revalidate: boolean = false) {
   try {
     await db.execute(sql`DELETE FROM ${product} WHERE ${product.id} IN ${ids}`);
-    if (revalidate) revalidatePath("/admin");
+    if (revalidate) revalidatePath("/");
     return true;
   } catch (error: any) {
     throw new Error(`${error.message}`);
@@ -255,7 +255,7 @@ async function adminReplaceData(
         is_available: item.is_available,
       });
     }
-    revalidatePath("/admin");
+    revalidatePath("/");
     return true;
   } catch (error: any) {
     throw new Error(`${error.message}`);

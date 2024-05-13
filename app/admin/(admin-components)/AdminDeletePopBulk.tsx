@@ -4,6 +4,7 @@ import {
   adminUpdateListing,
 } from "@/app/(serverActions)/adminActions";
 import { sortProducts } from "@/lib/utils";
+import { useAdminStore, useAdminStoreChangeData } from "@/lib/zus-store";
 import {
   Button,
   Modal,
@@ -13,25 +14,24 @@ import {
   ModalHeader,
   useDisclosure,
 } from "@nextui-org/react";
-import React from "react";
 import { toast } from "sonner";
 import { AdminBodyProductType, Selection } from "./AdminBodyShcn";
 
 const AdminDeletePopBulk = ({
-  setData,
+  // setData,
   data,
   selectedKeys,
-  setSelectedKeys,
-  rowsPerPage,
+  // rowsPerPage,
 }: {
-  setData: (value: React.SetStateAction<AdminBodyProductType>) => void;
+  // setData: (value: React.SetStateAction<AdminBodyProductType>) => void;
   data: AdminBodyProductType;
   selectedKeys: Selection;
-  setSelectedKeys: React.Dispatch<React.SetStateAction<Selection>>;
-  rowsPerPage: number | "Max";
+  // rowsPerPage: number | "Max";
 }) => {
   // const [isOpen, setIsOpen] = React.useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { setSelectedKeys, rowsPerPage } = useAdminStore();
+  const { initChangeData } = useAdminStoreChangeData();
 
   return (
     <div className="relative">
@@ -68,7 +68,8 @@ const AdminDeletePopBulk = ({
                         const objToDelete = data.map((item) => item.id);
                         toast.promise(
                           adminDelListingBulk(objToDelete, true).then(() => {
-                            setData([]);
+                            // setData([]);
+                            initChangeData([]);
                             setSelectedKeys(new Set([]));
                             onClose();
                           }),
@@ -94,7 +95,8 @@ const AdminDeletePopBulk = ({
                           // console.log(deleteEntry);
 
                           deleteEntry = sortProducts(deleteEntry);
-                          setData(deleteEntry);
+                          // setData(deleteEntry);
+                          initChangeData(deleteEntry);
                           setSelectedKeys(new Set([]));
                           // console.log(deleteEntry, "CHECK");
 
@@ -125,7 +127,8 @@ const AdminDeletePopBulk = ({
                         );
 
                         deleteEntry = sortProducts(deleteEntry);
-                        setData(deleteEntry);
+                        // setData(deleteEntry);
+                        initChangeData(deleteEntry);
                         setSelectedKeys(new Set([]));
 
                         toast.promise(adminUpdateListing(deleteEntry), {

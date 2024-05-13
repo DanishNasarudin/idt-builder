@@ -16,7 +16,7 @@ export default function OrdersLayout({
       <SideNavbarContent className="w-full px-16 pt-4">
         {children}
       </SideNavbarContent>
-      <div className="h-[50vh]" />
+      {/* <div className="h-[50vh]" /> */}
     </div>
   );
 }

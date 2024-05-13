@@ -13,6 +13,7 @@ type Props = { searchParams: { [key: string]: string | string[] | undefined } };
 export type ProductData = {
   id: number;
   name: string | null;
+  sort_val: number;
   product: {
     id: number;
     product_name: string | null;
@@ -59,43 +60,45 @@ export type ProductPublicSearchData = {
 
 const flattenData = (data: ProductData): ProductPublicData => {
   // console.log("flat");
-  return data.map(({ id, name, product }) => {
-    return {
-      category_id: id,
-      category_name: name,
-      product: product
-        .map(
-          ({
-            id: productId,
-            product_name,
-            is_label,
-            dis_price,
-            ori_price,
-            sort_val,
-            is_soldout,
-          }) => {
-            const original = ori_price !== null ? ori_price : 0;
-            const discount = dis_price !== null ? dis_price : 0;
-            const unit_price = discount > 0 ? discount : original;
-            return {
-              product_id: productId,
+  return data
+    .sort((a, b) => a.sort_val - b.sort_val)
+    .map(({ id, name, product }) => {
+      return {
+        category_id: id,
+        category_name: name,
+        product: product
+          .map(
+            ({
+              id: productId,
               product_name,
-              unit_price,
               is_label,
-              discount: discount > 0 ? original - discount : 0,
+              dis_price,
+              ori_price,
               sort_val,
               is_soldout,
-            };
-          },
-        )
-        .sort((a, b) => a.sort_val - b.sort_val),
-      qty: 0,
-      sub_total: 0,
-      selected_id: undefined,
-      discount: 0,
-      duplicate: false,
-    };
-  });
+            }) => {
+              const original = ori_price !== null ? ori_price : 0;
+              const discount = dis_price !== null ? dis_price : 0;
+              const unit_price = discount > 0 ? discount : original;
+              return {
+                product_id: productId,
+                product_name,
+                unit_price,
+                is_label,
+                discount: discount > 0 ? original - discount : 0,
+                sort_val,
+                is_soldout,
+              };
+            },
+          )
+          .sort((a, b) => a.sort_val - b.sort_val),
+        qty: 0,
+        sub_total: 0,
+        selected_id: undefined,
+        discount: 0,
+        duplicate: false,
+      };
+    });
 };
 
 const containsSearchTerm = (value: any, searchTerm: string): boolean => {

@@ -9,14 +9,11 @@ import { AdminBodyProductType } from "./AdminBodyShcn";
 type Props = {};
 
 const SortableItem = ({
-  item,
+  selectColumn,
   renderCell,
   columns,
-  selectColumn,
-  row,
   ...props
 }: {
-  item: AdminBodyProductType[0];
   renderCell: (
     item: AdminBodyProductType[0],
     columnKey: React.Key,
@@ -37,7 +34,9 @@ const SortableItem = ({
       }
   )[];
   selectColumn: boolean;
-  row: Row<{
+  [key: string]: any;
+}) => {
+  const row: Row<{
     id: number;
     sort_val: number;
     product_name: string | null;
@@ -47,9 +46,8 @@ const SortableItem = ({
     is_label: boolean | null;
     is_soldout: boolean;
     hidden?: boolean;
-  }>;
-  [key: string]: any;
-}) => {
+  }> = props.item;
+
   const { attributes, listeners, setNodeRef, transform, transition } =
     useSortable({ id: row.getValue("sort_val") });
 
@@ -58,13 +56,11 @@ const SortableItem = ({
     transition,
   };
 
-  const checkSortAvailable = columns.find(
-    (item) => item.key === "select",
-  )?.visible;
+  // const checkSortAvailable = columns.find(
+  //   (item) => item.key === "select",
+  // )?.visible;
 
-  const conditionalProps = checkSortAvailable
-    ? { ...attributes, ...listeners }
-    : {};
+  const conditionalProps = selectColumn ? { ...attributes, ...listeners } : {};
 
   // const isSelected = selectedKeys.has(item.id);
   const is_label = row.getValue("is_label");
@@ -87,18 +83,20 @@ const SortableItem = ({
           // "w-full",
         )}
       >
-        {/* {columns
+        {/* {row.getVisibleCells().map((cell) => {
+          return (
+            <TableCell key={cell.id}>
+              {flexRender(cell.column.columnDef.cell, cell.getContext())}
+            </TableCell>
+          );
+        })} */}
+        {columns
           .filter((item) => item.visible)
           .map((col) => (
             <TableCell className={cn("font-medium", col.style)} key={col.key}>
-              {renderCell(item, col.key, selectColumn)}
+              {renderCell(row.original, col.key, selectColumn)}
             </TableCell>
-          ))} */}
-        {row.getVisibleCells().map((cell) => (
-          <TableCell key={cell.id}>
-            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-          </TableCell>
-        ))}
+          ))}
       </TableRow>
     </React.Fragment>
   );

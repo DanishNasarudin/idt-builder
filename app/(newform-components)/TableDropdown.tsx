@@ -12,7 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { containsSearchTerm } from "@/lib/utils";
+import { cn, containsSearchTerm } from "@/lib/utils";
 import { useSelectStore } from "@/lib/zus-store";
 import React from "react";
 import { ProductPublicData } from "../page";
@@ -236,7 +236,21 @@ const TableDropdown = ({ data, disabledKeys }: Props) => {
                       }}
                     >
                       {item.is_soldout && "[SOLD OUT]"} {item.product_name}{" "}
-                      {item.is_label ? `` : `| RM${item.unit_price}`}
+                      {item.is_label ? (
+                        ``
+                      ) : (
+                        <div className="flex">
+                          <p className="text-[10px]">{"| "}</p>
+                          <p
+                            className={cn(
+                              "text-[10px]",
+                              item.discount && "text-green-700",
+                            )}
+                          >
+                            RM{item.unit_price}
+                          </p>
+                        </div>
+                      )}
                     </CommandItem>
                   );
                 })}
