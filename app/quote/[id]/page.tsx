@@ -4,16 +4,14 @@ import { Inter } from "next/font/google";
 import { useEffect, useRef, useState } from "react";
 import { RiArrowDropDownFill, RiArrowDropLeftFill } from "react-icons/ri";
 
-import { db } from "@/firebase";
-import { collection, query } from "firebase/firestore";
 import { usePathname, useRouter } from "next/navigation";
-import { useCollection } from "react-firebase-hooks/firestore";
 
-import { State } from "country-state-city";
-import React from "react";
-import Link from "next/link";
 import { readData } from "@/app/(components)/QuoteDataJSON";
+import { State } from "country-state-city";
+import Link from "next/link";
+import React from "react";
 
+import Offers from "@/app/(components)/Offers";
 import html2pdf from "html2pdf.js";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -377,6 +375,9 @@ function QuotePage({}: Props) {
     .email__head {
       text-align: center;
     }
+    .email__head-sub {
+      text-align: left;
+    }
     .email__table {
       width: 100%;
       margin-top: 16px;
@@ -440,8 +441,20 @@ function QuotePage({}: Props) {
       <p>Thank you for using Ideal Tech PC Builder.</p>
       <p>We will contact you to proceed with the order soon.</p>
       <p>
-        Quotation generated on: ${emailProp.quoteDate}
+        Quotation generated on: ${emailProp.quoteDate}.
       </p>
+      <br />
+      <hr style="color:black;">
+      <div class="email__head-sub">
+      <p><b>Our Aftersales Services cover the following:</b></p>
+      <p>1. Lifetime FREE Labor Charges.</p>
+      <p>2. 90 Days One to One Exchange.</p>
+      <p>3. FREE On-Site Service / Repair within KL, Johor.</p>
+      <p>4. Full Years Warranty Covered. Up to 10 Years.</p>
+      <p>5. FREE Warranty Pick-Up and Return Covered Whole Malaysia.</p>
+      <p>6. Lifetime Technical Support.</p>
+      </div>
+      <br />
     </div>
     <table class="email__table">
       <thead>
@@ -500,6 +513,21 @@ function QuotePage({}: Props) {
         </tr>
       </tfoot>
     </table>
+    <br />
+    <div style="text-align: center">
+      <h2>Quotation Link</h2>
+      <a href="${emailProp.link}">${emailProp.link}</a>
+    </div>
+    <br />
+    <div style="text-align: center">
+      <h2>Customer Information</h2>
+      <p><b>Name: </b>${emailProp.name}</p>
+      <p><b>Email: </b>${emailProp.email}</p>
+      <p><b>Contact Number: </b>${emailProp.contact}</p>
+      <p><b>State: </b>${emailProp.state}</p>
+      <p><b>PC Usage: </b>${emailProp.reason}</p>
+      <p><b>Other Requirements: </b>${emailProp.requirements}</p>
+    </div>
     <br />
     <h2 style="text-align: center; margin-bottom: 0">Installment Options</h2>
     <p style="text-align: center; margin-top: 0; margin-bottom: 8px">(Walk-in Only)</p>
@@ -573,21 +601,6 @@ function QuotePage({}: Props) {
       </div>
     </div>
     <br />
-    <br />
-    <div style="text-align: center">
-      <h2>Quotation Link</h2>
-      <a href="${emailProp.link}">${emailProp.link}</a>
-    </div>
-    <br />
-    <div style="text-align: center">
-      <h2>Customer Information</h2>
-      <p><b>Name: </b>${emailProp.name}</p>
-      <p><b>Email: </b>${emailProp.email}</p>
-      <p><b>Contact Number: </b>${emailProp.contact}</p>
-      <p><b>State: </b>${emailProp.state}</p>
-      <p><b>PC Usage: </b>${emailProp.reason}</p>
-      <p><b>Other Requirements: </b>${emailProp.requirements}</p>
-    </div>
   </body>
 </html>
   `;
@@ -884,6 +897,7 @@ function QuotePage({}: Props) {
             }
           })} */}
       </div>
+      <Offers />
       <table className="w-full">
         <thead className="hidden sm:table-header-group">
           <tr>

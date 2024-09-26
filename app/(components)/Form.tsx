@@ -1,30 +1,13 @@
 "use client";
 
-import { db } from "@/firebase";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  limit,
-  orderBy,
-  query,
-  serverTimestamp,
-  setDoc,
-} from "firebase/firestore";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { ScrollContext, useScrollListener } from "../(hooks)/useScrollListener";
+import { useScrollListener } from "../(hooks)/useScrollListener";
+import { useUserSelected } from "../lib/zus-store";
 import FormItem from "./FormItem";
+import { deleteOldestFiles, queueWrite } from "./QuoteDataJSON";
 import readFileAndParse from "./TxtToProduct";
-import {
-  deleteOldestFiles,
-  queueWrite,
-  readData,
-  writeData,
-} from "./QuoteDataJSON";
-import React from "react";
 
 type OptionType = {
   name: string;
@@ -296,6 +279,9 @@ function Form({}: Props) {
 
   // console.log(rows, "Check");
 
+  const userSelected = useUserSelected((state) => state.selected);
+  const setUserSelected = useUserSelected((state) => state.changeSelected);
+
   const [createQuoteLoad, setCreateQuoteLoad] = useState(false);
 
   const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
@@ -335,6 +321,12 @@ function Form({}: Props) {
     // if (currentData.length > 20000) {
     //   currentData.splice(0, 10000); // Remove the oldest 10000 quotes
     // }
+
+    // console.log(newQuote, "CHECK");
+
+    setUserSelected(newQuote);
+
+    // console.log(userSelected, "CHANGE");
 
     await queueWrite(newQuote, id);
 
