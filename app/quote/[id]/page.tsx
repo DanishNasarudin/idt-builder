@@ -1,25 +1,11 @@
 import Offers from "@/app/(components)/Offers";
-import { readData } from "@/app/(serverActions)/QuoteDataJSON";
+import { readData } from "@/app/(serverActions)/textDbActions";
+import { QuoteData } from "@/app/page";
 import GrandTotal from "../(quote-components)/GrandTotal";
 import TableDisplay from "../(quote-components)/TableDisplay";
 import UserActions from "../(quote-components)/UserActions";
 
 type Props = {};
-
-export type FormDataItem = {
-  category: string;
-  selectedOption: { name: string; price: number };
-  quantity: number;
-  total: number;
-};
-
-export type QuoteData = {
-  id: string;
-  formData: FormDataItem[];
-  grandTotal: number;
-  oriTotal: number;
-  createdAt: string;
-};
 
 export type DisplayFormData = {
   name: string;

@@ -1,9 +1,27 @@
 import { Inter } from "next/font/google";
 import Hero from "./(components)/Hero";
 import Offers from "./(components)/Offers";
-import { getLatestUpdatedTimestamp } from "./(serverActions)/QuoteDataJSON";
+import {
+  getAllPriceList,
+  getLatestUpdatedTimestamp,
+} from "./(serverActions)/textDbPriceListActions";
 
 const inter = Inter({ subsets: ["latin"] });
+
+export type FormDataItem = {
+  category: string;
+  selectedOption: { name: string; price: number };
+  quantity: number;
+  total: number;
+};
+
+export type QuoteData = {
+  id: string;
+  formData: FormDataItem[];
+  grandTotal: number;
+  oriTotal: number;
+  createdAt: string;
+};
 
 export default async function Home() {
   const timeUpdated = await getLatestUpdatedTimestamp();
@@ -19,6 +37,10 @@ export default async function Home() {
           timeZone: "GMT",
         })
       : "";
+
+  const dataPriceList = await getAllPriceList();
+
+  // console.log(dataPriceList);
   return (
     <main className={`${inter.className} flex flex-col w-4/5 mx-auto`}>
       <Hero />
