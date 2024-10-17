@@ -1,5 +1,5 @@
 "use client";
-import { useUserSelected } from "@/lib/zus-store";
+import { cn } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -9,25 +9,27 @@ import {
   TableRow,
   getKeyValue,
 } from "@nextui-org/react";
-import { FormDataItem } from "../[id]/new-later";
+import { DisplayFormData } from "../[id]/page";
 
-type Props = {};
+type Props = {
+  data: DisplayFormData[];
+};
 
 const columns = [
-  { key: "product_name", label: "Product Name" },
-  { key: "price", label: "Price" },
+  { key: "name", label: "Product Name" },
+  { key: "total", label: "Price" },
   { key: "qty", label: "Qty" },
-  { key: "sub_total", label: "Total" },
+  { key: "price", label: "Total" },
 ];
 
-const TableDisplay = () => {
-  const data = useUserSelected((state) => state.selected);
+const TableDisplay = ({ data }: Props) => {
+  // const data = useUserSelected((state) => state.selected);
 
   // const data: QuoteData = {} as QuoteData;
 
   // const dataFlattened = data.formData.map((item) => item);
 
-  console.log(data);
+  // console.log(data);
   // console.log(data, dataFlattened);
 
   // const [data, setData] = React.useState<SelectedStore>(selected());
@@ -52,38 +54,29 @@ const TableDisplay = () => {
           {(column) => (
             <TableColumn
               key={column.key}
-              className={`${column.key === "qty" ? "px-1 text-center" : ""} ${
-                column.key === "price" ? "px-1 text-center" : ""
-              } ${column.key === "sub_total" ? "px-1 text-center" : ""}
-              ${column.key === "product_name" ? "min-w-[50px]" : ""}
-              
-              `}
+              className={cn(
+                column.key === "qty" ? "px-1 text-center" : "",
+                column.key === "total" ? "px-1 text-center" : "",
+                column.key === "price" ? "px-1 text-center" : "",
+                column.key === "name" ? "min-w-[50px]" : ""
+              )}
             >
               {column.label}
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={data.formData} emptyContent={"No rows to display."}>
+        <TableBody items={data} emptyContent={"No rows to display."}>
           {(item) => (
-            <TableRow key={item.selectedOption.name}>
+            <TableRow key={item.name}>
               {(columnKey) => (
                 <TableCell
-                  className={`${
-                    (columnKey as keyof FormDataItem) === "quantity" &&
-                    "text-center"
-                  } 
-                  ${
-                    (columnKey as keyof FormDataItem) === "quantity" &&
-                    "text-center"
-                  } ${
-                    (columnKey as keyof FormDataItem) === "quantity" &&
-                    "text-center"
-                  }
-                  ${(columnKey as keyof FormDataItem) === "quantity" && ""}
-                  text-[10px] sm:text-sm
-                  `}
+                  className={cn(
+                    "text-[10px] sm:text-sm text-center",
+                    (columnKey as keyof DisplayFormData) === "name" &&
+                      "text-left"
+                  )}
                 >
-                  {getKeyValue(item, columnKey as keyof FormDataItem)}
+                  {getKeyValue(item, columnKey as keyof DisplayFormData)}
                 </TableCell>
               )}
             </TableRow>
