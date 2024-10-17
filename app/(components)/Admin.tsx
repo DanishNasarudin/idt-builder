@@ -3,7 +3,6 @@
 import { signOut, useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import AdminCategory from "./AdminCategory";
 
 const initialCategories = [
   {
@@ -153,18 +152,6 @@ function Admin({}: Props) {
             </div>
           </div> */}
           <div className="flex flex-col gap-4">
-            {rows.map((row, index) => {
-              return (
-                <AdminCategory
-                  key={row.id}
-                  rowIndex={index}
-                  removeRow={removeRow}
-                  category={row.category}
-                  textEditor={row.text}
-                  added={row.added}
-                />
-              );
-            })}
             <button
               className="bg-zinc-900 w-full mx-auto px-4 py-6 text-start"
               onClick={() => addRow(0)}

@@ -37,7 +37,7 @@ function Offers({}: Props) {
             src={
               "https://idealtech.com.my/wp-content/uploads/2023/03/icons-03.png"
             }
-            text={"FREE On-Site Service / Repair within KL, Johor."}
+            text={"FREE On-Site Service / Repair within Klang Valley, Johor."}
           />
         </div>
         <div className={`hidden offer:block`}>

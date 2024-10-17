@@ -4,7 +4,6 @@ import { Inter } from "next/font/google";
 import Script from "next/script";
 import Footer from "./(components)/Footer";
 import "./globals.css";
-import { Providers } from "./lib/providers";
 
 const Navbar = dynamic(() => import("./(components)/Navbar"), { ssr: false });
 
@@ -28,7 +27,7 @@ export const metadata: Metadata = {
     "Custom Computers",
   ],
   icons: {
-    icon: "/icon?<generated>",
+    icon: "/icon.png",
   },
   appleWebApp: true,
   openGraph: {
@@ -72,12 +71,12 @@ export default function RootLayout({
         `}
       </Script>
       <body className={`${inter.className} relative`}>
-        <Providers>
-          <Navbar />
-          <div className="max-w-[1060px] mx-auto">{children}</div>
-          <div className="h-[200px]"></div>
-          <Footer />
-        </Providers>
+        {/* <Providers> */}
+        <Navbar />
+        <div className="max-w-[1060px] mx-auto">{children}</div>
+        <div className="h-[200px]"></div>
+        <Footer />
+        {/* </Providers> */}
       </body>
     </html>
   );

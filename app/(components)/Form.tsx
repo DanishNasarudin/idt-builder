@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useScrollListener } from "../(hooks)/useScrollListener";
-import { useUserSelected } from "../lib/zus-store";
+import { useUserSelected } from "../../lib/zus-store";
 import FormItem from "./FormItem";
 import { deleteOldestFiles, queueWrite } from "./QuoteDataJSON";
 import readFileAndParse from "./TxtToProduct";
@@ -356,8 +356,11 @@ function Form({}: Props) {
   // ------ clear the link from google analytics
 
   const router = useRouter();
-  const pathname = String(window.location.search);
+  let pathname = "";
 
+  if (typeof window !== "undefined") {
+    pathname = String(window.location.search);
+  }
   useEffect(() => {
     // // List of common Google Analytics parameters - remove them
 

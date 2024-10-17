@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { QuoteData } from "../quote/[id]/page-new";
+import { QuoteData } from "../app/quote/[id]/new-later";
 
 type UserSelected = {
   selected: QuoteData;

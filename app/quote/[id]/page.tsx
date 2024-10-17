@@ -449,7 +449,7 @@ function QuotePage({}: Props) {
       <p><b>Our Aftersales Services cover the following:</b></p>
       <p>1. Lifetime FREE Labor Charges.</p>
       <p>2. 90 Days One to One Exchange.</p>
-      <p>3. FREE On-Site Service / Repair within KL, Johor.</p>
+      <p>3. FREE On-Site Service / Repair within Klang Valley, Johor.</p>
       <p>4. Full Years Warranty Covered. Up to 10 Years.</p>
       <p>5. FREE Warranty Pick-Up and Return Covered Whole Malaysia.</p>
       <p>6. Lifetime Technical Support.</p>
