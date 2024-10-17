@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
     "@internationalized/date": "^3.5.5",
     "@nextui-org/react": "^2.4.8",
     "@nextui-org/theme": "^2.2.11",
@@ -19,6 +20,7 @@
     "autoprefixer": "10.4.14",
     "body-parser": "^1.20.2",
     "country-state-city": "^3.2.1",
+    "date-fns": "^4.1.0",
     "dompurify": "^3.0.6",
     "eslint": "8.38.0",
     "eslint-config-next": "13.3.0",
@@ -44,6 +46,7 @@
     "typescript": "5.0.4",
     "url": "^0.11.3",
     "uuid": "^9.0.0",
+    "zod": "^3.23.8",
     "zustand": "^5.0.0-rc.2"
   },
   "devDependencies": {

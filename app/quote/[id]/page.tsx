@@ -1,5 +1,5 @@
 import Offers from "@/app/(components)/Offers";
-import { readData } from "@/app/(components)/QuoteDataJSON";
+import { readData } from "@/app/(serverActions)/QuoteDataJSON";
 import GrandTotal from "../(quote-components)/GrandTotal";
 import TableDisplay from "../(quote-components)/TableDisplay";
 import UserActions from "../(quote-components)/UserActions";
