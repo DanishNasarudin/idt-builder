@@ -2,8 +2,19 @@ import Offers from "@/app/(components)/Offers";
 import { readData } from "@/app/(serverActions)/textDbActions";
 import { QuoteData } from "@/app/page";
 import GrandTotal from "../(quote-components)/GrandTotal";
-import TableDisplay from "../(quote-components)/TableDisplay";
-import UserActions from "../(quote-components)/UserActions";
+// import TableDisplay from "../(quote-components)/TableDisplay";
+// import UserActions from "../(quote-components)/UserActions";
+import dynamic from "next/dynamic";
+
+const TableDisplay = dynamic(
+  () => import("../(quote-components)/TableDisplay"),
+  {
+    ssr: false,
+  }
+);
+const UserActions = dynamic(() => import("../(quote-components)/UserActions"), {
+  ssr: false,
+});
 
 type Props = {};
 
