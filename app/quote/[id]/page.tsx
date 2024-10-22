@@ -9,6 +9,7 @@ import {
 } from "@/app/(serverActions)/textDbPriceListActions";
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 import dynamic from "next/dynamic";
+// import NewForm from "../(quote-components)/NewForm";
 
 const TableDisplay = dynamic(
   () => import("../(quote-components)/TableDisplay"),
@@ -17,6 +18,10 @@ const TableDisplay = dynamic(
   }
 );
 const UserActions = dynamic(() => import("../(quote-components)/UserActions"), {
+  ssr: false,
+});
+
+const NewForm = dynamic(() => import("../(quote-components)/NewForm"), {
   ssr: false,
 });
 
@@ -100,6 +105,7 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
             // discount={data2.ori_total - data2.grand_total}
           />
           <UserActions quoteId={quoteId} data={data} dataList={dataFormList} />
+          <NewForm quoteId={quoteId} />
         </div>
       </div>
       <div className="h-[200px]"></div>

@@ -16,6 +16,16 @@ export const useNavbarStore = create<NavbarStore>()((set) => ({
   setIsBuildPage: (isBuildPage) => set({ isBuildPage }),
 }));
 
+type TriggerStore = {
+  trigger: boolean;
+  setTrigger: (trigger: boolean) => void;
+};
+
+export const useTriggerStore = create<TriggerStore>()((set) => ({
+  trigger: false,
+  setTrigger: (trigger) => set({ trigger }),
+}));
+
 export type ProductItemSelectionData = CategoryType & {
   qty: number;
   sub_total: number;
@@ -231,7 +241,7 @@ export const useUserSelected = create<UserSelected>()((set, get) => ({
   quoteToData: (data) => {
     if (data === null) return;
     const parsedData: ProductSelectionData = data.retainFormatData;
-    console.log(parsedData, "pass1");
+    // console.log(parsedData, "pass1");
 
     set((state) => {
       let updatedData: ProductItemSelectionData[] = state.staticData.map(
@@ -284,9 +294,10 @@ export const useUserSelected = create<UserSelected>()((set, get) => ({
         }
       });
 
-      console.log(updatedData, " CHECK zus");
+      // console.log(updatedData, " CHECK zus");
 
-      return { dynamicData: updatedData, selected: { ...parsedData } };
+      // console.log(parsedData, "DONE FILL");
+      return { dynamicData: updatedData, selected: parsedData };
     });
   },
 }));

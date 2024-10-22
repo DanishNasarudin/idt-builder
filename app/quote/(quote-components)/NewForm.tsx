@@ -1,9 +1,17 @@
 "use client";
+import { sendNodemail } from "@/app/(serverActions)/sendEmail";
+import { createPDF } from "@/lib/utils";
+import {
+  ProductItemSelectionData,
+  useTriggerStore,
+  useUserSelected,
+} from "@/lib/zus-store";
 // import { Products, useSelectStore, useTriggerStore } from "@/lib/zus-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { State } from "country-state-city";
-import { useForm } from "react-hook-form";
+import React from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -26,7 +34,7 @@ const schema = z.object({
 export type FormFields = z.infer<typeof schema>;
 
 const NewForm = ({ quoteId }: Props) => {
-  //   const quoteData = useSelectStore((state) => state.selectedData);
+  const quoteData = useUserSelected((state) => state.selected);
 
   // Initiate Form Registry
   const {
@@ -38,114 +46,114 @@ const NewForm = ({ quoteId }: Props) => {
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
   //Recollect Rows
-  //   function generateRows(data: Products[]): string {
-  //     return data
-  //       .map(
-  //         (item) => `
-  //     <tr class="email__row" style="border-bottom: 1px solid gray">
-  //       <td style="width: 70%">${item.product_name}</td>
-  //       <td style="width: 10%">${item.price}</td>
-  //       <td style="width: 10%">${item.qty}</td>
-  //       <td style="width: 10%">${item.sub_total}</td>
-  //     </tr>
-  //   `,
-  //       )
-  //       .join("");
-  //   }
+  function generateRows(data: ProductItemSelectionData[]): string {
+    return data
+      .map(
+        (item) => `
+      <tr class="email__row" style="border-bottom: 1px solid gray">
+        <td style="width: 70%">${item.products[0].product_name}</td>
+        <td style="width: 10%">${item.products[0].dis_price}</td>
+        <td style="width: 10%">${item.qty}</td>
+        <td style="width: 10%">${item.sub_total}</td>
+      </tr>
+    `
+      )
+      .join("");
+  }
 
   const fullUrl = `${window.location.protocol}//${window.location.host}/quote/${quoteId}`;
 
-  //   const pdfTrigger = useTriggerStore((state) => state.trigger);
-  //   const setTrigger = useTriggerStore((state) => state.setTrigger);
-  // const onPDF: SubmitHandler<FormFields> = async (data) => {
-  //   try {
-  //     if (!quoteData) throw new Error("Quote Data missing.");
-  //     // console.log("pass in");
-  //     const response = await fetch("/quoteTemplate.html");
-  //     let template = await response.text();
+  const pdfTrigger = useTriggerStore((state) => state.trigger);
+  const setTrigger = useTriggerStore((state) => state.setTrigger);
+  const onPDF: SubmitHandler<FormFields> = async (data) => {
+    try {
+      if (!quoteData) throw new Error("Quote Data missing.");
+      // console.log("pass in");
+      const response = await fetch("/quoteTemplate.html");
+      let template = await response.text();
 
-  //     const emailHTMLRow = generateRows(quoteData.products);
+      const emailHTMLRow = generateRows(quoteData.product_items);
 
-  //     template = template.replace("{{quoteDate}}", String(quoteData.createdAt));
-  //     template = template.replace("{{emailHTMLRow}}", emailHTMLRow);
-  //     template = template.replace("{{oriPrice}}", String(quoteData.ori_total));
-  //     template = template.replace(
-  //       "{{discount}}",
-  //       String(quoteData.ori_total - quoteData.grand_total),
-  //     );
-  //     template = template.replace(
-  //       "{{totalPrice}}",
-  //       String(quoteData.grand_total),
-  //     );
-  //     template = template.replace("{{link}}", fullUrl);
-  //     template = template.replace("{{link}}", fullUrl);
-  //     template = template.replace("{{name}}", data.name);
-  //     template = template.replace("{{email}}", data.email);
-  //     template = template.replace("{{contact}}", data.contact);
-  //     template = template.replace("{{state}}", data.state);
-  //     template = template.replace("{{reason}}", data.reason);
-  //     template = template.replace("{{requirements}}", data.requirements);
-  //     template = template.replace(
-  //       "{{monthly}}",
-  //       String(Math.floor(quoteData.grand_total / (1 - 0.04) / 12)),
-  //     );
+      template = template.replace("{{quoteDate}}", String(quoteData.createdAt));
+      template = template.replace("{{emailHTMLRow}}", emailHTMLRow);
+      template = template.replace("{{oriPrice}}", String(quoteData.ori_total));
+      template = template.replace(
+        "{{discount}}",
+        String(quoteData.ori_total - quoteData.grand_total)
+      );
+      template = template.replace(
+        "{{totalPrice}}",
+        String(quoteData.grand_total)
+      );
+      template = template.replace("{{link}}", fullUrl);
+      template = template.replace("{{link}}", fullUrl);
+      template = template.replace("{{name}}", data.name);
+      template = template.replace("{{email}}", data.email);
+      template = template.replace("{{contact}}", data.contact);
+      template = template.replace("{{state}}", data.state);
+      template = template.replace("{{reason}}", data.reason);
+      template = template.replace("{{requirements}}", data.requirements);
+      template = template.replace(
+        "{{monthly}}",
+        String(Math.floor(quoteData.grand_total / (1 - 0.04) / 12))
+      );
 
-  //     createPDF(template);
-  //     toast.success("Downloaded PDF!");
-  //     setTrigger(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //     setTrigger(false);
-  //   }
-  // };
+      createPDF(template);
+      toast.success("Downloaded PDF!");
+      setTrigger(false);
+    } catch (error) {
+      console.log(error);
+      setTrigger(false);
+    }
+  };
 
   // console.log(getValues());
 
-  //   React.useEffect(() => {
-  //     pdfTrigger && onPDF(getValues());
-  //   }, [pdfTrigger]);
+  React.useEffect(() => {
+    pdfTrigger && onPDF(getValues());
+  }, [pdfTrigger]);
 
-  //   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-  //     try {
-  //       if (!quoteData) throw new Error("Quote Data missing.");
-  //       const response = await fetch("/quoteTemplate.html");
-  //       let template = await response.text();
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    try {
+      if (!quoteData) throw new Error("Quote Data missing.");
+      const response = await fetch("/quoteTemplate.html");
+      let template = await response.text();
 
-  //       const emailHTMLRow = generateRows(quoteData.products);
+      const emailHTMLRow = generateRows(quoteData.product_items);
 
-  //       template = template.replace("{{quoteDate}}", String(quoteData.createdAt));
-  //       template = template.replace("{{emailHTMLRow}}", emailHTMLRow);
-  //       template = template.replace("{{oriPrice}}", String(quoteData.ori_total));
-  //       template = template.replace(
-  //         "{{discount}}",
-  //         String(quoteData.ori_total - quoteData.grand_total),
-  //       );
-  //       template = template.replace(
-  //         "{{totalPrice}}",
-  //         String(quoteData.grand_total),
-  //       );
-  //       template = template.replace("{{link}}", fullUrl);
-  //       template = template.replace("{{link}}", fullUrl);
-  //       template = template.replace("{{name}}", data.name);
-  //       template = template.replace("{{email}}", data.email);
-  //       template = template.replace("{{contact}}", data.contact);
-  //       template = template.replace("{{state}}", data.state);
-  //       template = template.replace("{{reason}}", data.reason);
-  //       template = template.replace("{{requirements}}", data.requirements);
-  //       template = template.replace(
-  //         "{{monthly}}",
-  //         String(Math.floor(quoteData.grand_total / (1 - 0.04) / 12)),
-  //       );
+      template = template.replace("{{quoteDate}}", String(quoteData.createdAt));
+      template = template.replace("{{emailHTMLRow}}", emailHTMLRow);
+      template = template.replace("{{oriPrice}}", String(quoteData.ori_total));
+      template = template.replace(
+        "{{discount}}",
+        String(quoteData.ori_total - quoteData.grand_total)
+      );
+      template = template.replace(
+        "{{totalPrice}}",
+        String(quoteData.grand_total)
+      );
+      template = template.replace("{{link}}", fullUrl);
+      template = template.replace("{{link}}", fullUrl);
+      template = template.replace("{{name}}", data.name);
+      template = template.replace("{{email}}", data.email);
+      template = template.replace("{{contact}}", data.contact);
+      template = template.replace("{{state}}", data.state);
+      template = template.replace("{{reason}}", data.reason);
+      template = template.replace("{{requirements}}", data.requirements);
+      template = template.replace(
+        "{{monthly}}",
+        String(Math.floor(quoteData.grand_total / (1 - 0.04) / 12))
+      );
 
-  //       // console.log(template);
-  //       await sendNodemail({ template, data });
-  //     } catch (error) {
-  //       setError("root", {
-  //         message: error as string,
-  //       });
-  //       console.log(error);
-  //     }
-  //   };
+      // console.log(template);
+      await sendNodemail({ template, data });
+    } catch (error) {
+      setError("root", {
+        message: error as string,
+      });
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -160,7 +168,7 @@ const NewForm = ({ quoteId }: Props) => {
       </div>
       <form
         className="mt-8 flex w-full max-w-[500px] flex-col gap-2"
-        // onSubmit={handleSubmit(onSubmit)}
+        onSubmit={handleSubmit(onSubmit)}
       >
         <div className="flex gap-2">
           <Input
