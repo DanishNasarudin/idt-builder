@@ -41,6 +41,7 @@ import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useScrollListener } from "../(hooks)/useScrollListener";
 // import { drizzleInsertQuote } from "../(serverActions)/drizzleCmd";
+import { queueWrite } from "../(serverActions)/textDbActions";
 import { LogoIcon } from "./Icons";
 
 type Props = {};
@@ -159,9 +160,9 @@ const menuList: MenuList[] = [
 ];
 
 function Navbar({}: Props) {
-  const [toggle, setToggle] = useState(true);
-  const [offerToggle, setOfferToggle] = useState(false);
-  const [careToggle, setCareToggle] = useState(false);
+  // const [toggle, setToggle] = useState(true);
+  // const [offerToggle, setOfferToggle] = useState(false);
+  // const [careToggle, setCareToggle] = useState(false);
   const scroll = useScrollListener();
   const [hideNavbar, setHideNavbar] = useState(false);
   // console.log(scroll);
@@ -182,7 +183,7 @@ function Navbar({}: Props) {
   const dataClient = useUserSelected((state) => state.dynamicData);
   const selected = useUserSelected((state) => state.selected);
   const resetDataClient = useUserSelected((state) => state.resetData);
-  // const dataToJSON = useUserSelected((state) => state.dataToJSON);
+  const dataToQuote = useUserSelected((state) => state.dataToQuote);
   const setIsBuildPage = useNavbarStore((state) => state.setIsBuildPage);
 
   const [data, setData] = useState<ProductSelectionData>(selected);
@@ -208,8 +209,10 @@ function Navbar({}: Props) {
     const check = selected;
     if (check.grand_total === 0) return;
     const id = uuidv4();
-    // const json = dataToJSON();
-    // console.log(id, json);
+    const quoteData = dataToQuote();
+    console.log(id, quoteData);
+
+    await queueWrite(quoteData, id);
     // await drizzleInsertQuote(id, json);
 
     let quoteWindow;

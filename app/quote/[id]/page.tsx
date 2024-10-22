@@ -1,9 +1,13 @@
 import Offers from "@/app/(components)/Offers";
 import { readData } from "@/app/(serverActions)/textDbActions";
-import { QuoteData } from "@/app/page";
 import GrandTotal from "../(quote-components)/GrandTotal";
 // import TableDisplay from "../(quote-components)/TableDisplay";
 // import UserActions from "../(quote-components)/UserActions";
+import {
+  CategoryType,
+  getAllPriceList,
+} from "@/app/(serverActions)/textDbPriceListActions";
+import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 import dynamic from "next/dynamic";
 
 const TableDisplay = dynamic(
@@ -30,6 +34,8 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
 
   const data = (await readData(quoteId)) as QuoteData;
 
+  // const data2 = (await readData(quoteId)) as ProductSelectionData;
+
   const createDate = new Date(data.createdAt).toLocaleString("en-GB", {
     day: "2-digit",
     month: "short",
@@ -48,7 +54,29 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
     };
   });
 
-  // console.log(data);
+  const dataPriceList: CategoryType[] = await getAllPriceList();
+
+  const dataFormList: ProductItemSelectionData[] = dataPriceList.map((item) => {
+    return {
+      ...item,
+      qty: 0,
+      sub_total: 0,
+      selected_id: undefined,
+      duplicate: false,
+      discount: 0,
+    };
+  });
+
+  // const displayData2: DisplayFormData[] = data2.product_items.map((data) => {
+  //   return {
+  //     name: data.products[0].product_name,
+  //     price: data.products[0].dis_price,
+  //     qty: data.qty,
+  //     total: data.sub_total,
+  //   };
+  // });
+
+  // console.log(displayData2);
 
   return (
     <>
@@ -67,8 +95,11 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
             original={data.oriTotal}
             final={data.grandTotal}
             discount={data.oriTotal - data.grandTotal}
+            // original={data2.ori_total}
+            // final={data2.grand_total}
+            // discount={data2.ori_total - data2.grand_total}
           />
-          <UserActions quoteId={quoteId} />
+          <UserActions quoteId={quoteId} data={data} dataList={dataFormList} />
         </div>
       </div>
       <div className="h-[200px]"></div>

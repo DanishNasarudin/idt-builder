@@ -1,5 +1,6 @@
 "use client";
 import { createURL } from "@/lib/utils";
+import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 // import {
 //   Products,
 //   SelectedStore,
@@ -12,9 +13,11 @@ import { toast } from "sonner";
 
 type Props = {
   quoteId: string;
+  data: QuoteData;
+  dataList: ProductItemSelectionData[];
 };
 
-const UserActions = ({ quoteId }: Props) => {
+const UserActions = ({ quoteId, data, dataList }: Props) => {
   //   const quoteData = useSelectStore((state) => state.selectedData);
   //   function generateCopySpec(data: Products[]): string {
   //     return data
@@ -59,6 +62,18 @@ const UserActions = ({ quoteId }: Props) => {
   //   const setPDFTrigger = useTriggerStore((state) => state.setTrigger);
   //   const dataToJSON = useSelectStore((state) => state.dataToJSON);
   //   const editData = useSelectStore((state) => state.editData);
+
+  // const initData = useUserSelected((state) => state.initData);
+  // const quoteToData = useUserSelected((state) => state.quoteToData);
+  // const dynamicData = useUserSelected((state) => state.dynamicData);
+
+  // React.useEffect(() => {
+  //   initData(dataList);
+  //   quoteToData(data);
+  //   console.log("run");
+  // }, [data]);
+
+  // console.log(dynamicData, " CHECK");
 
   const router = useRouter();
   const pathname = usePathname();
