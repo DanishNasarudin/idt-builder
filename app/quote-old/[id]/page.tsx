@@ -13,6 +13,7 @@ import React from "react";
 
 import Offers from "@/app/(components)/Offers";
 import html2pdf from "html2pdf.js";
+import { toast } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -765,66 +766,73 @@ function QuotePage({}: Props) {
 
     // console.log(formValues, "onsubmit check");
 
-    await fetch("/api/contact", {
-      method: "POST",
-      body: JSON.stringify(formValues.values),
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-    }).then(() => {
-      setTimeout(() => {
-        setFormValues((prev) => ({
-          ...prev,
-          isLoading: false,
-          values: {
-            ...prev.values,
+    toast.promise(
+      fetch("/api/contact", {
+        method: "POST",
+        body: JSON.stringify(formValues.values),
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }).then(() => {
+        setTimeout(() => {
+          setFormValues((prev) => ({
+            ...prev,
+            isLoading: false,
+            values: {
+              ...prev.values,
+              name: "",
+              email: "",
+              contact: "",
+              state: "",
+              reason: "",
+              requirements: "",
+            },
+          }));
+          setEmailProp({
+            ...emailProp,
+            quoteDate: "date",
+            oriPrice: 0,
+            discount: 0,
+            totalPrice: 0,
+            months:
+              quantityOption === 1
+                ? 6
+                : quantityOption === 2
+                ? 12
+                : quantityOption === 3
+                ? 18
+                : 0,
+            monthly: 0,
+            interest: 0,
+            interestPerc: 0,
+            totalInstall: 0,
+            link: fullUrl,
             name: "",
             email: "",
             contact: "",
             state: "",
             reason: "",
             requirements: "",
-          },
-        }));
-        setEmailProp({
-          ...emailProp,
-          quoteDate: "date",
-          oriPrice: 0,
-          discount: 0,
-          totalPrice: 0,
-          months:
-            quantityOption === 1
-              ? 6
-              : quantityOption === 2
-              ? 12
-              : quantityOption === 3
-              ? 18
-              : 0,
-          monthly: 0,
-          interest: 0,
-          interestPerc: 0,
-          totalInstall: 0,
-          link: fullUrl,
-          name: "",
-          email: "",
-          contact: "",
-          state: "",
-          reason: "",
-          requirements: "",
-        });
-      }, 2000);
-      setFormValues((prev) => ({
-        ...prev,
-        isSent: true,
-      }));
-      setTimeout(() => {
+          });
+        }, 2000);
         setFormValues((prev) => ({
           ...prev,
-          isSent: false,
+          isSent: true,
         }));
-      }, 1000);
-    });
+        setTimeout(() => {
+          setFormValues((prev) => ({
+            ...prev,
+            isSent: false,
+          }));
+        }, 1000);
+      }),
+      {
+        loading: "Sending Email...",
+        success: "Email Sent!",
+        error: "Error Sending Email!",
+      }
+    );
   };
 
   if (loading) {
@@ -992,9 +1000,9 @@ function QuotePage({}: Props) {
         {/* <tfoot>
           <tr>
             <td colSpan={3} className="w-[90%] p-0">
-              <div className="mt-4 py-4 px-12 sm:px-8 bg-secondary text-black font-bold rounded-2xl sm:rounded-none sm:rounded-l-2xl flex justify-between w-full align-middle items-center">
+              <div className="mt-4 py-4 px-12 sm:px-8 bg-secondary  font-bold rounded-2xl sm:rounded-none sm:rounded-l-2xl flex justify-between w-full align-middle items-center">
                 Grand Total
-                <div className=" text-center py-4 bg-secondary text-black font-bold rounded-r-2xl block sm:hidden">
+                <div className=" text-center py-4 bg-secondary  font-bold rounded-r-2xl block sm:hidden">
                   {formData &&
                     quoteId &&
                     formData.docs.map((item) => {
@@ -1007,7 +1015,7 @@ function QuotePage({}: Props) {
               </div>
             </td>
             <td className="w-[10%] p-0 hidden sm:table-cell">
-              <div className="mt-4 text-center py-4 px-8 bg-secondary text-black font-bold rounded-r-2xl">
+              <div className="mt-4 text-center py-4 px-8 bg-secondary  font-bold rounded-r-2xl">
                 {formData &&
                   quoteId &&
                   formData.docs.map((item) => {
@@ -1061,7 +1069,7 @@ function QuotePage({}: Props) {
                 ? "bg-green-600 text-white mobilehover:hover:bg-green-600/80"
                 : "bg-secondary"
             }
-          py-2 px-4  text-black font-bold rounded-xl
+          py-2 px-4   font-bold rounded-xl
           mobilehover:hover:bg-secondary/80 transition-all`}
             onClick={(event) => handleCopySpec(event)}
           >
@@ -1074,7 +1082,7 @@ function QuotePage({}: Props) {
                 ? "bg-green-600 text-white mobilehover:hover:bg-green-600/80"
                 : "bg-secondary"
             }
-          py-2 px-4  text-black font-bold rounded-xl
+          py-2 px-4   font-bold rounded-xl
           mobilehover:hover:bg-secondary/80 transition-all`}
             onClick={(event) => handlePDF(event)}
           >
@@ -1118,7 +1126,7 @@ function QuotePage({}: Props) {
           </div>
           <div className="flex gap-4 sm:flex-row flex-col w-full mx-auto flex-wrap justify-center">
             <div className="flex gap-4 text-center">
-              <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
+              <div className="bg-secondary  rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
                 <b style={{ fontSize: 12 }}>Installment with</b>
                 <b style={{ color: "#009BFF", fontSize: 20 }}>
                   {quantityOption == 1 ? 6 : ""}
@@ -1135,7 +1143,7 @@ function QuotePage({}: Props) {
                   return (
                     <React.Fragment key={item.id}>
                       <div className="flex gap-4">
-                        <div className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
+                        <div className="bg-secondary  rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col">
                           <b style={{ fontSize: 12 }}>Starting from</b>
                           <b style={{ color: "#009BFF", fontSize: 20 }}>
                             RM{" "}
@@ -1174,7 +1182,7 @@ function QuotePage({}: Props) {
                   return (
                     <div
                       key={item.id}
-                      className="bg-secondary text-black rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col"
+                      className="bg-secondary  rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col"
                     >
                       <b style={{ fontSize: 12 }}>Total</b>
                       <b style={{ color: "#009BFF", fontSize: 20 }}>
@@ -1221,7 +1229,7 @@ function QuotePage({}: Props) {
               <input
                 type="url"
                 id="quotation__id"
-                className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-4"
+                className=" bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-4"
                 value={fullUrl}
                 readOnly
               />
@@ -1260,7 +1268,7 @@ function QuotePage({}: Props) {
         <p>
           <input
             type="text"
-            className={`text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
+            className={` bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
             ${invalidRequired.name ? "border-red-500" : "border-transparent"}`}
             required
             name="name"
@@ -1291,7 +1299,7 @@ function QuotePage({}: Props) {
             <p>
               <input
                 type="email"
-                className={`text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
+                className={` bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
                 ${
                   invalidFormat.email ? "border-transparent" : "border-red-500"
                 }`}
@@ -1340,7 +1348,7 @@ function QuotePage({}: Props) {
             <p>
               <input
                 type="tel"
-                className={`text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
+                className={` bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
                 ${
                   invalidFormat.contact
                     ? "border-transparent"
@@ -1401,7 +1409,7 @@ function QuotePage({}: Props) {
           <p>
             <select
               id="state__id"
-              className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 appearance-none cursor-pointer"
+              className=" bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 appearance-none cursor-pointer"
               onClick={() => {
                 setToggle(!toggle);
               }}
@@ -1412,7 +1420,7 @@ function QuotePage({}: Props) {
             >
               <option
                 value="notSelected"
-                className="font-bold text-black"
+                className="font-bold "
               >{`Choose your state here`}</option>
               {State.getStatesOfCountry("MY").map((option, optionIndex) => {
                 return (
@@ -1447,7 +1455,7 @@ function QuotePage({}: Props) {
           <textarea
             id="reason__id"
             rows={2}
-            className={`text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
+            className={` bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-2 border-[3px]
             ${
               invalidRequired.reason ? "border-red-500" : "border-transparent"
             }`}
@@ -1477,7 +1485,7 @@ function QuotePage({}: Props) {
           <textarea
             id="requirements__id"
             rows={2}
-            className="text-black bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-4"
+            className=" bg-secondary py-2 px-4 w-full max-w-[500px] rounded-lg mt-2 mb-4"
             name="requirements"
             value={values.requirements}
             onChange={formAreaChange}
@@ -1487,7 +1495,7 @@ function QuotePage({}: Props) {
           <Link href={"/"}>
             <button
               className="
-            py-2 px-4 bg-secondary text-black font-bold rounded-xl
+            py-2 px-4 bg-secondary  font-bold rounded-xl
             mobilehover:hover:bg-secondary/80 transition-all"
             >
               <p>Back</p>
@@ -1495,7 +1503,7 @@ function QuotePage({}: Props) {
           </Link>
           <button
             className={`
-            py-2 px-4 bg-accent text-secondary font-bold rounded-xl border-transparent
+            py-2 px-4 bg-accent text- font-bold rounded-xl border-transparent
           mobilehover:hover:bg-accent/50 transition-all
           ${formValues.isLoading ? "bg-green-600" : ""}
           ${
@@ -1526,7 +1534,7 @@ function QuotePage({}: Props) {
           </button>
           {/* <button
             className="
-          py-2 px-4 bg-secondary text-black font-bold rounded-xl
+          py-2 px-4 bg-secondary  font-bold rounded-xl
           mobilehover:hover:bg-secondary/80 transition-all"
           >
             <p>Print</p>

@@ -1,12 +1,4 @@
 "use client";
-// import {
-//   Table,
-//   TableBody,
-//   TableCell,
-//   TableHead,
-//   TableHeader,
-//   TableRow,
-// } from "@/components/ui/table";
 import { cn, createURL } from "@/lib/utils";
 import {
   ProductItemSelectionData,
@@ -62,19 +54,16 @@ const TableForm = ({ data, dataToEdit }: Props) => {
   const initDataClient = useUserSelected((state) => state.initData);
   const addDataClient = useUserSelected((state) => state.addData);
   const delDataClient = useUserSelected((state) => state.delData);
-  const selected = useUserSelected((state) => state.selected);
+  // const selected = useUserSelected((state) => state.selected);
   const quoteToData = useUserSelected((state) => state.quoteToData);
   const updateSelected = useUserSelected((state) => state.updateSelected);
 
   // console.log(selected);
-  // const dataToJSON = useSelectStore((state) => state.dataToJSON);
-  // const editData = useSelectStore((state) => state.editData);
   const setIsBuildPage = useNavbarStore((state) => state.setIsBuildPage);
 
   // Init Data for client
   React.useEffect(() => {
     if (dataClient.length === 0) {
-      // console.log("pass");
       initDataClient(data);
     }
     setIsBuildPage(true);
@@ -106,28 +95,6 @@ const TableForm = ({ data, dataToEdit }: Props) => {
     );
     return newDisabledKeys;
   }, [data]);
-
-  // React.useEffect(() => {
-  //   const getData = async (id: string | null) => {
-  //     if (id === null) return;
-  //     try {
-  //       const json = await drizzlePullQuote(id);
-  //       editData(json);
-  //       toast.success("Data ready to edit.");
-  //       setParams.delete("edit");
-  //       if (pathname === null) return;
-  //       const setURL = createURL(pathname, setParams);
-  //       router.replace(setURL);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-
-  //     // console.log(setParams.get("edit"));
-  //   };
-  //   if (setParams.get("edit")) {
-  //     getData(setParams.get("edit"));
-  //   }
-  // }, [params]);
 
   const renderCell = React.useCallback(
     (data: ProductItemSelectionData, columnKey: React.Key) => {
@@ -219,11 +186,7 @@ const TableForm = ({ data, dataToEdit }: Props) => {
         case "products":
           return (
             <div className="flex items-center">
-              <TableDropdown
-                data={data}
-                disabledKeys={disabledKeys}
-                // tableHeight={tableHeight}
-              />
+              <TableDropdown data={data} disabledKeys={disabledKeys} />
             </div>
           );
         case "quantity":

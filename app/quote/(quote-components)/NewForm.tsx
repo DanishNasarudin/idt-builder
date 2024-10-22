@@ -6,7 +6,6 @@ import {
   useTriggerStore,
   useUserSelected,
 } from "@/lib/zus-store";
-// import { Products, useSelectStore, useTriggerStore } from "@/lib/zus-store";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { State } from "country-state-city";
@@ -146,7 +145,12 @@ const NewForm = ({ quoteId }: Props) => {
       );
 
       // console.log(template);
-      await sendNodemail({ template, data });
+      // await sendNodemail({ template, data });
+      toast.promise(sendNodemail({ template, data }), {
+        loading: "Sending Email...",
+        success: "Email Sent!",
+        error: "Error Sending Email!",
+      });
     } catch (error) {
       setError("root", {
         message: error as string,
