@@ -103,9 +103,30 @@ const menuList: MenuList[] = [
   },
   {
     title: "About",
-    href: "https://idealtech.com.my/about-us/",
+    href: "javascript:void(0)",
     target: true,
-    dropdown: undefined,
+    dropdown: [
+      {
+        title: "Ideal Tech PC",
+        href: "https://idealtech.com.my/about-us/",
+        target: true,
+      },
+      {
+        title: "Events",
+        href: "https://idealtech.com.my/offline-events/",
+        target: true,
+      },
+      {
+        title: "NVIDIA AI PC",
+        href: "https://idealtech.com.my/nvidia-rtx-ai/",
+        target: true,
+      },
+      {
+        title: "NVIDIA Studio PC",
+        href: "https://idealtech.com.my/geforce-studiopc/",
+        target: true,
+      },
+    ],
   },
   {
     title: "Special Offer ",
@@ -113,13 +134,18 @@ const menuList: MenuList[] = [
     target: true,
     dropdown: [
       {
-        title: "Package PC",
+        title: "Package Gaming PCs",
         href: "https://idealtech.com.my/gaming-pcs/#rtx-geforce-pc",
         target: true,
       },
       {
         title: "Workstation PC",
         href: "https://idealtech.com.my/workstation-pc",
+        target: true,
+      },
+      {
+        title: "Custom Watercooling PC",
+        href: "https://watercool.idealtech.com.my/",
         target: true,
       },
     ],
@@ -155,7 +181,18 @@ const menuList: MenuList[] = [
     title: "Contact Us",
     href: "https://idealtech.com.my/contact-us/",
     target: true,
-    dropdown: undefined,
+    dropdown: [
+      {
+        title: "Contacts",
+        href: "https://idealtech.com.my/contact-us/",
+        target: true,
+      },
+      {
+        title: "Career",
+        href: "https://career.idealtech.com.my/",
+        target: true,
+      },
+    ],
   },
 ];
 
@@ -312,7 +349,7 @@ function Navbar({}: Props) {
                         <PopoverContent
                           className={cn(
                             "z-[100] mt-8",
-                            "relative overflow-hidden bg-primary/50"
+                            "relative overflow-hidden bg-background/50"
                           )}
                         >
                           <ul className=" transition-all before:absolute before:left-0 before:top-0 before:-z-10 before:h-full before:w-full before:backdrop-blur-md before:content-['']">
@@ -344,7 +381,7 @@ function Navbar({}: Props) {
             </a>
             <Sheet>
               <SheetTrigger asChild>
-                <Button className="bg-transparent px-2">
+                <Button className="bg-transparent px-2 text-white">
                   <MenuIcon />
                 </Button>
               </SheetTrigger>
