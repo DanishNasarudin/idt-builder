@@ -24,7 +24,9 @@ const nextConfig = {
   //   },
   //   responseLimit: "10mb",
   // },
-  // output: "export",
+  // output: {
+  //   globalObject: `typeof self !== 'undefined' ? self : this`,
+  // },
 };
 
 module.exports = nextConfig;
