@@ -4,10 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useScrollListener } from "../(hooks)/useScrollListener";
-import {
-  deleteOldestFiles,
-  queueWrite,
-} from "../(serverActions)/textDbActions";
+import { deleteOldestFiles } from "../(serverActions)/textDbActions";
 import { getAllPriceList } from "../(serverActions)/textDbPriceListActions";
 import { useUserSelected } from "../../lib/zus-store";
 import FormItem from "./FormItem";
@@ -120,7 +117,7 @@ function Form({}: Props) {
 
   useEffect(() => {
     getAllPriceList().then((data) => {
-      setProducts(data);
+      // setProducts(data);
     });
   }, []);
 
@@ -283,7 +280,7 @@ function Form({}: Props) {
   // console.log(rows, "Check");
 
   const userSelected = useUserSelected((state) => state.selected);
-  const setUserSelected = useUserSelected((state) => state.changeSelected);
+  // const setUserSelected = useUserSelected((state) => state.changeSelected);
 
   const [createQuoteLoad, setCreateQuoteLoad] = useState(false);
 
@@ -327,11 +324,11 @@ function Form({}: Props) {
 
     // console.log(newQuote, "CHECK");
 
-    setUserSelected(newQuote);
+    // setUserSelected(newQuote);
 
     // console.log(userSelected, "CHANGE");
 
-    await queueWrite(newQuote, id);
+    // await queueWrite(newQuote, id);
 
     // After writing the new quote file, call the cleanup function
     await deleteOldestFiles(20000);
