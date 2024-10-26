@@ -41,3 +41,20 @@ export const createPDF = (template: string) => {
       document.body.removeChild(element);
     });
 };
+
+export const containsSearchTerm = (value: any, searchTerm: string): boolean => {
+  if (typeof value === "string") {
+    const terms = searchTerm.split(" ");
+
+    return terms.every((term) =>
+      value.toLowerCase().includes(term.toLowerCase())
+    );
+  } else if (Array.isArray(value)) {
+    return value.some((item) => containsSearchTerm(item, searchTerm));
+  } else if (typeof value === "object" && value !== null) {
+    return Object.values(value).some((innerValue) =>
+      containsSearchTerm(innerValue, searchTerm)
+    );
+  }
+  return false;
+};

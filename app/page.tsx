@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Hero from "./(components)/Hero";
 import Offers from "./(components)/Offers";
 // import TableSearch from "./(newform-components)/TableSearch";
+import { ProductItemSelectionData } from "@/lib/zus-store";
 import {
   CategoryType,
   getAllPriceList,
@@ -15,6 +16,10 @@ const TableSearch = dynamic(
     ssr: false,
   }
 );
+
+const TableForm = dynamic(() => import("./(newform-components)/TableForm"), {
+  ssr: false,
+});
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,6 +49,23 @@ export type ProductTypeSearch = {
   is_label: boolean;
 }[];
 
+const flattenSearchData = (data: CategoryType[]): ProductTypeSearch => {
+  return data.flatMap(({ category_id, category_name, products }) =>
+    products.map(
+      ({ product_id, product_name, ori_price, dis_price, is_label }) => ({
+        category_id,
+        category_name,
+
+        product_id,
+        product_name,
+        ori_price,
+        dis_price,
+        is_label,
+      })
+    )
+  );
+};
+
 export default async function Home() {
   const timeUpdated = await getLatestUpdatedTimestamp();
   const lastUpdated =
@@ -61,22 +83,16 @@ export default async function Home() {
 
   const dataPriceList: CategoryType[] = await getAllPriceList();
 
-  const flattenSearchData = (data: CategoryType[]): ProductTypeSearch => {
-    return data.flatMap(({ category_id, category_name, products }) =>
-      products.map(
-        ({ product_id, product_name, ori_price, dis_price, is_label }) => ({
-          category_id,
-          category_name,
-
-          product_id,
-          product_name,
-          ori_price,
-          dis_price,
-          is_label,
-        })
-      )
-    );
-  };
+  const dataFormList: ProductItemSelectionData[] = dataPriceList.map((item) => {
+    return {
+      ...item,
+      qty: 0,
+      sub_total: 0,
+      selected_id: undefined,
+      duplicate: false,
+      discount: 0,
+    };
+  });
 
   // console.log(dataPriceList);
   return (
@@ -88,7 +104,7 @@ export default async function Home() {
         <h2>Choose your parts</h2>
         <p className="text-zinc-400">Price list last updated: {lastUpdated}</p>
         <TableSearch data={flattenSearchData(dataPriceList)} />
-        {/* <TableForm data={flatPublicData} /> */}
+        <TableForm data={dataFormList} />
       </div>
     </main>
   );

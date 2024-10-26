@@ -7,6 +7,7 @@ export type ProductType = {
   product_name: string;
   ori_price: number;
   dis_price: number;
+  is_discounted: boolean;
   is_label: boolean;
 };
 
@@ -34,6 +35,7 @@ function TxtToProduct(txtContent: string): CategoryType {
         product_name: line.slice(0, -1),
         ori_price: 0,
         dis_price: 0,
+        is_discounted: false,
         is_label: true,
       });
 
@@ -49,6 +51,8 @@ function TxtToProduct(txtContent: string): CategoryType {
           product_name,
           ori_price: Number(ori_price),
           dis_price: Number(dis_price),
+          is_discounted:
+            Number(ori_price) - Number(dis_price) > 0 ? true : false,
           is_label: false,
         });
 
@@ -62,6 +66,7 @@ function TxtToProduct(txtContent: string): CategoryType {
           product_name: line,
           ori_price: 0,
           dis_price: 0,
+          is_discounted: false,
           is_label: true,
         });
         i++;

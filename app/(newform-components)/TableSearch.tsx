@@ -16,12 +16,11 @@ import {
 import { cn, Kbd } from "@nextui-org/react";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useUserSelected } from "@/lib/zus-store";
 import React from "react";
 import { ProductTypeSearch } from "../page";
-// import { ProductData, ProductPublicSearchData } from "../page";
 
 type Props = {
-  //   disabledKeys: string[];
   data: ProductTypeSearch;
 };
 
@@ -69,7 +68,7 @@ const TableSearch = ({ data }: Props) => {
 
   React.useEffect(() => {
     if (searchTerm) {
-      setSearchData((prev) => {
+      setSearchData(() => {
         const newData = data.filter((order) =>
           Object.values(order).some((value) => {
             if (typeof value === "string" && !order.is_label) {
@@ -87,6 +86,8 @@ const TableSearch = ({ data }: Props) => {
       setSearchData(data.filter((order) => !order.is_label));
     }
   }, [searchTerm]);
+
+  const setDataClient = useUserSelected((state) => state.setData);
 
   return (
     <>
@@ -131,19 +132,23 @@ const TableSearch = ({ data }: Props) => {
                   return (
                     <CommandItem
                       aria-label={item.product_name as string}
-                      key={`c${item.category_id}_p${item.product_id}`}
+                      key={`${item.category_id}_${item.product_id}`}
                       // showDivider
                       className={cn(
                         "whitespace-pre-wrap py-0 !text-left !text-[10px]",
                         item.is_label ? "!text-accentOwn !opacity-100" : ""
                       )}
                       disabled={item.is_label}
-                      value={`c${item.category_id}_p${item.product_id}`}
+                      value={`${item.category_id}_${item.product_id}`}
                       onSelect={(e) => {
                         // console.log(e);
                         const [category_id, product_id] = String(e).split("_");
                         setSearchDisplay(`${item.product_name}`);
-                        // setDataClient(Number(category_id), product_id, 1);
+                        setDataClient(
+                          Number(category_id),
+                          Number(product_id),
+                          1
+                        );
                         setOpen(false);
                       }}
                     >
