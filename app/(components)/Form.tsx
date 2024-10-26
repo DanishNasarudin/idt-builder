@@ -7,10 +7,10 @@ import { useScrollListener } from "../(hooks)/useScrollListener";
 import {
   deleteOldestFiles,
   queueWrite,
-} from "../(serverActions)/QuoteDataJSON";
+} from "../(serverActions)/textDbActions";
+import { getAllPriceList } from "../(serverActions)/textDbPriceListActions";
 import { useUserSelected } from "../../lib/zus-store";
 import FormItem from "./FormItem";
-import readFileAndParse from "./TxtToProduct";
 
 type OptionType = {
   name: string;
@@ -119,7 +119,7 @@ function Form({}: Props) {
   const [initialProducts, setProducts] = useState<ProductType[]>([]);
 
   useEffect(() => {
-    readFileAndParse().then((data) => {
+    getAllPriceList().then((data) => {
       setProducts(data);
     });
   }, []);

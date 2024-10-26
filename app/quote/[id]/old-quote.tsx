@@ -6,7 +6,7 @@ import { RiArrowDropDownFill, RiArrowDropLeftFill } from "react-icons/ri";
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { readData } from "@/app/(serverActions)/QuoteDataJSON";
+import { readData } from "@/app/(serverActions)/textDbActions";
 import { State } from "country-state-city";
 import Link from "next/link";
 import React from "react";

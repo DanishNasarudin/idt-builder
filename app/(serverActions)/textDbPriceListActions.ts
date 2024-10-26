@@ -2,18 +2,18 @@
 import fs from "fs/promises";
 import path from "path";
 
-type OptionType = {
+export type OptionType = {
   name: string;
   oriPrice: number;
   price: number;
 };
 
-type BrandType = {
+export type BrandType = {
   name: string;
   options: OptionType[];
 };
 
-type ProductType = {
+export type ProductType = {
   category: string;
   brands: BrandType[];
 };
@@ -70,7 +70,7 @@ function TxtToProduct(txtContent: string): ProductType {
   return products;
 }
 
-async function readFileAndParse(): Promise<ProductType[]> {
+export async function getAllPriceList(): Promise<ProductType[]> {
   const pricelistDir = "pricelist";
   const files = await fs.readdir(pricelistDir);
   const allProducts: ProductType[] = [];
@@ -81,6 +81,7 @@ async function readFileAndParse(): Promise<ProductType[]> {
       const content = await fs.readFile(filePath, "utf-8");
       const category = path.basename(file, ".txt"); // Getting the file name without extension
       const products = TxtToProduct(content);
+
       products.category = category; // Setting the category based on file name
       allProducts.push(products);
     }
@@ -88,4 +89,40 @@ async function readFileAndParse(): Promise<ProductType[]> {
   return allProducts;
 }
 
-export default readFileAndParse;
+export async function getAllTextFilePaths(): Promise<string[]> {
+  const dirPath = path.join(process.cwd(), "pricelist");
+  const files = await fs.readdir(dirPath);
+
+  return files
+    .filter((file) => file.endsWith(".txt"))
+    .map((file) => path.join(dirPath, file));
+}
+
+export async function getLatestUpdatedTimestamp(): Promise<Date | null> {
+  try {
+    const filePaths = await getAllTextFilePaths();
+
+    // Return null if there are no .txt files
+    if (filePaths.length === 0) {
+      return null;
+    }
+
+    // Get modification times of all .txt files
+    const fileModTimes = await Promise.all(
+      filePaths.map(async (filePath) => {
+        const stats = await fs.stat(filePath);
+        return stats.mtime; // Return the modification time
+      })
+    );
+
+    // Find the latest modification time
+    const latestModTime = fileModTimes.reduce((latest, current) =>
+      current > latest ? current : latest
+    );
+
+    return latestModTime;
+  } catch (error) {
+    console.error("Error getting latest updated timestamp:", error);
+    throw error; // Handle error as needed
+  }
+}
