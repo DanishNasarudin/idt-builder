@@ -102,4 +102,42 @@ async function deleteOldestFiles(maxFiles: number): Promise<void> {
   }
 }
 
-export { readData, writeData, queueWrite, deleteOldestFiles };
+export async function getAllTextFilePaths(): Promise<string[]> {
+  const dirPath = path.join(process.cwd(), "pricelist");
+  const files = await fs.readdir(dirPath);
+
+  return files
+    .filter((file) => file.endsWith(".txt"))
+    .map((file) => path.join(dirPath, file));
+}
+
+export async function getLatestUpdatedTimestamp(): Promise<Date | null> {
+  try {
+    const filePaths = await getAllTextFilePaths();
+
+    // Return null if there are no .txt files
+    if (filePaths.length === 0) {
+      return null;
+    }
+
+    // Get modification times of all .txt files
+    const fileModTimes = await Promise.all(
+      filePaths.map(async (filePath) => {
+        const stats = await fs.stat(filePath);
+        return stats.mtime; // Return the modification time
+      })
+    );
+
+    // Find the latest modification time
+    const latestModTime = fileModTimes.reduce((latest, current) =>
+      current > latest ? current : latest
+    );
+
+    return latestModTime;
+  } catch (error) {
+    console.error("Error getting latest updated timestamp:", error);
+    throw error; // Handle error as needed
+  }
+}
+
+export { deleteOldestFiles, queueWrite, readData, writeData };
