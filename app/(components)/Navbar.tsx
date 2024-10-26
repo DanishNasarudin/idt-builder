@@ -210,7 +210,7 @@ function Navbar({}: Props) {
     if (check.grand_total === 0) return;
     const id = uuidv4();
     const quoteData = dataToQuote();
-    console.log(id, quoteData);
+    // console.log(id, quoteData);
 
     await queueWrite(quoteData, id);
     // await drizzleInsertQuote(id, json);
@@ -283,19 +283,16 @@ function Navbar({}: Props) {
                   return (
                     <React.Fragment key={idx}>
                       <NavigationMenuItem className="bg-transparent">
-                        <Link
+                        <NavigationMenuLink
                           href={main.href}
                           target={main.target ? "_blank" : undefined}
+                          className={cn(
+                            navigationMenuTriggerStyle(),
+                            "hover:accent/50 bg-transparent"
+                          )}
                         >
-                          <NavigationMenuLink
-                            className={cn(
-                              navigationMenuTriggerStyle(),
-                              "hover:accent/50 bg-transparent"
-                            )}
-                          >
-                            {main.title}
-                          </NavigationMenuLink>
-                        </Link>
+                          {main.title}
+                        </NavigationMenuLink>
                       </NavigationMenuItem>
                     </React.Fragment>
                   );
@@ -346,7 +343,7 @@ function Navbar({}: Props) {
               />
             </a>
             <Sheet>
-              <SheetTrigger>
+              <SheetTrigger asChild>
                 <Button className="bg-transparent px-2">
                   <MenuIcon />
                 </Button>
