@@ -5,8 +5,13 @@ import {
   getAllPriceList,
 } from "@/app/(serverActions)/textDbPriceListActions";
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
+import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import GrandTotal from "../(quote-components)/GrandTotal";
+
+export const metadata: Metadata = {
+  title: "Quote",
+};
 
 const TableDisplay = dynamic(
   () => import("../(quote-components)/TableDisplay"),
@@ -55,6 +60,8 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
       total: data.total,
     };
   });
+
+  // console.log(displayData);
 
   const dataPriceList: CategoryType[] = await getAllPriceList();
 

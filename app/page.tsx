@@ -1,4 +1,5 @@
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
+import { unstable_cache } from "next/cache";
 import dynamic from "next/dynamic";
 import { Inter } from "next/font/google";
 import Hero from "./(components)/Hero";
@@ -64,11 +65,23 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
+const getCachedList = unstable_cache(
+  async () => {
+    return await getAllPriceList();
+  },
+  ["pricelist"],
+  { revalidate: 10, tags: ["pricelist"] }
+);
+
 export default async function Home({ searchParams }: Props) {
   const timeUpdated = await getLatestUpdatedTimestamp();
-  const lastUpdated =
+  const timeUpdatedGMT8 =
     timeUpdated != null
-      ? timeUpdated.toLocaleString("en-GB", {
+      ? new Date(timeUpdated.getTime() + 8 * 60 * 60 * 1000)
+      : "";
+  const lastUpdated =
+    timeUpdatedGMT8 != null
+      ? timeUpdatedGMT8.toLocaleString("en-GB", {
           day: "2-digit",
           month: "short",
           year: "numeric",
@@ -79,7 +92,7 @@ export default async function Home({ searchParams }: Props) {
         })
       : "";
 
-  const dataPriceList: CategoryType[] = await getAllPriceList();
+  const dataPriceList: CategoryType[] = await getCachedList();
 
   const dataFormList: ProductItemSelectionData[] = dataPriceList.map((item) => {
     return {

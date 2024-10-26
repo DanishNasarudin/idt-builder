@@ -17,9 +17,9 @@ type Props = {
 
 const columns = [
   { key: "name", label: "Product Name" },
-  { key: "total", label: "Price" },
+  { key: "price", label: "Price" },
   { key: "qty", label: "Qty" },
-  { key: "price", label: "Total" },
+  { key: "total", label: "Total" },
 ];
 
 const TableDisplay = ({ data }: Props) => {
