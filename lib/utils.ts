@@ -5,6 +5,10 @@ import { ReadonlyURLSearchParams } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
+  if (typeof window === "undefined") {
+    return clsx(inputs);
+  }
+
   return twMerge(clsx(inputs));
 }
 

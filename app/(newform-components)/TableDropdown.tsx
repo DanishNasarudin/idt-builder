@@ -86,7 +86,8 @@ const TableDropdown = ({ data, disabledKeys }: Props) => {
             aria-expanded={open}
             className="
             w-full justify-start overflow-hidden overflow-ellipsis whitespace-pre-wrap bg-zinc-300
-            text-left !text-[10px] !font-bold !text-black transition-all mobilehover:hover:bg-zinc-400"
+            text-left !text-[12px] !font-bold !text-black transition-all mobilehover:hover:bg-zinc-400
+            h-min"
           >
             {selectedProductId !== null
               ? selectedProductId !== ""
@@ -124,11 +125,13 @@ const TableDropdown = ({ data, disabledKeys }: Props) => {
                       key={item.product_id}
                       // showDivider
                       className={cn(
-                        "whitespace-pre-wrap py-0 !text-left !text-[10px]",
-                        item.is_label ? "!text-accentOwn !opacity-100" : "",
+                        "whitespace-pre-wrap py-0 !text-left !text-[12px]",
+                        item.is_label ? "!text-accent !opacity-100" : "",
                         selectedProductId &&
                           Number(selectedProductId) === item.product_id &&
-                          "bg-accentOwn/50"
+                          "bg-accent/50",
+                        Number(selectedProductId) === item.product_id &&
+                          "data-[selected=true]:hover:!bg-red-400"
                       )}
                       disabled={
                         item.is_label === null ? undefined : item.is_label
@@ -149,22 +152,29 @@ const TableDropdown = ({ data, disabledKeys }: Props) => {
                         }
                       }}
                     >
-                      {item.product_name}{" "}
+                      {item.product_name === "" ? (
+                        <p className="text-transparent">{"."}</p>
+                      ) : (
+                        item.product_name
+                      )}{" "}
                       {item.is_label ? (
                         ``
                       ) : (
                         <div className="flex">
-                          <p className="text-[10px]">{"| "}</p>
+                          <p className="text-[12px]">{"| "}</p>
                           <p
                             className={cn(
-                              "text-[10px]",
+                              "text-[12px]",
                               item.is_discounted && "text-green-700"
                             )}
                           >
                             RM{item.dis_price}
                           </p>
+                          {Number(selectedProductId) === item.product_id && (
+                            <p className="text-[12px]">{` (x)`}</p>
+                          )}
                         </div>
-                      )}
+                      )}{" "}
                     </CommandItem>
                   );
                 })}

@@ -39,7 +39,11 @@ const UserActions = ({ quoteId, data, dataList }: Props) => {
     return data
       .map(
         (item) =>
-          `${item.category_name.replace(/\d{2}\.\s/g, "").trim()}: ` +
+          `${item.category_name
+            .replace(/^--\s*\d+\.\s+/, "") // Removes "-- <number>. "
+            .replace(/-.+$/, "") // Removes "- and everything after it"
+            .replace(/\s+--$/, "") // Removes the trailing "--"
+            .trim()}: ` +
           `${item.products[0].product_name.replace(/\([^)]*\)/g, "").trim()}` +
           `${item.qty > 1 ? " | " : ""}` +
           `${item.qty > 1 ? `Qty: ${item.qty}x` : ""}` +

@@ -97,7 +97,7 @@ const TableForm = ({ data, dataToEdit }: Props) => {
   }, [data]);
 
   const renderCell = React.useCallback(
-    (data: ProductItemSelectionData, columnKey: React.Key) => {
+    (data: ProductItemSelectionData, columnKey: React.Key, index: number) => {
       const cellValue = data[columnKey as keyof ProductItemSelectionData];
 
       const currentProduct = data.products.find(
@@ -107,11 +107,11 @@ const TableForm = ({ data, dataToEdit }: Props) => {
       switch (columnKey) {
         case "action":
           return (
-            <div className="relative flex justify-center">
+            <div className="relative flex justify-center !h-full">
               <Button
                 className={`${
                   data.selected_id ? "block" : "hidden"
-                } absolute left-[-150%] h-[40px] w-[40px] bg-zinc-700 text-xs text-white mobilehover:hover:bg-accent`}
+                } absolute left-[-150%] h-full w-[40px] bg-zinc-700 text-xs text-white mobilehover:hover:bg-accent`}
                 isIconOnly
                 size="sm"
                 aria-label="copy"
@@ -142,7 +142,7 @@ const TableForm = ({ data, dataToEdit }: Props) => {
               </Button>
               {data.duplicate ? (
                 <Button
-                  className="text-md h-[40px] w-[40px] bg-zinc-300 text-black mobilehover:hover:bg-red-500 mobilehover:hover:text-white"
+                  className="text-md h-full w-[40px] bg-zinc-300 text-black mobilehover:hover:bg-red-500 mobilehover:hover:text-white"
                   isIconOnly
                   size="sm"
                   aria-label="del"
@@ -162,7 +162,9 @@ const TableForm = ({ data, dataToEdit }: Props) => {
                 </Button>
               ) : (
                 <Button
-                  className="text-md h-[40px] w-[40px] bg-zinc-300 text-black mobilehover:hover:bg-accent mobilehover:hover:text-white"
+                  className={cn(
+                    "h-full w-[40px] text-md bg-zinc-300 text-black mobilehover:hover:bg-accent mobilehover:hover:text-white"
+                  )}
                   isIconOnly
                   size="sm"
                   aria-label="add"
@@ -191,7 +193,7 @@ const TableForm = ({ data, dataToEdit }: Props) => {
           );
         case "quantity":
           return (
-            <div className="flex justify-center">
+            <div className="flex h-full justify-center">
               <TableDropdownQty
                 category_id={Number(data.category_id)}
                 product_id={data.selected_id ? data.selected_id : 0}
@@ -221,7 +223,7 @@ const TableForm = ({ data, dataToEdit }: Props) => {
         aria-label="Main Table"
         isCompact
         removeWrapper
-        classNames={{ th: "bg-transparent" }}
+        classNames={{ th: "bg-transparent", td: "!h-[40px]" }}
       >
         <TableHeader columns={columns}>
           {(column) => (
@@ -267,10 +269,11 @@ const TableForm = ({ data, dataToEdit }: Props) => {
                       : "",
                     columnKey === "quantity"
                       ? "w-[40px] px-0 sm:px-3 [&>div]:mx-auto [&>div]:w-min"
-                      : ""
+                      : "",
+                    "h-full"
                   )}
                 >
-                  {renderCell(item, columnKey)}
+                  {renderCell(item, columnKey, item.category_id)}
                 </TableCell>
               )}
             </TableRow>

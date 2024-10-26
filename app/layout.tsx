@@ -12,7 +12,10 @@ const Navbar = dynamic(() => import("./(components)/Navbar"), { ssr: false });
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Ideal Tech PC Builder",
+  title: {
+    default: "Ideal Tech PC Builder",
+    template: "%s | Ideal Tech PC Builder",
+  },
   description:
     "Custom PC, Desktop PC, Gaming PC, Workstation PC built for your needs in Malaysia. Fully Customizable.",
   keywords: [

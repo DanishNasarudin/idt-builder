@@ -38,7 +38,7 @@ const TableDropdownQty = ({ category_id, product_id }: Props) => {
     >
       <DropdownTrigger>
         <Button
-          className="text-md bg-zinc-300 text-black w-[40px] h-[40px]"
+          className="text-md bg-zinc-300 text-black w-[40px] !h-full"
           isIconOnly
           size="sm"
         >
