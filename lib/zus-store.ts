@@ -1,4 +1,5 @@
 import { CategoryType } from "@/app/(serverActions)/textDbPriceListActions";
+import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 
 type NavbarStore = {
@@ -27,7 +28,23 @@ export type ProductSelectionData = {
   product_items: ProductItemSelectionData[];
   ori_total: number;
   grand_total: number;
-  createdAt?: string;
+  createdAt: string;
+};
+
+type FormDataItem = {
+  category: string;
+  selectedOption: { name: string; price: number };
+  quantity: number;
+  total: number;
+};
+
+export type QuoteData = {
+  id: string;
+  formData: FormDataItem[];
+  grandTotal: number;
+  oriTotal: number;
+  createdAt: string;
+  retainFormatData: ProductSelectionData;
 };
 
 type UserSelected = {
@@ -44,6 +61,8 @@ type UserSelected = {
   selected: ProductSelectionData;
   updateSelected: () => void;
   resetData: () => void;
+  dataToQuote: () => QuoteData;
+  quoteToData: (data: QuoteData) => void;
 };
 
 export const useUserSelected = create<UserSelected>()((set, get) => ({
@@ -158,6 +177,7 @@ export const useUserSelected = create<UserSelected>()((set, get) => ({
           product_items: selectedProducts,
           ori_total: oriTotal + grandTotal,
           grand_total: grandTotal,
+          createdAt: "",
         },
       };
     }),
@@ -167,4 +187,122 @@ export const useUserSelected = create<UserSelected>()((set, get) => ({
       selected: {} as ProductSelectionData,
     }));
   },
+  dataToQuote: () => {
+    const { product_items, ori_total, grand_total } = get().selected;
+    const createdAt = new Date().toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      hour12: true,
+    });
+
+    const retainFormatData: ProductSelectionData = {
+      product_items,
+      ori_total,
+      grand_total,
+      createdAt,
+    };
+
+    const id = uuidv4();
+
+    const selectedStore: QuoteData = {
+      id,
+      formData: product_items.map((item) => {
+        return {
+          category: item.category_name,
+          selectedOption: {
+            name: item.products[0].product_name,
+            price: item.products[0].dis_price,
+          },
+          quantity: item.qty,
+          total: item.sub_total,
+        };
+      }),
+      grandTotal: grand_total,
+      oriTotal: ori_total,
+      createdAt: createdAt,
+      retainFormatData,
+    };
+
+    return selectedStore;
+  },
+  quoteToData: (data) => {
+    if (data === null) return;
+    const parsedData: ProductSelectionData = data.retainFormatData;
+    console.log(parsedData, "pass1");
+
+    set((state) => {
+      let updatedData: ProductItemSelectionData[] = state.staticData.map(
+        (cat) => ({
+          ...cat,
+          products: cat.products.map((prod) => ({ ...prod })),
+        })
+      ); // Start with a copy of savedData
+
+      let processedProducts = new Set();
+      let processedProductsCat = new Set();
+
+      parsedData.product_items.forEach((selection) => {
+        // Find the category index based on the product name
+        const categoryIndex = updatedData.findIndex((category) =>
+          category.products.some(
+            (product) =>
+              product.product_name === selection.products[0].product_name
+          )
+        );
+
+        if (categoryIndex !== -1) {
+          // Check if this category already has a different selected product
+          const category: ProductItemSelectionData = updatedData[categoryIndex];
+          const productId = category.products.find(
+            (prod) => prod.product_name === selection.products[0].product_name
+          )?.product_id;
+          if (
+            processedProducts.has(productId) ||
+            processedProductsCat.has(categoryIndex)
+          ) {
+            // A different product is already selected in this category, so duplicate the category
+            const newCategory: ProductItemSelectionData = JSON.parse(
+              JSON.stringify(category)
+            );
+            const maxId =
+              Math.max(...updatedData.map((c) => c.category_id), 0) + 1;
+            newCategory.category_id = maxId;
+            newCategory.duplicate = true;
+            // Apply the selection to the new duplicated category
+            applySelectionToCategory(newCategory, selection);
+            updatedData.splice(categoryIndex + 1, 0, newCategory); // Insert the new category right after the original one
+          } else {
+            // Apply the selection directly to the existing category
+            applySelectionToCategory(category, selection);
+            updatedData[categoryIndex] = { ...category };
+            processedProducts.add(productId);
+            processedProductsCat.add(categoryIndex);
+          }
+        }
+      });
+
+      console.log(updatedData, " CHECK zus");
+
+      return { dynamicData: updatedData, selected: { ...parsedData } };
+    });
+  },
 }));
+
+function applySelectionToCategory(
+  category: ProductItemSelectionData,
+  selection: ProductItemSelectionData
+) {
+  category.products.forEach((product) => {
+    if (product.product_name === selection.products[0].product_name) {
+      category.qty = selection.qty;
+      category.sub_total = product.dis_price
+        ? product.dis_price * selection.qty
+        : 0;
+      category.discount = product.is_discounted ? product.dis_price : undefined;
+      category.selected_id = product.product_id; // Assuming this needs to be set at the category level
+    }
+  });
+}

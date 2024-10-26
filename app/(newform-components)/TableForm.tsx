@@ -7,9 +7,10 @@
 //   TableHeader,
 //   TableRow,
 // } from "@/components/ui/table";
-import { cn } from "@/lib/utils";
+import { cn, createURL } from "@/lib/utils";
 import {
   ProductItemSelectionData,
+  QuoteData,
   useNavbarStore,
   useUserSelected,
 } from "@/lib/zus-store";
@@ -30,6 +31,7 @@ import TableDropdownQty from "./TableDropdownQty";
 
 type Props = {
   data: ProductItemSelectionData[];
+  dataToEdit?: QuoteData;
 };
 
 const columns = [
@@ -55,12 +57,13 @@ const columns = [
   },
 ];
 
-const TableForm = ({ data }: Props) => {
+const TableForm = ({ data, dataToEdit }: Props) => {
   const dataClient = useUserSelected((state) => state.dynamicData);
   const initDataClient = useUserSelected((state) => state.initData);
   const addDataClient = useUserSelected((state) => state.addData);
   const delDataClient = useUserSelected((state) => state.delData);
   const selected = useUserSelected((state) => state.selected);
+  const quoteToData = useUserSelected((state) => state.quoteToData);
   const updateSelected = useUserSelected((state) => state.updateSelected);
 
   // console.log(selected);
@@ -73,9 +76,25 @@ const TableForm = ({ data }: Props) => {
     if (dataClient.length === 0) {
       // console.log("pass");
       initDataClient(data);
-      setIsBuildPage(true);
     }
+    setIsBuildPage(true);
   }, []);
+
+  const pathname = usePathname();
+  const params = useSearchParams();
+  const router = useRouter();
+  const setParams = new URLSearchParams(params?.toString());
+
+  React.useEffect(() => {
+    if (dataToEdit) {
+      quoteToData(dataToEdit);
+
+      setParams.delete("edit");
+      if (pathname === null) return;
+      const setURL = createURL(pathname, setParams);
+      router.replace(setURL);
+    }
+  }, [dataToEdit]);
 
   // console.log(dataClient);
 
@@ -87,11 +106,6 @@ const TableForm = ({ data }: Props) => {
     );
     return newDisabledKeys;
   }, [data]);
-
-  const pathname = usePathname();
-  const params = useSearchParams();
-  const router = useRouter();
-  const setParams = new URLSearchParams(params?.toString());
 
   // React.useEffect(() => {
   //   const getData = async (id: string | null) => {

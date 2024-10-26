@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import Hero from "./(components)/Hero";
 import Offers from "./(components)/Offers";
 // import TableSearch from "./(newform-components)/TableSearch";
-import { ProductItemSelectionData } from "@/lib/zus-store";
+import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
+import { readData } from "./(serverActions)/textDbActions";
 import {
   CategoryType,
   getAllPriceList,
@@ -23,20 +24,20 @@ const TableForm = dynamic(() => import("./(newform-components)/TableForm"), {
 
 const inter = Inter({ subsets: ["latin"] });
 
-export type FormDataItem = {
-  category: string;
-  selectedOption: { name: string; price: number };
-  quantity: number;
-  total: number;
-};
+// export type FormDataItem = {
+//   category: string;
+//   selectedOption: { name: string; price: number };
+//   quantity: number;
+//   total: number;
+// };
 
-export type QuoteData = {
-  id: string;
-  formData: FormDataItem[];
-  grandTotal: number;
-  oriTotal: number;
-  createdAt: string;
-};
+// export type QuoteData = {
+//   id: string;
+//   formData: FormDataItem[];
+//   grandTotal: number;
+//   oriTotal: number;
+//   createdAt: string;
+// };
 
 export type ProductTypeSearch = {
   category_id: number;
@@ -66,7 +67,11 @@ const flattenSearchData = (data: CategoryType[]): ProductTypeSearch => {
   );
 };
 
-export default async function Home() {
+type Props = {
+  searchParams: { [key: string]: string | string[] | undefined };
+};
+
+export default async function Home({ searchParams }: Props) {
   const timeUpdated = await getLatestUpdatedTimestamp();
   const lastUpdated =
     timeUpdated != null
@@ -94,6 +99,16 @@ export default async function Home() {
     };
   });
 
+  let dataToEdit: QuoteData | undefined = undefined;
+
+  const searchTerm = Array.isArray(searchParams.edit)
+    ? searchParams.edit[0]
+    : searchParams.edit;
+
+  if (searchTerm) {
+    dataToEdit = await readData(searchTerm);
+  }
+
   // console.log(dataPriceList);
   return (
     <main className={`${inter.className} flex flex-col w-4/5 mx-auto`}>
@@ -104,7 +119,7 @@ export default async function Home() {
         <h2>Choose your parts</h2>
         <p className="text-zinc-400">Price list last updated: {lastUpdated}</p>
         <TableSearch data={flattenSearchData(dataPriceList)} />
-        <TableForm data={dataFormList} />
+        <TableForm data={dataFormList} dataToEdit={dataToEdit} />
       </div>
     </main>
   );

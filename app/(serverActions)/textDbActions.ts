@@ -1,4 +1,5 @@
 "use server";
+import { QuoteData } from "@/lib/zus-store";
 import fs from "fs/promises";
 import path from "path";
 
@@ -20,7 +21,7 @@ function getFilePath(id: string) {
 }
 
 // Updated writeData function to write to a specific file based on the id
-async function writeData(data: any, id: string) {
+async function writeData(data: QuoteData, id: string) {
   const filePath = getFilePath(id);
   await fs.writeFile(filePath, JSON.stringify(data));
 }
@@ -59,7 +60,7 @@ async function processQueue() {
   }
 }
 
-function queueWrite(data: any, id: string): Promise<void> {
+function queueWrite(data: QuoteData, id: string): Promise<void> {
   return new Promise((resolve, reject) => {
     queue.push({ id, data, resolve, reject }); // Push a new job into the queue
     processQueue(); // Start processing the queue
