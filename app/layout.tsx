@@ -1,7 +1,9 @@
+import { Providers } from "@/lib/providers";
 import { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import { Toaster } from "sonner";
 import Footer from "./(components)/Footer";
 import "./globals.css";
 
@@ -71,12 +73,13 @@ export default function RootLayout({
         `}
       </Script>
       <body className={`${inter.className} relative`}>
-        {/* <Providers> */}
-        <Navbar />
-        <div className="max-w-[1060px] mx-auto">{children}</div>
-        <div className="h-[200px]"></div>
-        <Footer />
-        {/* </Providers> */}
+        <Providers>
+          <Navbar />
+          <div className="max-w-[1060px] mx-auto">{children}</div>
+          <div className="h-[200px]"></div>
+          <Toaster richColors closeButton theme="dark" />
+          <Footer />
+        </Providers>
       </body>
     </html>
   );
