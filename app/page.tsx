@@ -1,9 +1,8 @@
+import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 import dynamic from "next/dynamic";
 import { Inter } from "next/font/google";
 import Hero from "./(components)/Hero";
 import Offers from "./(components)/Offers";
-// import TableSearch from "./(newform-components)/TableSearch";
-import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 import { readData } from "./(serverActions)/textDbActions";
 import {
   CategoryType,
@@ -24,21 +23,6 @@ const TableForm = dynamic(() => import("./(newform-components)/TableForm"), {
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export type FormDataItem = {
-//   category: string;
-//   selectedOption: { name: string; price: number };
-//   quantity: number;
-//   total: number;
-// };
-
-// export type QuoteData = {
-//   id: string;
-//   formData: FormDataItem[];
-//   grandTotal: number;
-//   oriTotal: number;
-//   createdAt: string;
-// };
-
 export type ProductTypeSearch = {
   category_id: number;
   category_name: string;
@@ -48,12 +32,20 @@ export type ProductTypeSearch = {
   ori_price: number;
   dis_price: number;
   is_label: boolean;
+  is_discounted: boolean;
 }[];
 
 const flattenSearchData = (data: CategoryType[]): ProductTypeSearch => {
   return data.flatMap(({ category_id, category_name, products }) =>
     products.map(
-      ({ product_id, product_name, ori_price, dis_price, is_label }) => ({
+      ({
+        product_id,
+        product_name,
+        ori_price,
+        dis_price,
+        is_label,
+        is_discounted,
+      }) => ({
         category_id,
         category_name,
 
@@ -62,6 +54,7 @@ const flattenSearchData = (data: CategoryType[]): ProductTypeSearch => {
         ori_price,
         dis_price,
         is_label,
+        is_discounted,
       })
     )
   );
@@ -111,7 +104,7 @@ export default async function Home({ searchParams }: Props) {
 
   // console.log(dataPriceList);
   return (
-    <main className={`${inter.className} flex flex-col w-4/5 mx-auto`}>
+    <main className={`mx-auto flex w-full flex-col px-4 sm:w-4/5 sm:px-0`}>
       <Hero />
       <Offers />
       {/* <Form /> */}

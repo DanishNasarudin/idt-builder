@@ -23,21 +23,6 @@ const columns = [
 ];
 
 const TableDisplay = ({ data }: Props) => {
-  // const data = useUserSelected((state) => state.selected);
-
-  // const data: QuoteData = {} as QuoteData;
-
-  // const dataFlattened = data.formData.map((item) => item);
-
-  // console.log(data);
-  // console.log(data, dataFlattened);
-
-  // const [data, setData] = React.useState<SelectedStore>(selected());
-
-  // console.log()
-
-  // console.log(data.products, "quote check");
-
   return (
     <div className="w-full">
       <Table

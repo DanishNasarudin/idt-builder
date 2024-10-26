@@ -7,12 +7,6 @@ import {
   useTriggerStore,
   useUserSelected,
 } from "@/lib/zus-store";
-// import {
-//   Products,
-//   SelectedStore,
-//   useSelectStore,
-//   useTriggerStore,
-// } from "@/lib/zus-store";
 import { Button } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
@@ -27,9 +21,13 @@ type Props = {
 const UserActions = ({ quoteId, data, dataList }: Props) => {
   const quoteToData = useUserSelected((state) => state.quoteToData);
 
+  const checkOldQuote = data?.retainFormatData;
+
   React.useEffect(() => {
-    if (data) {
+    if (data && checkOldQuote) {
       quoteToData(data);
+    } else if (data && !checkOldQuote) {
+      router.push(`/quote-old/${quoteId}`);
     }
   }, [data]);
 
@@ -82,20 +80,6 @@ const UserActions = ({ quoteId, data, dataList }: Props) => {
 
   const pdfTrigger = useTriggerStore((state) => state.trigger);
   const setPDFTrigger = useTriggerStore((state) => state.setTrigger);
-  //   const dataToJSON = useSelectStore((state) => state.dataToJSON);
-  //   const editData = useSelectStore((state) => state.editData);
-
-  // const initData = useUserSelected((state) => state.initData);
-  // const quoteToData = useUserSelected((state) => state.quoteToData);
-  // const dynamicData = useUserSelected((state) => state.dynamicData);
-
-  // React.useEffect(() => {
-  //   initData(dataList);
-  //   quoteToData(data);
-  //   console.log("run");
-  // }, [data]);
-
-  // console.log(dynamicData, " CHECK");
 
   const router = useRouter();
   const pathname = usePathname();
@@ -122,11 +106,9 @@ const UserActions = ({ quoteId, data, dataList }: Props) => {
       <Button
         radius="sm"
         onClick={() => {
-          // editData(dataToJSON());
           setSearchParams.set("edit", quoteId);
           if (pathname === null) return;
           const setURL = createURL("/", setSearchParams);
-          // console.log(setURL);
           router.push(setURL);
         }}
       >

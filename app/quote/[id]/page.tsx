@@ -1,15 +1,12 @@
 import Offers from "@/app/(components)/Offers";
 import { readData } from "@/app/(serverActions)/textDbActions";
-import GrandTotal from "../(quote-components)/GrandTotal";
-// import TableDisplay from "../(quote-components)/TableDisplay";
-// import UserActions from "../(quote-components)/UserActions";
 import {
   CategoryType,
   getAllPriceList,
 } from "@/app/(serverActions)/textDbPriceListActions";
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 import dynamic from "next/dynamic";
-// import NewForm from "../(quote-components)/NewForm";
+import GrandTotal from "../(quote-components)/GrandTotal";
 
 const TableDisplay = dynamic(
   () => import("../(quote-components)/TableDisplay"),
@@ -71,17 +68,6 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
       discount: 0,
     };
   });
-
-  // const displayData2: DisplayFormData[] = data2.product_items.map((data) => {
-  //   return {
-  //     name: data.products[0].product_name,
-  //     price: data.products[0].dis_price,
-  //     qty: data.qty,
-  //     total: data.sub_total,
-  //   };
-  // });
-
-  // console.log(displayData2);
 
   return (
     <>

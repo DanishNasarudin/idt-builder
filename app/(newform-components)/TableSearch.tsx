@@ -1,10 +1,4 @@
 "use client";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
-// import { useSelectStore } from "@/lib/zus-store";
 import { Button } from "@/components/ui/button";
 import {
   Command,
@@ -13,6 +7,11 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import { cn, Kbd } from "@nextui-org/react";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -88,6 +87,7 @@ const TableSearch = ({ data }: Props) => {
   }, [searchTerm]);
 
   const setDataClient = useUserSelected((state) => state.setData);
+  const updateSelected = useUserSelected((state) => state.updateSelected);
 
   return (
     <>
@@ -136,7 +136,7 @@ const TableSearch = ({ data }: Props) => {
                       // showDivider
                       className={cn(
                         "whitespace-pre-wrap py-0 !text-left !text-[10px]",
-                        item.is_label ? "!text-accentOwn !opacity-100" : ""
+                        item.is_label ? "!text-accent !opacity-100" : ""
                       )}
                       disabled={item.is_label}
                       value={`${item.category_id}_${item.product_id}`}
@@ -149,11 +149,24 @@ const TableSearch = ({ data }: Props) => {
                           Number(product_id),
                           1
                         );
+                        updateSelected();
                         setOpen(false);
                       }}
                     >
                       {item.product_name}{" "}
-                      {!item.is_label && `| RM${item.dis_price}`}
+                      {!item.is_label && (
+                        <div className="flex">
+                          <p className="text-[10px]">{"| "}</p>
+                          <p
+                            className={cn(
+                              "text-[10px]",
+                              item.is_discounted && "text-green-700"
+                            )}
+                          >
+                            RM{item.dis_price}
+                          </p>
+                        </div>
+                      )}
                     </CommandItem>
                   );
                 })}
