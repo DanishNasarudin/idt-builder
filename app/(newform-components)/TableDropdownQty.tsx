@@ -19,6 +19,7 @@ const TableDropdownQty = ({ category_id, product_id }: Props) => {
 
   const dataClient = useUserSelected((state) => state.dynamicData);
   const setDataClient = useUserSelected((state) => state.setData);
+  const updateSelected = useUserSelected((state) => state.updateSelected);
 
   React.useEffect(() => {
     setSelectedKeys(() => {
@@ -49,6 +50,7 @@ const TableDropdownQty = ({ category_id, product_id }: Props) => {
         onSelectionChange={(e) => {
           setSelectedKeys(Array.from(e)[0] as string);
           setDataClient(category_id, product_id, Array.from(e)[0] as number);
+          updateSelected();
         }}
         selectedKeys={selectedKeys}
         hideSelectedIcon

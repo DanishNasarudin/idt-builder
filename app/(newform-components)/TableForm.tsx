@@ -8,7 +8,11 @@
 //   TableRow,
 // } from "@/components/ui/table";
 import { cn } from "@/lib/utils";
-import { ProductItemSelectionData, useUserSelected } from "@/lib/zus-store";
+import {
+  ProductItemSelectionData,
+  useNavbarStore,
+  useUserSelected,
+} from "@/lib/zus-store";
 import {
   Button,
   Table,
@@ -54,19 +58,22 @@ const columns = [
 const TableForm = ({ data }: Props) => {
   const dataClient = useUserSelected((state) => state.dynamicData);
   const initDataClient = useUserSelected((state) => state.initData);
-  // const addDataClient = useSelectStore((state) => state.addData);
-  // const delDataClient = useSelectStore((state) => state.delData);
-  // const selected = useSelectStore((state) => state.selected);
+  const addDataClient = useUserSelected((state) => state.addData);
+  const delDataClient = useUserSelected((state) => state.delData);
+  const selected = useUserSelected((state) => state.selected);
+  const updateSelected = useUserSelected((state) => state.updateSelected);
+
+  // console.log(selected);
   // const dataToJSON = useSelectStore((state) => state.dataToJSON);
   // const editData = useSelectStore((state) => state.editData);
-  // const setIsBuildPage = useNavbarStore((state) => state.setIsBuildPage);
+  const setIsBuildPage = useNavbarStore((state) => state.setIsBuildPage);
 
   // Init Data for client
   React.useEffect(() => {
     if (dataClient.length === 0) {
       // console.log("pass");
       initDataClient(data);
-      // setIsBuildPage(true); ---------------- check
+      setIsBuildPage(true);
     }
   }, []);
 
@@ -158,11 +165,15 @@ const TableForm = ({ data }: Props) => {
                   isIconOnly
                   size="sm"
                   aria-label="del"
-                  // onClick={() => delDataClient(data.category_id)}
+                  onClick={() => {
+                    delDataClient(data.category_id);
+                    updateSelected();
+                  }}
                   onKeyDown={(e) => {
                     e.preventDefault();
                     if (e.key === "Enter") {
-                      // delDataClient(data.category_id);
+                      delDataClient(data.category_id);
+                      updateSelected();
                     }
                   }}
                 >
@@ -174,11 +185,15 @@ const TableForm = ({ data }: Props) => {
                   isIconOnly
                   size="sm"
                   aria-label="add"
-                  // onClick={() => addDataClient(data.category_id)}
+                  onClick={() => {
+                    addDataClient(data.category_id);
+                    updateSelected();
+                  }}
                   onKeyDown={(e) => {
                     e.preventDefault();
                     if (e.key === "Enter") {
-                      // addDataClient(data.category_id);
+                      addDataClient(data.category_id);
+                      updateSelected();
                     }
                   }}
                 >

@@ -25,6 +25,7 @@ type Selection = "all" | Set<React.Key>;
 
 const TableDropdown = ({ data, disabledKeys }: Props) => {
   const setDataClient = useUserSelected((state) => state.setData);
+  const updateSelected = useUserSelected((state) => state.updateSelected);
 
   const [selectedProductId, setSelectedProductId] = React.useState<
     string | null
@@ -49,6 +50,7 @@ const TableDropdown = ({ data, disabledKeys }: Props) => {
       keyArray.length > 0 ? (keyArray[0] as number) : null,
       1
     );
+    updateSelected();
   };
 
   // console.log(
@@ -138,9 +140,11 @@ const TableDropdown = ({ data, disabledKeys }: Props) => {
                           Number(selectedProductId) === item.product_id
                         ) {
                           setDataClient(data.category_id, null, 1);
+                          updateSelected();
                           setOpen(false);
                         } else {
                           setDataClient(data.category_id, Number(e), 1);
+                          updateSelected();
                           setOpen(false);
                         }
                       }}
