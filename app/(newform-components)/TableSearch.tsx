@@ -1,0 +1,164 @@
+"use client";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+// import { useSelectStore } from "@/lib/zus-store";
+import { Button } from "@/components/ui/button";
+import {
+  Command,
+  CommandEmpty,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import { cn, Kbd } from "@nextui-org/react";
+
+import { ScrollArea } from "@/components/ui/scroll-area";
+import React from "react";
+import { ProductTypeSearch } from "../page";
+// import { ProductData, ProductPublicSearchData } from "../page";
+
+type Props = {
+  //   disabledKeys: string[];
+  data: ProductTypeSearch;
+};
+
+const TableSearch = ({ data }: Props) => {
+  // Shortcut function ---------------------------------------------------
+  const [open, setOpen] = React.useState(false);
+  function useKey(
+    key: string,
+    ref: React.MutableRefObject<HTMLInputElement | null>
+  ) {
+    React.useEffect(() => {
+      let timeoutId: NodeJS.Timeout;
+      function hotkeyPress(e: KeyboardEvent) {
+        if (e.ctrlKey && e.key === key) {
+          e.preventDefault();
+          setOpen(true);
+          if (ref.current === null) return;
+          timeoutId = setTimeout(() => ref.current?.focus(), 500);
+          // ref.current.focus();
+          return;
+        }
+      }
+
+      document.addEventListener("keydown", hotkeyPress);
+      return () => {
+        document.removeEventListener("keydown", hotkeyPress);
+        clearTimeout(timeoutId);
+      };
+    }, [key, open]);
+  }
+
+  const keyRef = React.useRef<HTMLInputElement>(null);
+  useKey("k", keyRef);
+
+  // Search functions -----------------------------------------------------
+
+  const [searchTerm, setSearchTerm] = React.useState("");
+  const [searchDisplay, setSearchDisplay] = React.useState("");
+
+  const [searchData, setSearchData] = React.useState<ProductTypeSearch>([]);
+
+  React.useEffect(() => {
+    setSearchData(data);
+  }, []);
+
+  React.useEffect(() => {
+    if (searchTerm) {
+      setSearchData((prev) => {
+        const newData = data.filter((order) =>
+          Object.values(order).some((value) => {
+            if (typeof value === "string" && !order.is_label) {
+              const terms = searchTerm.split(" ");
+              return terms.every((term) =>
+                value.toLowerCase().includes(term.toLowerCase())
+              );
+            }
+            return false;
+          })
+        );
+        return newData;
+      });
+    } else {
+      setSearchData(data.filter((order) => !order.is_label));
+    }
+  }, [searchTerm]);
+
+  return (
+    <>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            role="combobox"
+            aria-expanded={open}
+            className={cn(
+              `relative
+            w-full justify-start overflow-hidden overflow-ellipsis whitespace-pre-wrap bg-zinc-300
+            text-left !text-[10px] !font-bold !text-zinc-500 transition-all mobilehover:hover:bg-zinc-400`,
+              searchDisplay && "!text-black"
+            )}
+          >
+            {searchDisplay ? searchDisplay : "Search product..."}
+            <Kbd className="absolute right-4 whitespace-nowrap rounded-sm bg-zinc-300 text-black">
+              Ctrl + K
+            </Kbd>
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent
+          className="w-full p-0"
+          align="start"
+          side="bottom"
+          avoidCollisions={false}
+        >
+          <Command className="bg-zinc-300 text-black" shouldFilter={false} loop>
+            <CommandInput
+              placeholder="Search product..."
+              className="h-9 "
+              value={searchTerm}
+              onValueChange={(e) => {
+                setSearchTerm(e);
+              }}
+              ref={keyRef}
+            />
+            <CommandEmpty>No product found.</CommandEmpty>
+            <CommandList className="max-h-[500px] w-full max-w-[30vw] font-bold sm:max-w-[90vw]">
+              <ScrollArea className="rounded-md border">
+                {searchData.slice(0, searchTerm ? 200 : 30).map((item) => {
+                  return (
+                    <CommandItem
+                      aria-label={item.product_name as string}
+                      key={`c${item.category_id}_p${item.product_id}`}
+                      // showDivider
+                      className={cn(
+                        "whitespace-pre-wrap py-0 !text-left !text-[10px]",
+                        item.is_label ? "!text-accentOwn !opacity-100" : ""
+                      )}
+                      disabled={item.is_label}
+                      value={`c${item.category_id}_p${item.product_id}`}
+                      onSelect={(e) => {
+                        // console.log(e);
+                        const [category_id, product_id] = String(e).split("_");
+                        setSearchDisplay(`${item.product_name}`);
+                        // setDataClient(Number(category_id), product_id, 1);
+                        setOpen(false);
+                      }}
+                    >
+                      {item.product_name}{" "}
+                      {!item.is_label && `| RM${item.dis_price}`}
+                    </CommandItem>
+                  );
+                })}
+              </ScrollArea>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </>
+  );
+};
+
+export default TableSearch;

@@ -27,6 +27,7 @@ module.exports = {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+        accentOwn: "#009BFF",
         "nav-bg": "#1E1E1E",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

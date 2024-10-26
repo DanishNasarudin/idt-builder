@@ -2,79 +2,84 @@
 import fs from "fs/promises";
 import path from "path";
 
-export type OptionType = {
-  name: string;
-  oriPrice: number;
-  price: number;
-};
-
-export type BrandType = {
-  name: string;
-  options: OptionType[];
-};
-
 export type ProductType = {
-  category: string;
-  brands: BrandType[];
+  product_id: number;
+  product_name: string;
+  ori_price: number;
+  dis_price: number;
+  is_label: boolean;
 };
 
-function TxtToProduct(txtContent: string): ProductType {
+export type CategoryType = {
+  category_id: number;
+  category_name: string;
+  products: ProductType[];
+};
+
+function TxtToProduct(txtContent: string): CategoryType {
   const lines = txtContent.trim().split("\n");
-  const products: ProductType = {
-    category: "CPU", // This can be dynamic based on the file name if needed
-    brands: [],
+  const category: CategoryType = {
+    category_id: 0,
+    category_name: "",
+    products: [],
   };
 
   let i = 0;
   while (i < lines.length) {
     const line = lines[i].trim();
 
-    // Detect brand names without options using the colon at the end
     if (line.endsWith(":")) {
-      const brand: BrandType = {
-        name: line.slice(0, -1), // Removing the colon
-        options: [],
-      };
+      category.products.push({
+        product_id: i,
+        product_name: line.slice(0, -1),
+        ori_price: 0,
+        dis_price: 0,
+        is_label: true,
+      });
+
       i++;
 
-      // Extract options for the brand
       while (i < lines.length && lines[i].includes(",")) {
-        const [optionName, priceStr, priceOri] = lines[i]
+        const [product_name, dis_price, ori_price] = lines[i]
           .split(",")
           .map((s) => s.trim());
-        brand.options.push({
-          name: optionName,
-          oriPrice: parseInt(priceOri, 10),
-          price: parseInt(priceStr, 10),
+
+        category.products.push({
+          product_id: i,
+          product_name,
+          ori_price: Number(ori_price),
+          dis_price: Number(dis_price),
+          is_label: false,
         });
+
         i++;
       }
-      // console.log(brand, "T2");
-
-      products.brands.push(brand);
     } else {
       // Brands with no options or just standalone lines
-      if (!lines[i].includes(",")) {
-        products.brands.push({
-          name: line,
-          options: [],
+      if (!lines.includes(",")) {
+        category.products.push({
+          product_id: i,
+          product_name: line,
+          ori_price: 0,
+          dis_price: 0,
+          is_label: true,
         });
         i++;
       } else {
-        // If a line with a comma is detected outside of a brand section, we'll skip it.
         i++;
       }
     }
   }
 
-  return products;
+  return category;
 }
 
-export async function getAllPriceList(): Promise<ProductType[]> {
+export async function getAllPriceList(): Promise<CategoryType[]> {
   const pricelistDir = "pricelist";
   const files = await fs.readdir(pricelistDir);
-  const allProducts: ProductType[] = [];
+  const allProducts: CategoryType[] = [];
 
+  let i = 0;
   for (const file of files) {
     if (path.extname(file) === ".txt") {
       const filePath = path.join(pricelistDir, file);
@@ -82,8 +87,10 @@ export async function getAllPriceList(): Promise<ProductType[]> {
       const category = path.basename(file, ".txt"); // Getting the file name without extension
       const products = TxtToProduct(content);
 
-      products.category = category; // Setting the category based on file name
+      products.category_id = i;
+      products.category_name = category; // Setting the category based on file name
       allProducts.push(products);
+      i++;
     }
   }
   return allProducts;
