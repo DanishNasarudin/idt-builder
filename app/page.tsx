@@ -1,26 +1,16 @@
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
-import { unstable_cache } from "next/cache";
-import dynamic from "next/dynamic";
 import { Inter } from "next/font/google";
+import { cache } from "react";
 import Hero from "./(components)/Hero";
 import Offers from "./(components)/Offers";
+import TableForm from "./(newform-components)/TableForm";
+import TableSearch from "./(newform-components)/TableSearch";
 import { readData } from "./(serverActions)/textDbActions";
 import {
   CategoryType,
   getAllPriceList,
   getLatestUpdatedTimestamp,
 } from "./(serverActions)/textDbPriceListActions";
-
-const TableSearch = dynamic(
-  () => import("./(newform-components)/TableSearch"),
-  {
-    ssr: false,
-  }
-);
-
-const TableForm = dynamic(() => import("./(newform-components)/TableForm"), {
-  ssr: false,
-});
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -65,15 +55,7 @@ type Props = {
   searchParams: { [key: string]: string | string[] | undefined };
 };
 
-const getCachedList = unstable_cache(
-  async () => {
-    return await getAllPriceList();
-  },
-  ["pricelist"],
-  { revalidate: 10, tags: ["pricelist"] }
-);
-
-export default async function Home({ searchParams }: Props) {
+const Home = cache(async ({ searchParams }: Props) => {
   const timeUpdated = await getLatestUpdatedTimestamp();
   const timeUpdatedGMT8 =
     timeUpdated != null
@@ -92,7 +74,7 @@ export default async function Home({ searchParams }: Props) {
         })
       : "";
 
-  const dataPriceList: CategoryType[] = await getCachedList();
+  const dataPriceList: CategoryType[] = await getAllPriceList();
 
   const dataFormList: ProductItemSelectionData[] = dataPriceList.map((item) => {
     return {
@@ -120,13 +102,15 @@ export default async function Home({ searchParams }: Props) {
     <main className={`mx-auto flex w-full flex-col px-4 sm:w-4/5 sm:px-0`}>
       <Hero />
       <Offers />
-      {/* <Form /> */}
       <div className="flex flex-col items-center gap-4 pt-4">
         <h2>Choose your parts</h2>
         <p className="text-zinc-400">Price list last updated: {lastUpdated}</p>
         <TableSearch data={flattenSearchData(dataPriceList)} />
         <TableForm data={dataFormList} dataToEdit={dataToEdit} />
+        <section className="h-[100px] sm:h-[300px]" />
       </div>
     </main>
   );
-}
+});
+
+export default Home;

@@ -1,14 +1,10 @@
 import { type ClassValue, clsx } from "clsx";
 import { format } from "date-fns";
-import html2pdf from "html2pdf.js";
+// import html2pdf from "html2pdf.js";
 import { ReadonlyURLSearchParams } from "next/navigation";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
-  if (typeof window === "undefined") {
-    return clsx(inputs);
-  }
-
   return twMerge(clsx(inputs));
 }
 
@@ -22,7 +18,8 @@ export const createURL = (
   return `${pathname}${queryString}`;
 };
 
-export const createPDF = (template: string) => {
+export const createPDF = async (template: string) => {
+  const html2pdf = await require("html2pdf.js");
   const element = document.createElement("div");
   element.innerHTML = template;
   element.style.color = "black";

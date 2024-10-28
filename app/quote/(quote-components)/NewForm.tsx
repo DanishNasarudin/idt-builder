@@ -60,7 +60,11 @@ const NewForm = ({ quoteId }: Props) => {
       .join("");
   }
 
-  const fullUrl = `${window.location.protocol}//${window.location.host}/quote/${quoteId}`;
+  let fullUrl = "";
+
+  if (typeof window !== "undefined") {
+    fullUrl = `${window.location.protocol}//${window.location.host}/quote/${quoteId}`;
+  }
 
   const pdfTrigger = useTriggerStore((state) => state.trigger);
   const setTrigger = useTriggerStore((state) => state.setTrigger);

@@ -233,13 +233,26 @@ function Navbar({}: Props) {
     }
   }, [dataClient, isBuildPage]);
 
-  // console.log(data.);
-
-  const isSafari = /^((?!chrome|android).)*safari/i.test(
-    window.navigator.userAgent
-  );
-
   const router = useRouter();
+
+  // ------ clear the link from google analytics
+  let isSafari: boolean;
+  let pathname = "";
+
+  if (typeof window !== "undefined") {
+    pathname = String(window.location.search);
+
+    isSafari = /^((?!chrome|android).)*safari/i.test(
+      window.navigator.userAgent
+    );
+  }
+  useEffect(() => {
+    // // List of common Google Analytics parameters - remove them
+
+    if (pathname.includes("_ga") || pathname.includes("_gl")) {
+      router.replace("/");
+    }
+  }, [pathname]);
 
   const createQuote = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

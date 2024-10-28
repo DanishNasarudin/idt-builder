@@ -29,7 +29,7 @@ const TableDropdown = ({ data, disabledKeys }: Props) => {
 
   const [selectedProductId, setSelectedProductId] = React.useState<
     string | null
-  >(null);
+  >("");
 
   React.useEffect(() => {
     setSelectedProductId(
@@ -115,7 +115,7 @@ const TableDropdown = ({ data, disabledKeys }: Props) => {
               }}
             />
             <CommandEmpty>No product found.</CommandEmpty>
-            <CommandList className="w-full font-bold">
+            <CommandList className="w-full font-bold sm:max-h-[500px]">
               {data.products
                 .filter((item) => containsSearchTerm(item, value))
                 .map((item) => {

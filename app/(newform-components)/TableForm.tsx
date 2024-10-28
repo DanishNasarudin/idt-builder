@@ -254,7 +254,10 @@ const TableForm = ({ data, dataToEdit }: Props) => {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={dataClient} emptyContent="No data.">
+        <TableBody
+          items={dataClient.length > 0 ? dataClient : data}
+          emptyContent="No data."
+        >
           {(item) => (
             <TableRow key={item.category_id}>
               {(columnKey) => (

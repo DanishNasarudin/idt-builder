@@ -14,6 +14,7 @@ function Offers({}: Props) {
         className="
             flex flex-wrap gap-4 justify-evenly pt-4
             sm:py-8"
+        // className={cn("flex flex-wrap gap-4 justify-evenly pt-4", "sm:py-8")}
         id="idt__main-section"
       >
         <div>

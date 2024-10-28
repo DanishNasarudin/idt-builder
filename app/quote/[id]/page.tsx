@@ -6,26 +6,14 @@ import {
 } from "@/app/(serverActions)/textDbPriceListActions";
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 import { Metadata } from "next";
-import dynamic from "next/dynamic";
 import GrandTotal from "../(quote-components)/GrandTotal";
+import NewForm from "../(quote-components)/NewForm";
+import TableDisplay from "../(quote-components)/TableDisplay";
+import UserActions from "../(quote-components)/UserActions";
 
 export const metadata: Metadata = {
   title: "Quote",
 };
-
-const TableDisplay = dynamic(
-  () => import("../(quote-components)/TableDisplay"),
-  {
-    ssr: false,
-  }
-);
-const UserActions = dynamic(() => import("../(quote-components)/UserActions"), {
-  ssr: false,
-});
-
-const NewForm = dynamic(() => import("../(quote-components)/NewForm"), {
-  ssr: false,
-});
 
 type Props = {};
 

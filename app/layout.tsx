@@ -1,17 +1,17 @@
 import { Providers } from "@/lib/providers";
+import cover from "@/public/Cover.webp";
 import { Metadata } from "next";
-import dynamic from "next/dynamic";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "sonner";
 import Footer from "./(components)/Footer";
+import Navbar from "./(components)/Navbar";
 import "./globals.css";
-
-const Navbar = dynamic(() => import("./(components)/Navbar"), { ssr: false });
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://build.idealtech.com.my"),
   title: {
     default: "Ideal Tech PC Builder",
     template: "%s | Ideal Tech PC Builder",
@@ -41,16 +41,10 @@ export const metadata: Metadata = {
       "Custom PC, Desktop PC, Gaming PC, Workstation PC built for your needs in Malaysia. Fully Customizable.",
     images: [
       {
-        url: "https://idealtech.com.my/wp-content/uploads/2023/07/01_Artwork-PC.png",
+        url: cover.src,
         width: 1000,
         height: 1000,
         alt: "Ideal Tech Custom PC",
-      },
-      {
-        url: "https://idealtech.com.my/wp-content/uploads/2023/03/IDT_LOGO-150x150.png",
-        width: 1000,
-        height: 1000,
-        alt: "Ideal Tech Gaming PC",
       },
     ],
   },

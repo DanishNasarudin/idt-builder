@@ -122,3 +122,10 @@ tr {
     @apply bg-background text-foreground;
   }
 }
+
+/* This is to fix htmltopdf text shift */
+@layer base {
+  img {
+    display: initial;
+  }
+}

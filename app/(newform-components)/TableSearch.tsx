@@ -12,9 +12,10 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn, Kbd } from "@nextui-org/react";
+import { Kbd } from "@nextui-org/react";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 import { useUserSelected } from "@/lib/zus-store";
 import React from "react";
 import { ProductTypeSearch } from "../page";
@@ -118,7 +119,7 @@ const TableSearch = ({ data }: Props) => {
           <Command className="bg-zinc-300 text-black" shouldFilter={false} loop>
             <CommandInput
               placeholder="Search product..."
-              className="h-9 "
+              className={`h-9 ${searchDisplay && ""}`}
               value={searchTerm}
               onValueChange={(e) => {
                 setSearchTerm(e);
@@ -135,7 +136,7 @@ const TableSearch = ({ data }: Props) => {
                       key={`${item.category_id}_${item.product_id}`}
                       // showDivider
                       className={cn(
-                        "whitespace-pre-wrap py-0 !text-left !text-[10px]",
+                        "whitespace-pre-wrap py-0 !text-left !text-[12px]",
                         item.is_label ? "!text-accent !opacity-100" : ""
                       )}
                       disabled={item.is_label}
@@ -156,10 +157,10 @@ const TableSearch = ({ data }: Props) => {
                       {item.product_name}{" "}
                       {!item.is_label && (
                         <div className="flex">
-                          <p className="text-[10px]">{"| "}</p>
+                          <p className="text-[12px]">{"| "}</p>
                           <p
                             className={cn(
-                              "text-[10px]",
+                              "text-[12px]",
                               item.is_discounted && "text-green-700"
                             )}
                           >
