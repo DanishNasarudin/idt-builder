@@ -13,6 +13,9 @@ import UserActions from "../(quote-components)/UserActions";
 
 export const metadata: Metadata = {
   title: "Quote",
+  openGraph: {
+    title: "Quote | Ideal Tech PC Builder",
+  },
 };
 
 type Props = {};
