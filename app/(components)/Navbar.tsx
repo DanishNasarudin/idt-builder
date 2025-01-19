@@ -224,11 +224,34 @@ function Navbar({}: Props) {
   const setIsBuildPage = useNavbarStore((state) => state.setIsBuildPage);
 
   const [data, setData] = useState<ProductSelectionData>(selected);
+
+  // const [dataSearchImage, setDataSearchImage] = useState<string[]>([]);
+
+  // console.log(dataSearchImage, "CEHCL ");
+
   // const [buildPage, setBuildPage] = useState(false);
 
   useEffect(() => {
     if (isBuildPage) {
       setData(selected);
+
+      const dataToString =
+        selected.grand_total > 0
+          ? selected.product_items
+              .map((item) => {
+                const productName = item.products[0].product_name;
+                const match = productName.match(/^[^\(\[]+/);
+                return match ? match[0].trim() : productName;
+              })
+              .join(", ")
+          : "";
+
+      // getImageFromStock(dataToString).then((images) => {
+      //   setDataSearchImage(images.images);
+      // });
+
+      // console.log(dataToString, "PASS");
+
       // setBuildPage(true);
     }
   }, [dataClient, isBuildPage]);
