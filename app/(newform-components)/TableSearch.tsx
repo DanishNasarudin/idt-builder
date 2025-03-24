@@ -116,7 +116,11 @@ const TableSearch = ({ data }: Props) => {
           side="bottom"
           avoidCollisions={false}
         >
-          <Command className="bg-zinc-300 text-black" shouldFilter={false} loop>
+          <Command
+            className="bg-zinc-300 text-black max-w-[90vw]"
+            shouldFilter={false}
+            loop
+          >
             <CommandInput
               placeholder="Search product..."
               className={`h-9 ${searchDisplay && ""}`}
@@ -127,7 +131,7 @@ const TableSearch = ({ data }: Props) => {
               ref={keyRef}
             />
             <CommandEmpty>No product found.</CommandEmpty>
-            <CommandList className="max-h-[500px] w-full max-w-[30vw] font-bold sm:max-w-[90vw]">
+            <CommandList className="max-h-[500px] w-full  font-bold ">
               <ScrollArea className="rounded-md border">
                 {searchData.slice(0, searchTerm ? 200 : 30).map((item) => {
                   return (

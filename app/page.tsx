@@ -97,25 +97,6 @@ const Home = cache(async ({ searchParams }: Props) => {
     dataToEdit = await readData(searchTerm);
   }
 
-  type SearchImageType = {
-    images: string[];
-    count: number;
-  };
-
-  const searchImage = await fetch(
-    "https://photostock.idealtech.com.my/getImage",
-    {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ search: "antec" }),
-    }
-  );
-
-  const imagesData: SearchImageType = await searchImage.json();
-
-  // console.log(imagesData.images);
   return (
     <main className={`mx-auto flex w-full flex-col px-4 sm:w-4/5 sm:px-0`}>
       <Hero />

@@ -580,15 +580,16 @@ function Navbar({}: Props) {
                 </div>
                 <div>
                   <button
-                    disabled={data.grand_total === 0}
-                    className={`${
-                      data.grand_total === 0 ? "bg-zinc-500" : "bg-accent"
-                    } rounded-lg px-4 py-2 text-xs  sm:px-8 sm:py-4
-                      ${false ? "bg-green-600" : "bg-accent"}`}
+                    disabled={
+                      data.grand_total === 0 || data.grand_total === undefined
+                    }
+                    className={cn(
+                      data.grand_total === 0 || data.grand_total === undefined
+                        ? "bg-zinc-500 cursor-default"
+                        : "bg-accent",
+                      "rounded-lg px-4 py-2 text-xs  sm:px-8 sm:py-4"
+                    )}
                     onClick={(e) => data.grand_total > 0 && createQuote(e)}
-                    // disabled={
-                    //   !rows.some((item) => item.data.grand_total > 0 === true)
-                    // }
                   >
                     <p className="text-[10px] sm:text-sm">
                       <b>{false ? "Generating.." : "Next"}</b>
