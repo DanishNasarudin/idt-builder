@@ -106,15 +106,6 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
 
   // const data2 = (await readData(quoteId)) as ProductSelectionData;
 
-  const createDate = new Date(data.createdAt).toLocaleString("en-GB", {
-    day: "2-digit",
-    month: "short",
-    year: "numeric",
-    hour: "numeric",
-    minute: "2-digit",
-    hour12: true,
-  });
-
   const displayData: DisplayFormData[] = data.formData.map((data) => {
     return {
       name: data.selectedOption.name,
@@ -206,7 +197,7 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
           <div className="flex flex-col items-center gap-2 text-center">
             <h2>Quotation from Ideal Tech PC</h2>
             <p>Thank you for using Ideal Tech PC Builder.</p>
-            <p>Quotation generated on: {createDate}</p>
+            <p>Quotation generated on: {data.createdAt}</p>
           </div>
           <div>
             <Offers />
