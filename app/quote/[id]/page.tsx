@@ -198,6 +198,9 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
             <h2>Quotation from Ideal Tech PC</h2>
             <p>Thank you for using Ideal Tech PC Builder.</p>
             <p>Quotation generated on: {data.createdAt}</p>
+            <p className="text-foreground/60">
+              IDEAL TECH PC SDN BHD 201401008251 (1084329-M)
+            </p>
           </div>
           <div>
             <Offers />
