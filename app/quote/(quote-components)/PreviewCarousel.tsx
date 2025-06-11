@@ -7,42 +7,53 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useDebouncedCallback } from "use-debounce";
+import { ImageType } from "../[id]/page";
 
 interface PreviewCarouselProps {
-  images: string[]; // Array of image URLs
+  images: ImageType[]; // Array of image URLs
 }
 
 // Memoized Image Component
-const MemoizedImage = React.memo(({ image }: { image: string }) => (
-  <Dialog>
-    <DialogTrigger>
-      <img
-        loading="lazy"
-        src={image}
-        alt="Preview"
-        className="w-full h-auto cursor-pointer rounded-lg border-transparent border-2 hover:border-white/60 transition-all duration-300 ease-in-out"
-      />
-    </DialogTrigger>
-    <DialogContent className="max-w-[1000px] rounded-lg">
-      <DialogHeader>
-        <DialogTitle>Example Build</DialogTitle>
-        <DialogDescription>
-          Disclaimer: This might not be 100% of the final look of your build.
-        </DialogDescription>
-        <img src={image} alt="Preview" className="rounded-md" />
-      </DialogHeader>
-    </DialogContent>
-  </Dialog>
-));
+const MemoizedImage = React.memo(
+  ({ image, invoice }: { image: string; invoice: string }) => (
+    <Dialog>
+      <DialogTrigger>
+        <img
+          loading="lazy"
+          src={image}
+          alt="Preview"
+          className="w-full h-auto cursor-pointer rounded-lg border-transparent border-2 hover:border-white/60 transition-all duration-300 ease-in-out"
+        />
+      </DialogTrigger>
+      <DialogContent className="max-w-[1000px] rounded-lg">
+        <DialogHeader>
+          <DialogTitle>Example Build</DialogTitle>
+          <DialogDescription>
+            Disclaimer: This might not be 100% of the final look of your build.
+          </DialogDescription>
+          <Link
+            href={invoice}
+            target="_blank"
+            className="text-sm text-accent hover:text-accent/60 transition-all underline"
+          >
+            View Specs
+          </Link>
+          <img src={image} alt="Preview" className="rounded-md" />
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
+  )
+);
 MemoizedImage.displayName = MemoizedImage.displayName;
 
 const PreviewCarousel: React.FC<PreviewCarouselProps> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0); // Default to 0 on component mount
 
-  const imagesPerPage = 3;
+  const imagesPerPage = 2;
 
   // Calculate the maximum index that allows showing 3 images
   const maxIndex = Math.max(0, images.length - imagesPerPage);
@@ -58,7 +69,7 @@ const PreviewCarousel: React.FC<PreviewCarouselProps> = ({ images }) => {
 
       adjacentImages.forEach((image) => {
         const img = new Image();
-        img.src = image;
+        img.src = image.path;
       });
     };
     preloadImages();
@@ -102,7 +113,7 @@ const PreviewCarousel: React.FC<PreviewCarouselProps> = ({ images }) => {
                 key={index}
                 className="w-1/3 flex-shrink-0 px-2" // Set overflow-visible to prevent image clipping
               >
-                <MemoizedImage image={image} />
+                <MemoizedImage image={image.path} invoice={image.invoice} />
               </div>
             ))}
           </div>

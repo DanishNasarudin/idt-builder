@@ -5,6 +5,7 @@ import {
   getAllPriceList,
 } from "@/app/(serverActions)/textDbPriceListActions";
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
+import CarouselDisplay from "../(quote-components)/CarouselDisplay";
 import GrandTotal from "../(quote-components)/GrandTotal";
 import NewForm from "../(quote-components)/NewForm";
 import TableDisplay from "../(quote-components)/TableDisplay";
@@ -99,6 +100,15 @@ export type DisplayFormData = {
   total: number;
 };
 
+export type ImageType = {
+  path: string;
+  invoice: string;
+};
+
+export type SearchImageType = {
+  images: ImageType[];
+};
+
 const QuotePage = async ({ params }: { params: { id: string } }) => {
   const quoteId = params.id;
 
@@ -150,13 +160,7 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
     /^(?:\s*[\(\[][^\)\]]*[\)\]]\s*)+|(?:\s*[\(\[][^\)\]]*[\)\]]\s*)+$/g;
 
   const imageSample = data.formData
-    .filter(
-      (data) =>
-        data.category.includes("Graphic Card") ||
-        data.category.includes("Case") ||
-        data.category.includes("Cooler") ||
-        data.category.includes("RAM")
-    )
+    .filter((data) => data.category.includes("Case"))
     .map((data) =>
       data.selectedOption.name
         .replace(/^(?:\s*(\([^()]*\)|\[[^\]]*\]))+\s*/g, "")
@@ -164,31 +168,33 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
         .trim()
     );
 
-  const cleanedString: string = imageSample.map(extractBrandAndModel).join(" ");
+  const cleanedString: string = imageSample.join(" ");
 
-  type SearchImageType = {
-    images: string[];
-    count: number;
-  };
+  let images: ImageType[] = [];
 
-  // const searchImage = await fetch(
-  //   "https://photostock.idealtech.com.my/getImage",
-  //   {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({ search: cleanedString }),
-  //   }
-  // );
+  try {
+    const searchImage = await fetch(
+      "https://photostock.idealtech.com.my/api/results",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.CLERK_SECRET_KEY}`,
+        },
+        body: JSON.stringify({ query: cleanedString }),
+      }
+    );
+    images = ((await searchImage.json()) as SearchImageType).images.map(
+      (item) => ({
+        path: `https://photostock.idealtech.com.my${item.path}`,
+        invoice: `https://photostock.idealtech.com.my/?search=${item.invoice}`,
+      })
+    );
+  } catch (error) {
+    images = [];
+  }
 
-  // const imagesData: SearchImageType = await searchImage.json();
-
-  // const imagesLink = imagesData.images.map(
-  //   (image) => `https://photostock.idealtech.com.my${image}`
-  // );
-
-  // console.log(cleanedString, imagesLink);
+  // console.log(cleanedString, images);
 
   return (
     <>
@@ -205,7 +211,7 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
           <div>
             <Offers />
           </div>
-          {/* {imagesLink.length > 0 && <PreviewCarousel images={imagesLink} />} */}
+          {images.length > 0 && <CarouselDisplay images={images} />}
           <TableDisplay data={displayData} />
           <GrandTotal
             original={data.oriTotal}
