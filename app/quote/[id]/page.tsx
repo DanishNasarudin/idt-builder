@@ -50,31 +50,31 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     count: number;
   };
 
-  const searchImage = await fetch(
-    "https://photostock.idealtech.com.my/getImage",
-    {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ search: cleanedString }),
-    }
-  );
+  // const searchImage = await fetch(
+  //   "https://photostock.idealtech.com.my/getImage",
+  //   {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({ search: cleanedString }),
+  //   }
+  // );
 
-  const imagesData: SearchImageType = await searchImage.json();
+  // const imagesData: SearchImageType = await searchImage.json();
 
-  const imagesLink = imagesData.images.map(
-    (image) => `https://photostock.idealtech.com.my${image}`
-  );
+  // const imagesLink = imagesData.images.map(
+  //   (image) => `https://photostock.idealtech.com.my${image}`
+  // );
 
-  if (imagesLink.length > 0) {
+  if (false) {
     return {
       title: "Quote",
       openGraph: {
         title: "Quote | Ideal Tech PC Builder",
         images: [
           {
-            url: imagesLink[0],
+            // url: imagesLink[0],
             width: 1000,
             height: 1000,
             alt: "Ideal Tech Custom PC",
@@ -171,22 +171,22 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
     count: number;
   };
 
-  const searchImage = await fetch(
-    "https://photostock.idealtech.com.my/getImage",
-    {
-      method: "POST",
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: JSON.stringify({ search: cleanedString }),
-    }
-  );
+  // const searchImage = await fetch(
+  //   "https://photostock.idealtech.com.my/getImage",
+  //   {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-type": "application/json",
+  //     },
+  //     body: JSON.stringify({ search: cleanedString }),
+  //   }
+  // );
 
-  const imagesData: SearchImageType = await searchImage.json();
+  // const imagesData: SearchImageType = await searchImage.json();
 
-  const imagesLink = imagesData.images.map(
-    (image) => `https://photostock.idealtech.com.my${image}`
-  );
+  // const imagesLink = imagesData.images.map(
+  //   (image) => `https://photostock.idealtech.com.my${image}`
+  // );
 
   // console.log(cleanedString, imagesLink);
 
