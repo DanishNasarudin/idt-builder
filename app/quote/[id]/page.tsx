@@ -30,13 +30,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     /^(?:\s*[\(\[][^\)\]]*[\)\]]\s*)+|(?:\s*[\(\[][^\)\]]*[\)\]]\s*)+$/g;
 
   const imageSample = data.formData
-    .filter(
-      (data) =>
-        data.category.includes("Graphic Card") ||
-        data.category.includes("Case") ||
-        data.category.includes("Cooler") ||
-        data.category.includes("RAM")
-    )
+    .filter((data) => data.category.includes("Case"))
     .map((data) =>
       data.selectedOption.name
         .replace(/^(?:\s*(\([^()]*\)|\[[^\]]*\]))+\s*/g, "")
@@ -44,38 +38,40 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
         .trim()
     );
 
-  const cleanedString: string = imageSample.map(extractBrandAndModel).join(" ");
+  const cleanedString: string = imageSample.join(" ");
 
-  type SearchImageType = {
-    images: string[];
-    count: number;
-  };
+  let images: ImageType[] = [];
 
-  // const searchImage = await fetch(
-  //   "https://photostock.idealtech.com.my/getImage",
-  //   {
-  //     method: "POST",
-  //     headers: {
-  //       "Content-type": "application/json",
-  //     },
-  //     body: JSON.stringify({ search: cleanedString }),
-  //   }
-  // );
+  try {
+    const searchImage = await fetch(
+      "https://photostock.idealtech.com.my/api/results",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${process.env.CLERK_SECRET_KEY}`,
+        },
+        body: JSON.stringify({ query: cleanedString }),
+      }
+    );
+    images = ((await searchImage.json()) as SearchImageType).images.map(
+      (item) => ({
+        path: `https://photostock.idealtech.com.my${item.path}`,
+        invoice: `https://photostock.idealtech.com.my/?search=${item.invoice}`,
+      })
+    );
+  } catch (error) {
+    images = [];
+  }
 
-  // const imagesData: SearchImageType = await searchImage.json();
-
-  // const imagesLink = imagesData.images.map(
-  //   (image) => `https://photostock.idealtech.com.my${image}`
-  // );
-
-  if (false) {
+  if (images.length > 0) {
     return {
       title: "Quote",
       openGraph: {
         title: "Quote | Ideal Tech PC Builder",
         images: [
           {
-            // url: imagesLink[0],
+            url: images[0].path,
             width: 1000,
             height: 1000,
             alt: "Ideal Tech Custom PC",

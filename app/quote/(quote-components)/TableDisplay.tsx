@@ -10,6 +10,7 @@ import {
   getKeyValue,
 } from "@nextui-org/react";
 import { DisplayFormData } from "../[id]/page";
+import Watermark from "./Watermark";
 
 type Props = {
   data: DisplayFormData[];
@@ -24,7 +25,8 @@ const columns = [
 
 const TableDisplay = ({ data }: Props) => {
   return (
-    <div className="w-full">
+    <div className="w-full relative">
+      <Watermark />
       <Table
         aria-label="Quote"
         removeWrapper
