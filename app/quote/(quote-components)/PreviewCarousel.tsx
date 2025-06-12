@@ -19,7 +19,7 @@ interface PreviewCarouselProps {
 
 // Memoized Image Component
 const MemoizedImage = React.memo(
-  ({ image, invoice }: { image: string; invoice: string }) => (
+  ({ image, id }: { image: string; id: string }) => (
     <Dialog>
       <DialogTrigger>
         <img
@@ -36,7 +36,7 @@ const MemoizedImage = React.memo(
             Disclaimer: This might not be 100% of the final look of your build.
           </DialogDescription>
           <Link
-            href={invoice}
+            href={id}
             target="_blank"
             className="text-sm text-accent hover:text-accent/60 transition-all underline"
           >
@@ -113,7 +113,7 @@ const PreviewCarousel: React.FC<PreviewCarouselProps> = ({ images }) => {
                 key={index}
                 className="w-1/3 flex-shrink-0 px-2" // Set overflow-visible to prevent image clipping
               >
-                <MemoizedImage image={image.path} invoice={image.invoice} />
+                <MemoizedImage image={image.path} id={image.id} />
               </div>
             ))}
           </div>

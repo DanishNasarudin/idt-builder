@@ -1,4 +1,5 @@
 Server Rack (4U Casing):
+LIANLI PC-O11 VISION COMPACT WHITE (ATX/Tempered Glass), 120,120
 HEC S401 (ATX-version) (4U Rackmount Chassis/ e-ATX (12" x 13"/SSI EEB / CEB), 699, 699
 INWIN IW-R400N (ATX / CEB) (4U Rackmount Chassis/ Support 8X GPU),1299,1299
 

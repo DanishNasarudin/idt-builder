@@ -57,7 +57,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
     images = ((await searchImage.json()) as SearchImageType).images.map(
       (item) => ({
         path: `https://photostock.idealtech.com.my${item.path}`,
-        invoice: `https://photostock.idealtech.com.my/?search=${item.invoice}`,
+        id: `https://photostock.idealtech.com.my/?search=id:${item.id}`,
       })
     );
   } catch (error) {
@@ -98,7 +98,7 @@ export type DisplayFormData = {
 
 export type ImageType = {
   path: string;
-  invoice: string;
+  id: string;
 };
 
 export type SearchImageType = {
@@ -183,7 +183,7 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
     images = ((await searchImage.json()) as SearchImageType).images.map(
       (item) => ({
         path: `https://photostock.idealtech.com.my${item.path}`,
-        invoice: `https://photostock.idealtech.com.my/?search=${item.invoice}`,
+        id: `https://photostock.idealtech.com.my/?search=id:${item.id}`,
       })
     );
   } catch (error) {
@@ -194,7 +194,7 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <>
-      <div className="mx-auto max-w-[1060px]">
+      <div className="mx-auto max-w-[1060px] relative overflow-hidden">
         <div className="mx-auto flex w-full flex-col items-center gap-10 px-4 py-8 sm:w-4/5 sm:px-0">
           <div className="flex flex-col items-center gap-2 text-center">
             <h2>Quotation from Ideal Tech PC</h2>
@@ -207,7 +207,12 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
           <div>
             <Offers />
           </div>
-          {images.length > 0 && <CarouselDisplay images={images} />}
+          {images.length > 0 && (
+            <div className="border-border border-[1px] p-4 rounded-xl text-center space-y-2 sm:pb-4 pb-9">
+              <p className="text-foreground/60">Example Builds</p>
+              <CarouselDisplay images={images} />
+            </div>
+          )}
           <TableDisplay data={displayData} />
           <GrandTotal
             original={data.oriTotal}

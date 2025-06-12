@@ -19,7 +19,7 @@ export default function CarouselDisplay({ images }: Props) {
       <CarouselContent>
         {images.map((item, index) => (
           <CarouselItem key={index} className="basis-1/2 sm:basis-1/3">
-            <ImageDialog image={item.path} invoice={item.invoice} />
+            <ImageDialog image={item.path} invoice={item.id} />
           </CarouselItem>
         ))}
       </CarouselContent>
