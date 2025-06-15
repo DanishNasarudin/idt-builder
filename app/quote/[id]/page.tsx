@@ -159,8 +159,8 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
     .filter((data) => data.category.includes("Case"))
     .map((data) =>
       data.selectedOption.name
-        .replace(/^(?:\s*(\([^()]*\)|\[[^\]]*\]))+\s*/g, "")
-        .replace(/\s*(\([^()]*\)|\[[^\]]*\])+\s*$/g, "")
+        .replace(/ *(\([^)]*\)|\[[^\]]*\]) */g, " ")
+        .replace(/\s+/g, " ")
         .trim()
     );
 
@@ -190,7 +190,7 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
     images = [];
   }
 
-  // console.log(cleanedString, images);
+  console.log(cleanedString, images);
 
   return (
     <>

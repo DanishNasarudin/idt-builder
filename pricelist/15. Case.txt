@@ -2,6 +2,7 @@ Server Rack (4U Casing):
 LIANLI PC-O11 VISION COMPACT WHITE (ATX/Tempered Glass), 120,120
 HEC S401 (ATX-version) (4U Rackmount Chassis/ e-ATX (12" x 13"/SSI EEB / CEB), 699, 699
 INWIN IW-R400N (ATX / CEB) (4U Rackmount Chassis/ Support 8X GPU),1299,1299
+ANTEC P101 SILENT (Support EATX/Fan Speed Control/Support 8x 3.5" HHD) (N/P: RM499), 499,399
 
 CLEARANCE:
 X-FIVE Marvelous N7 with normal 400w psu,99,99
