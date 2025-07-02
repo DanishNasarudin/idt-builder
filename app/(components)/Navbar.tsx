@@ -41,6 +41,7 @@ import React, { useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { useScrollListener } from "../(hooks)/useScrollListener";
 // import { drizzleInsertQuote } from "../(serverActions)/drizzleCmd";
+import { useTheme } from "next-themes";
 import { queueWrite } from "../(serverActions)/textDbActions";
 import { LogoIcon } from "./Icons";
 
@@ -212,8 +213,12 @@ function Navbar({}: Props) {
     }
   }, [scroll.y, scroll.lastY]);
 
+  // useEffect(() => {
+  //   document.documentElement.classList.add("dark");
+  // }, []);
+  const { setTheme } = useTheme();
   useEffect(() => {
-    document.documentElement.classList.add("dark");
+    setTheme("dark");
   }, []);
 
   const isBuildPage = useNavbarStore((state) => state.isBuildPage);
