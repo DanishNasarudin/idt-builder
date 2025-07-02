@@ -4,7 +4,6 @@ import cover from "@/public/Cover.webp";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
-import { Toaster } from "sonner";
 import Footer from "../components/custom/footer";
 import "./globals.css";
 
@@ -74,7 +73,6 @@ export default function RootLayout({
           <Navbar />
           <div className="max-w-[1060px] mx-auto">{children}</div>
           <div className="h-[200px]"></div>
-          <Toaster richColors closeButton theme="dark" />
           <Footer />
         </Providers>
       </body>

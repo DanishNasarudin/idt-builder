@@ -1,13 +1,13 @@
 "use client";
 import { useUserSelected } from "@/lib/zus-store";
 import {
-  Button,
   Dropdown,
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
 } from "@nextui-org/react";
 import React from "react";
+import { Button } from "../ui/button";
 
 type Props = {
   category_id: number;
@@ -33,14 +33,13 @@ export default function TableDropdownQty({ category_id, product_id }: Props) {
   return (
     <Dropdown
       placement="bottom"
-      className="w-min min-w-0 bg-zinc-300 text-black"
+      className="w-min min-w-0 bg-white text-black"
       aria-label="number"
     >
       <DropdownTrigger>
         <Button
-          className="text-md bg-zinc-300 text-black w-[40px] !h-full"
-          isIconOnly
-          size="sm"
+          className="text-md bg-white text-black !border-border w-[40px] !h-full"
+          size="icon"
         >
           {selectedKeys}
         </Button>

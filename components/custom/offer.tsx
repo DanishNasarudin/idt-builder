@@ -9,7 +9,7 @@ export default function Offer({ src, text }: Props) {
   const iconSize = 60;
 
   return (
-    <div className="flex justify-start items-center text-left max-w-[240px] bg-zinc-900 p-4 rounded-2xl">
+    <div className="flex justify-start items-center text-left max-w-[240px] bg-foreground/5 p-4 rounded-2xl">
       <Image
         src={src}
         alt={"offer"}

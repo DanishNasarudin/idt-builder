@@ -24,9 +24,7 @@ export default function Hero() {
           will guide you through.
         </p>
         <Link href={"#idt__main-section"}>
-          <Button className="mt-4">
-            <p>Start Build!</p>
-          </Button>
+          <Button className="mt-4 font-bold text-white">Start Build!</Button>
         </Link>
       </div>
       <div>

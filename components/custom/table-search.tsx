@@ -99,13 +99,13 @@ export default function TableSearch({ data }: Props) {
             aria-expanded={open}
             className={cn(
               `relative
-            w-full justify-start overflow-hidden overflow-ellipsis whitespace-pre-wrap bg-zinc-300
+            w-full justify-start overflow-hidden overflow-ellipsis whitespace-pre-wrap bg-white
             text-left !text-[10px] !font-bold !text-zinc-500 transition-all mobilehover:hover:bg-zinc-400`,
               searchDisplay && "!text-black"
             )}
           >
             {searchDisplay ? searchDisplay : "Search product..."}
-            <Kbd className="absolute right-4 whitespace-nowrap rounded-sm bg-zinc-300 text-black">
+            <Kbd className="absolute right-4 whitespace-nowrap rounded-sm bg-white text-black">
               Ctrl + K
             </Kbd>
           </Button>
@@ -117,7 +117,7 @@ export default function TableSearch({ data }: Props) {
           avoidCollisions={false}
         >
           <Command
-            className="bg-zinc-300 text-black max-w-[90vw]"
+            className="bg-white text-black max-w-[90vw]"
             shouldFilter={false}
             loop
           >
@@ -140,8 +140,8 @@ export default function TableSearch({ data }: Props) {
                       key={`${item.category_id}_${item.product_id}`}
                       // showDivider
                       className={cn(
-                        "whitespace-pre-wrap py-0 !text-left !text-[12px]",
-                        item.is_label ? "!text-accent !opacity-100" : ""
+                        "whitespace-pre-wrap py-0 !text-left !text-[12px]  data-[selected=true]:bg-primary",
+                        item.is_label ? "!text-primary !opacity-100" : ""
                       )}
                       disabled={item.is_label}
                       value={`${item.category_id}_${item.product_id}`}

@@ -8,7 +8,7 @@ export default function GrandTotal({ original, final, discount }: Props) {
   const discountChecker = discount > 0;
   return (
     <div className="flex gap-16">
-      <h2>
+      <h2 className="font-bold">
         Grand <br /> Total
       </h2>
       <div className="text-center">

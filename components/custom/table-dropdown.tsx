@@ -85,8 +85,8 @@ export default function TableDropdown({ data, disabledKeys }: Props) {
             role="combobox"
             aria-expanded={open}
             className="
-            w-full justify-start overflow-hidden overflow-ellipsis whitespace-pre-wrap bg-zinc-300
-            text-left !text-[12px] !font-bold !text-black transition-all mobilehover:hover:bg-zinc-400
+            w-full justify-start overflow-hidden overflow-ellipsis whitespace-pre-wrap bg-white
+            text-left !text-[12px] !font-bold !text-black transition-all mobilehover:hover:bg-primary
             h-min"
           >
             {selectedProductId !== null
@@ -105,7 +105,7 @@ export default function TableDropdown({ data, disabledKeys }: Props) {
           side="bottom"
           avoidCollisions={false}
         >
-          <Command className="bg-zinc-300 text-black" shouldFilter={false} loop>
+          <Command className="bg-white text-black" shouldFilter={false} loop>
             <CommandInput
               placeholder="Search product..."
               className="h-9 "
@@ -125,11 +125,11 @@ export default function TableDropdown({ data, disabledKeys }: Props) {
                       key={item.product_id}
                       // showDivider
                       className={cn(
-                        "whitespace-pre-wrap py-0 !text-left !text-[12px]",
-                        item.is_label ? "!text-accent !opacity-100" : "",
+                        "whitespace-pre-wrap py-0 !text-left !text-[12px] data-[selected=true]:bg-primary",
+                        item.is_label ? "!text-primary !opacity-100" : "",
                         selectedProductId &&
                           Number(selectedProductId) === item.product_id &&
-                          "bg-accent/50",
+                          "bg-primary/50",
                         Number(selectedProductId) === item.product_id &&
                           "data-[selected=true]:hover:!bg-red-400"
                       )}

@@ -193,7 +193,7 @@ export default async function QuotePage({
       <div className="mx-auto max-w-[1060px] relative overflow-hidden">
         <div className="mx-auto flex w-full flex-col items-center gap-10 px-4 py-8 sm:w-4/5 sm:px-0">
           <div className="flex flex-col items-center gap-2 text-center">
-            <h2>Quotation from Ideal Tech PC</h2>
+            <h2 className="font-bold">Quotation from Ideal Tech PC</h2>
             <p>Thank you for using Ideal Tech PC Builder.</p>
             <p>Quotation generated on: {data.createdAt}</p>
             <p className="text-foreground/60">

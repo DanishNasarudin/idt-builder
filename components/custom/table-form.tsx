@@ -7,7 +7,6 @@ import {
   useUserSelected,
 } from "@/lib/zus-store";
 import {
-  Button,
   Table,
   TableBody,
   TableCell,
@@ -18,6 +17,7 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
+import { Button } from "../ui/button";
 import TableDropdown from "./table-dropdown";
 import TableDropdownQty from "./table-dropdown-qty";
 
@@ -111,9 +111,8 @@ export default function TableForm({ data, dataToEdit }: Props) {
               <Button
                 className={`${
                   data.selected_id ? "block" : "hidden"
-                } absolute left-[-150%] h-full w-[40px] bg-zinc-700 text-xs text-white mobilehover:hover:bg-accent`}
-                isIconOnly
-                size="sm"
+                } absolute left-[-150%] h-full w-[40px] bg-white text-xs text-black mobilehover:hover:bg-primary`}
+                size="icon"
                 aria-label="copy"
                 onClick={() => {
                   currentProduct?.product_name &&
@@ -142,9 +141,8 @@ export default function TableForm({ data, dataToEdit }: Props) {
               </Button>
               {data.duplicate ? (
                 <Button
-                  className="text-md h-full w-[40px] bg-zinc-300 text-black mobilehover:hover:bg-red-500 mobilehover:hover:text-white"
-                  isIconOnly
-                  size="sm"
+                  className="text-md h-full w-[40px] bg-white text-black mobilehover:hover:bg-red-500 mobilehover:hover:text-white"
+                  size="icon"
                   aria-label="del"
                   onClick={() => {
                     delDataClient(data.category_id);
@@ -163,10 +161,9 @@ export default function TableForm({ data, dataToEdit }: Props) {
               ) : (
                 <Button
                   className={cn(
-                    "h-full w-[40px] text-md bg-zinc-300 text-black mobilehover:hover:bg-accent mobilehover:hover:text-white"
+                    "h-full w-[40px] text-md bg-white text-black mobilehover:hover:bg-primary mobilehover:hover:text-white"
                   )}
-                  isIconOnly
-                  size="sm"
+                  size="icon"
                   aria-label="add"
                   onClick={() => {
                     addDataClient(data.category_id);

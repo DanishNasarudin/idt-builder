@@ -1,4 +1,5 @@
 "use client";
+import { Toaster } from "@/components/ui/sonner";
 import { NextUIProvider } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -16,7 +17,10 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <NextUIProvider navigate={router.push}>{children}</NextUIProvider>
+      <NextUIProvider navigate={router.push}>
+        {children}
+        <Toaster richColors closeButton />
+      </NextUIProvider>
     </ThemeProvider>
   );
 }

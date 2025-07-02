@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { createPDF } from "@/lib/utils";
 import {
   ProductItemSelectionData,
@@ -7,7 +8,7 @@ import {
 } from "@/lib/zus-store";
 import { sendNodemail } from "@/services/sendEmail";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
+import { Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { State } from "country-state-city";
 import React from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -41,7 +42,7 @@ export default function NewForm({ quoteId }: Props) {
     handleSubmit,
     setError,
     getValues,
-    formState: { errors, isSubmitting },
+    formState: { errors, isSubmitting, isValid },
   } = useForm<FormFields>({ resolver: zodResolver(schema) });
 
   //Recollect Rows
@@ -187,8 +188,6 @@ export default function NewForm({ quoteId }: Props) {
             readOnly
           />
           <Button
-            radius="sm"
-            className="bg-accent"
             onClick={() => {
               navigator.clipboard.writeText(fullUrl);
               toast.success("Copied!");
@@ -266,11 +265,7 @@ export default function NewForm({ quoteId }: Props) {
           aria-label="requirements"
           label="Any other requirements you would like?"
         />
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className={`${isSubmitting ? "" : "bg-accent"}`}
-        >
+        <Button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Submitting..." : "Submit"}
         </Button>
       </form>

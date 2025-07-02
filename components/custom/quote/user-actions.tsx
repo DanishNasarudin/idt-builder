@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { createURL } from "@/lib/utils";
 import {
   ProductItemSelectionData,
@@ -7,7 +8,6 @@ import {
   useTriggerStore,
   useUserSelected,
 } from "@/lib/zus-store";
-import { Button } from "@nextui-org/react";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
@@ -91,7 +91,7 @@ export default function UserActions({ quoteId, data, dataList }: Props) {
   return (
     <div className="flex gap-2">
       <Button
-        radius="sm"
+        variant={"outline"}
         onClick={() => {
           navigator.clipboard.writeText(copySpec);
           toast.success("Copied!");
@@ -100,7 +100,7 @@ export default function UserActions({ quoteId, data, dataList }: Props) {
         Copy Spec
       </Button>
       <Button
-        radius="sm"
+        variant={"outline"}
         onClick={() => {
           setPDFTrigger(!pdfTrigger);
         }}
@@ -108,7 +108,7 @@ export default function UserActions({ quoteId, data, dataList }: Props) {
         Print PDF
       </Button>
       <Button
-        radius="sm"
+        variant={"outline"}
         onClick={() => {
           setSearchParams.set("edit", quoteId);
           if (pathname === null) return;

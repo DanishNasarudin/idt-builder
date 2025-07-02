@@ -159,11 +159,7 @@ export default function Navbar() {
               style={{ width: "100%" }}
             >
               <a href="/">
-                <img
-                  src="https://idealtech.com.my/wp-content/uploads/2023/03/IDT_LOGO-150x150.png"
-                  alt="logo"
-                  className="z-10 w-10"
-                />
+                <LogoIcon size={32} />
               </a>
               {menuList.map((main, idx) => {
                 if (main.dropdown === undefined) {
@@ -317,7 +313,7 @@ export default function Navbar() {
 
       <div
         className={`
-      sticky top-0 z-[15] border-b-[1px] border-[#323232] bg-background/80 transition-all
+      sticky top-0 z-[15] border-b-[1px] border-border bg-background/80 transition-all
       before:absolute before:top-0 before:-z-10 before:h-full before:w-full before:backdrop-blur-md before:content-['']
       ${isBuildPage ? "block" : "hidden"}`}
       >
@@ -328,20 +324,16 @@ export default function Navbar() {
                 <div className="flex items-center gap-8 ">
                   <div>
                     <button
-                      className="rounded-lg border-[1px] border-white px-4 py-2 text-xs sm:px-8 sm:py-4"
+                      className="rounded-lg border-[1px] border-foreground px-4 py-2 text-xs sm:px-8 sm:py-4 text-[10px] sm:text-sm font-bold"
                       onClick={() => resetDataClient()}
                     >
-                      <p className="text-[10px] sm:text-sm">
-                        <b>Reset</b>
-                      </p>
+                      Reset
                     </button>
                   </div>
                   <div className="hidden text-center sm:block sm:text-left">
                     {data.ori_total - data.grand_total > 0 ? (
-                      <p className="text-[10px] text-gray-400">
-                        <b>
-                          <s>RM {data.ori_total}</s>
-                        </b>
+                      <p className="text-[10px] text-foreground/60 line-through font-bold">
+                        RM {data.ori_total}
                       </p>
                     ) : (
                       ""
@@ -350,7 +342,7 @@ export default function Navbar() {
                       <b>RM {data.grand_total}</b>
                     </p>
                     {data.ori_total - data.grand_total > 0 ? (
-                      <p className="text-[10px] text-accent">
+                      <p className="text-[10px] text-primary">
                         <b>Save RM {data.ori_total - data.grand_total}</b>
                       </p>
                     ) : (
@@ -361,7 +353,7 @@ export default function Navbar() {
                     {data.grand_total > 0 ? (
                       <p className="text-[10px]">
                         Starting from <br />{" "}
-                        <b className="text-accent">
+                        <b className="text-primary">
                           {Math.floor(data.grand_total / (1 - 0.04) / 12)}/mo
                         </b>{" "}
                         <br /> with listed Bank.
@@ -385,7 +377,7 @@ export default function Navbar() {
                     <b>RM {data.grand_total}</b>
                   </p>
                   {data.ori_total - data.grand_total > 0 ? (
-                    <p className="text-[10px] text-accent">
+                    <p className="text-[10px] text-primary">
                       <b>Save RM {data.ori_total - data.grand_total}</b>
                     </p>
                   ) : (
@@ -399,8 +391,8 @@ export default function Navbar() {
                     }
                     className={cn(
                       data.grand_total === 0 || data.grand_total === undefined
-                        ? "bg-zinc-500 cursor-default"
-                        : "bg-accent",
+                        ? "bg-foreground/30 cursor-default"
+                        : "bg-primary",
                       "rounded-lg px-4 py-2 text-xs  sm:px-8 sm:py-4"
                     )}
                     onClick={(e) => data.grand_total > 0 && createQuote(e)}
@@ -411,12 +403,11 @@ export default function Navbar() {
                   </button>
                 </div>
               </div>
-
               <div className="flex w-full text-center sm:hidden">
                 {data.grand_total > 0 ? (
                   <p className="w-full text-[10px]">
                     Starting from{" "}
-                    <b className="text-accent">
+                    <b className="text-primary">
                       {Math.floor(data.grand_total / (1 - 0.04) / 12)}/mo
                     </b>{" "}
                     with listed Bank.
