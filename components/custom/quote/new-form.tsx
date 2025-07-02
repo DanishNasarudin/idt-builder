@@ -1,11 +1,11 @@
 "use client";
-import { sendNodemail } from "@/app/(serverActions)/sendEmail";
 import { createPDF } from "@/lib/utils";
 import {
   ProductItemSelectionData,
   useTriggerStore,
   useUserSelected,
 } from "@/lib/zus-store";
+import { sendNodemail } from "@/services/sendEmail";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button, Input, Select, SelectItem, Textarea } from "@nextui-org/react";
 import { State } from "country-state-city";
@@ -32,7 +32,7 @@ const schema = z.object({
 
 export type FormFields = z.infer<typeof schema>;
 
-const NewForm = ({ quoteId }: Props) => {
+export default function NewForm({ quoteId }: Props) {
   const quoteData = useUserSelected((state) => state.selected);
 
   // Initiate Form Registry
@@ -276,6 +276,4 @@ const NewForm = ({ quoteId }: Props) => {
       </form>
     </div>
   );
-};
-
-export default NewForm;
+}

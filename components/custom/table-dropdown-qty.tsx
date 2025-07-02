@@ -14,7 +14,7 @@ type Props = {
   product_id: number;
 };
 
-const TableDropdownQty = ({ category_id, product_id }: Props) => {
+export default function TableDropdownQty({ category_id, product_id }: Props) {
   const [selectedKeys, setSelectedKeys] = React.useState("1");
 
   const dataClient = useUserSelected((state) => state.dynamicData);
@@ -66,6 +66,4 @@ const TableDropdownQty = ({ category_id, product_id }: Props) => {
       </DropdownMenu>
     </Dropdown>
   );
-};
-
-export default TableDropdownQty;
+}

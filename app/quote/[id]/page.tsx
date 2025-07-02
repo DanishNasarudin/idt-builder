@@ -1,15 +1,15 @@
-import { readData } from "@/app/(serverActions)/textDbActions";
+import Offers from "@/components/custom/offers";
+import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
+import { readData } from "@/services/textDbActions";
 import {
   CategoryType,
   getAllPriceList,
-} from "@/app/(serverActions)/textDbPriceListActions";
-import Offers from "@/components/custom/offers";
-import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
-import CarouselDisplay from "../(quote-components)/CarouselDisplay";
-import GrandTotal from "../(quote-components)/GrandTotal";
-import NewForm from "../(quote-components)/NewForm";
-import TableDisplay from "../(quote-components)/TableDisplay";
-import UserActions from "../(quote-components)/UserActions";
+} from "@/services/textDbPriceListActions";
+import CarouselDisplay from "../../../components/custom/quote/carousel-display";
+import GrandTotal from "../../../components/custom/quote/grand-total";
+import NewForm from "../../../components/custom/quote/new-form";
+import TableDisplay from "../../../components/custom/quote/table-display";
+import UserActions from "../../../components/custom/quote/user-actions";
 
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const quoteId = params.id;
@@ -105,12 +105,14 @@ export type SearchImageType = {
   images: ImageType[];
 };
 
-const QuotePage = async ({ params }: { params: { id: string } }) => {
+export default async function QuotePage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const quoteId = params.id;
 
   const data = (await readData(quoteId)) as QuoteData;
-
-  // const data2 = (await readData(quoteId)) as ProductSelectionData;
 
   const displayData: DisplayFormData[] = data.formData.map((data) => {
     return {
@@ -120,8 +122,6 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
       total: data.total,
     };
   });
-
-  // console.log(imageSample.join(" "));
 
   const dataPriceList: CategoryType[] = await getAllPriceList();
 
@@ -141,11 +141,9 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
     if (tokens.length === 0) return "";
 
     const brand: string = tokens[0];
-    // Find the first token that contains a digit.
     let modelToken: string | undefined = tokens.find((token) =>
       /\d/.test(token)
     );
-    // If none found, use the second token.
     if (!modelToken && tokens.length > 1) {
       modelToken = tokens[1];
     }
@@ -190,8 +188,6 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
     images = [];
   }
 
-  console.log(cleanedString, images);
-
   return (
     <>
       <div className="mx-auto max-w-[1060px] relative overflow-hidden">
@@ -226,6 +222,4 @@ const QuotePage = async ({ params }: { params: { id: string } }) => {
       <div className="h-[200px]"></div>
     </>
   );
-};
-
-export default QuotePage;
+}

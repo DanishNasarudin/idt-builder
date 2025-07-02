@@ -4,7 +4,7 @@ type Props = {
   discount: number;
 };
 
-const GrandTotal = ({ original, final, discount }: Props) => {
+export default function GrandTotal({ original, final, discount }: Props) {
   const discountChecker = discount > 0;
   return (
     <div className="flex gap-16">
@@ -28,6 +28,4 @@ const GrandTotal = ({ original, final, discount }: Props) => {
       </div>
     </div>
   );
-};
-
-export default GrandTotal;
+}

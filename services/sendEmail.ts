@@ -1,7 +1,7 @@
 "use server";
 
 import nodemailer from "nodemailer";
-import { FormFields } from "../quote/(quote-components)/NewForm";
+import { FormFields } from "../components/custom/quote/new-form";
 
 export async function sendNodemail({
   template,

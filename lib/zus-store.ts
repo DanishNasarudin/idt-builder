@@ -1,4 +1,4 @@
-import { CategoryType } from "@/app/(serverActions)/textDbPriceListActions";
+import { CategoryType } from "@/services/textDbPriceListActions";
 import { v4 as uuidv4 } from "uuid";
 import { create } from "zustand";
 

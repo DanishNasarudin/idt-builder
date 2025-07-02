@@ -1,4 +1,4 @@
-import { LogoIcon } from "@/app/(components)/Icons";
+import { LogoIcon } from "@/components/custom/icons";
 
 type Props = {};
 

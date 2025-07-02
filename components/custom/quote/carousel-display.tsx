@@ -6,8 +6,8 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 
-import { ImageType } from "../[id]/page";
-import ImageDialog from "./ImageDialog";
+import { ImageType } from "../../../app/quote/[id]/page";
+import ImageDialog from "./image-dialog";
 
 type Props = {
   images: ImageType[];

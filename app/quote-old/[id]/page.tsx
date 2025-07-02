@@ -6,7 +6,7 @@ import { RiArrowDropDownFill, RiArrowDropLeftFill } from "react-icons/ri";
 
 import { usePathname, useRouter } from "next/navigation";
 
-import { readData } from "@/app/(serverActions)/textDbActions";
+import { readData } from "@/services/textDbActions";
 import { State } from "country-state-city";
 import Link from "next/link";
 import React from "react";
@@ -16,8 +16,6 @@ import html2pdf from "html2pdf.js";
 import { toast } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
-
-type Props = {};
 
 interface FormDataItem {
   category: string;
@@ -34,13 +32,7 @@ interface QuoteData {
   createdAt: string;
 }
 
-// formData: filteredFormData, // Add filteredFormData to the document
-//       grandTotal: totalPrice,
-//       oriTotal: totalOriPrice,
-//       //grand total ori - discount
-//       createdAt: serverTimestamp(),
-
-function QuotePage({}: Props) {
+function QuotePage() {
   const pathname = usePathname();
 
   const fullUrl = `${window.location.protocol}//${window.location.host}${pathname}`;
@@ -57,7 +49,6 @@ function QuotePage({}: Props) {
   const [formData, setQuotes] = useState<QuoteData[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  // console.log(formData[0].createdAt, "c");
 
   const MAX_RETRIES = 5; // maximum number of retries
   const RETRY_DELAY = 2000; // delay between retries in milliseconds (2 seconds)
@@ -77,26 +68,7 @@ function QuotePage({}: Props) {
 
         setQuotes([data]);
         setLoading(false);
-
-        // const quoteExists = data.some((quote) => quote.id === quoteId);
-
-        // if (quoteExists) {
-        //   // check if data is not empty
-        //   setQuotes(data);
-        //   setLoading(false);
-        // } else if (retryCount < MAX_RETRIES) {
-        //   console.log("Quote ID not found. Retrying...");
-        //   retryCount++;
-        //   setTimeout(fetchData, RETRY_DELAY);
-        // } else {
-        //   console.log("Max retries reached. Not retrying further.");
-        //   setLoading(false);
-        // }
       } catch (error) {
-        // console.error("Error fetching data:", error);
-        // // Handle the error, you can set some error state here or show a notification to the user
-        // router.refresh();
-
         console.error("Error fetching data:", error);
         if (retryCount < MAX_RETRIES) {
           console.log("Quote ID not found. Retrying...");
@@ -115,38 +87,7 @@ function QuotePage({}: Props) {
 
   const [quantityOption, setQuantityOption] = useState(2);
 
-  // const handleQuantityChange = (
-  //   event: React.ChangeEvent<HTMLSelectElement>
-  // ) => {
-  //   const value = event.target.value;
-  //   setQuantityOption(Number(value));
-  //   if (Number(value) === 1) {
-  //     setEmailProp({
-  //       ...emailProp,
-  //       months: 6,
-  //     });
-  //   } else if (Number(value) === 2) {
-  //     setEmailProp({
-  //       ...emailProp,
-  //       months: 12,
-  //     });
-  //   } else if (Number(value) === 3) {
-  //     setEmailProp({
-  //       ...emailProp,
-  //       months: 18,
-  //     });
-  //   }
-  // };
-
   const [toggle, setToggle] = useState(false);
-
-  // const [formData, loading] = useCollection(
-  //   query(collection(db, "quote__ids"))
-  // );
-
-  // console.log(pathname.includes(formData!.docs[0].id));
-
-  // console.log(formData?.docs[0].data());
 
   const [tooltipVisible, setTooltipVisible] = useState(false);
 
@@ -606,27 +547,6 @@ function QuotePage({}: Props) {
 </html>
   `;
 
-  //<h2 style="text-align: center">Installments</h2>
-  // <table class="email__table" style="width: 800px; margin: 0 auto">
-  //   <tr>
-  //     <td class="email__install">
-  //       Installment with <b>${emailProp.months} months</b> period
-  //     </td>
-  //     <td class="email__install">
-  //       Starting from <b>RM ${emailProp.monthly}/mo</b> with AEON CC
-  //     </td>
-  //     <td class="email__install">
-  //       Interest of{" "}
-  //       <b>
-  //         RM ${emailProp.interest} at ${emailProp.interestPerc}%
-  //       </b>
-  //     </td>
-  //     <td class="email__install">
-  //       Total <b>RM ${emailProp.totalInstall}</b> with Installment
-  //     </td>
-  //   </tr>
-  // </table>;
-
   interface FormValues {
     name: string;
     email: string;
@@ -891,19 +811,6 @@ function QuotePage({}: Props) {
               return null;
             })}
         </p>
-        {/* {quotes &&
-          quoteId &&
-          quotes.map((item, index) => {
-            console.log(item.id, "check", quoteId, "check2");
-            if (item.id === quoteId) {
-              console.log("pass");
-              const quoteData = item.formData;
-              // console.log(quoteData.category, "data");
-              return quoteData.map((data: any, dataIndex: number) => (
-                <p key={`${index}-${dataIndex}`}>{data.selectedOption.name}</p>
-              ));
-            }
-          })} */}
       </div>
       <Offers />
       <table className="w-full">
@@ -996,38 +903,6 @@ function QuotePage({}: Props) {
             <tr style={{ textAlign: "center" }}>Data Does Not Exists</tr>
           )}
         </tbody>
-
-        {/* <tfoot>
-          <tr>
-            <td colSpan={3} className="w-[90%] p-0">
-              <div className="mt-4 py-4 px-12 sm:px-8 bg-secondary  font-bold rounded-2xl sm:rounded-none sm:rounded-l-2xl flex justify-between w-full align-middle items-center">
-                Grand Total
-                <div className=" text-center py-4 bg-secondary  font-bold rounded-r-2xl block sm:hidden">
-                  {formData &&
-                    quoteId &&
-                    formData.docs.map((item) => {
-                      if (item.id === quoteId) {
-                        return item.data().grandTotal;
-                      }
-                      return null;
-                    })}
-                </div>
-              </div>
-            </td>
-            <td className="w-[10%] p-0 hidden sm:table-cell">
-              <div className="mt-4 text-center py-4 px-8 bg-secondary  font-bold rounded-r-2xl">
-                {formData &&
-                  quoteId &&
-                  formData.docs.map((item) => {
-                    if (item.id === quoteId) {
-                      return item.data().grandTotal;
-                    }
-                    return null;
-                  })}
-              </div>
-            </td>
-          </tr>
-        </tfoot> */}
       </table>
       <div className="flex flex-col pt-16 gap-16 items-center mx-auto w-full">
         <div className="flex gap-16">
@@ -1175,36 +1050,6 @@ function QuotePage({}: Props) {
                 }
                 return null;
               })}
-            {/* {formData &&
-              quoteId &&
-              formData.docs.map((item) => {
-                if (item.id === quoteId) {
-                  return (
-                    <div
-                      key={item.id}
-                      className="bg-secondary  rounded-2xl h-28 sm:w-40 w-full flex justify-center items-center flex-col"
-                    >
-                      <b style={{ fontSize: 12 }}>Total</b>
-                      <b style={{ color: "#009BFF", fontSize: 20 }}>
-                        RM{" "}
-                        {Math.floor(
-                          item.data().grandTotal /
-                            (1 -
-                              (quantityOption == 1
-                                ? 0.03
-                                : quantityOption == 2
-                                ? 0.04
-                                : quantityOption == 3
-                                ? 0.05
-                                : 0))
-                        )}
-                      </b>
-                      <b style={{ fontSize: 12 }}>with Installment</b>
-                    </div>
-                  );
-                }
-                return null;
-              })} */}
           </div>
         </div>
       </div>
@@ -1252,12 +1097,6 @@ function QuotePage({}: Props) {
             >
               <p>{tooltipVisible ? "Copied!" : "Copy"}</p>
             </button>
-            {/* <span
-              className="absolute left-0 top-0 translate-x-[150%] translate-y-[10%] mt-8 ml-4 text-xs text-white bg-black rounded px-2 py-1"
-              style={{ display: tooltipVisible ? "block" : "none" }}
-            >
-              Copied!
-            </span> */}
           </div>
         </div>
         <label htmlFor="name__label">
@@ -1429,8 +1268,6 @@ function QuotePage({}: Props) {
                   </option>
                 );
               })}
-              {/* <option value="kl">Kuala Lumpur</option>
-              <option value="johor">Johor</option> */}
             </select>
           </p>
           <RiArrowDropLeftFill
@@ -1532,13 +1369,6 @@ function QuotePage({}: Props) {
                 : "Submit"}
             </p>
           </button>
-          {/* <button
-            className="
-          py-2 px-4 bg-secondary  font-bold rounded-xl
-          mobilehover:hover:bg-secondary/80 transition-all"
-          >
-            <p>Print</p>
-          </button> */}
         </div>
       </form>
     </div>

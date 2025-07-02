@@ -18,7 +18,7 @@ type Props = {
   dataList: ProductItemSelectionData[];
 };
 
-const UserActions = ({ quoteId, data, dataList }: Props) => {
+export default function UserActions({ quoteId, data, dataList }: Props) {
   const quoteToData = useUserSelected((state) => state.quoteToData);
 
   const checkOldQuote = data?.retainFormatData;
@@ -120,6 +120,4 @@ const UserActions = ({ quoteId, data, dataList }: Props) => {
       </Button>
     </div>
   );
-};
-
-export default UserActions;
+}

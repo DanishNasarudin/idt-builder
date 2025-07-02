@@ -18,13 +18,13 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import { useUserSelected } from "@/lib/zus-store";
 import React from "react";
-import { ProductTypeSearch } from "../page";
+import { ProductTypeSearch } from "../../app/page";
 
 type Props = {
   data: ProductTypeSearch;
 };
 
-const TableSearch = ({ data }: Props) => {
+export default function TableSearch({ data }: Props) {
   // Shortcut function ---------------------------------------------------
   const [open, setOpen] = React.useState(false);
   function useKey(
@@ -182,6 +182,4 @@ const TableSearch = ({ data }: Props) => {
       </Popover>
     </>
   );
-};
-
-export default TableSearch;
+}

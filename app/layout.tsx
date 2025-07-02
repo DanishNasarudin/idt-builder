@@ -1,11 +1,11 @@
+import Navbar from "@/components/custom/navbar";
 import { Providers } from "@/lib/providers";
 import cover from "@/public/Cover.webp";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "sonner";
-import Footer from "./(components)/Footer";
-import Navbar from "./(components)/Navbar";
+import Footer from "../components/custom/footer";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });

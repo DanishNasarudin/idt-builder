@@ -1,15 +1,13 @@
 import Link from "next/link";
+import { Button } from "../ui/button";
 
-type Props = {};
-
-function Hero({}: Props) {
+export default function Hero() {
   return (
     <div
       className="
     flex flex-col items-center justify-between text-center py-4 pt-8 mt-16
     xs:flex-row xs:text-left sm:py-8"
     >
-      <div className="idt__container"></div>
       <div className="w-4/5">
         <h1 className="my-2 xs:my-4">
           Ideal Tech Official <br />
@@ -17,22 +15,18 @@ function Hero({}: Props) {
         </h1>
         <p className="hidden sm:block">
           You have taken a step forward into the Enthusiasts Realm. <br />
-          <b className="font-normal text-accent">Calm yourself</b>, our builder
+          <b className="font-normal text-primary">Calm yourself</b>, our builder
           will guide you through.
         </p>
         <p className="sm:hidden">
           You have taken a step forward into the Enthusiasts Realm.{" "}
-          <b className="font-normal text-accent">Calm yourself</b>, our builder
+          <b className="font-normal text-primary">Calm yourself</b>, our builder
           will guide you through.
         </p>
         <Link href={"#idt__main-section"}>
-          <button
-            className="
-          relative z-[1] bg-accent/0 border-[1px] py-2 px-4 rounded-lg my-4 font-bold
-          mobilehover:hover:bg-accent mobilehover:hover:text-black mobilehover:hover:border-transparent transition-all"
-          >
+          <Button className="mt-4">
             <p>Start Build!</p>
-          </button>
+          </Button>
         </Link>
       </div>
       <div>
@@ -47,5 +41,3 @@ function Hero({}: Props) {
     </div>
   );
 }
-
-export default Hero;

@@ -1,16 +1,16 @@
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 import { Inter } from "next/font/google";
 import { cache } from "react";
+import Hero from "../components/custom/hero";
 import Offers from "../components/custom/offers";
-import Hero from "./(components)/Hero";
-import TableForm from "./(newform-components)/TableForm";
-import TableSearch from "./(newform-components)/TableSearch";
-import { readData } from "./(serverActions)/textDbActions";
+import TableForm from "../components/custom/table-form";
+import TableSearch from "../components/custom/table-search";
+import { readData } from "../services/textDbActions";
 import {
   CategoryType,
   getAllPriceList,
   getLatestUpdatedTimestamp,
-} from "./(serverActions)/textDbPriceListActions";
+} from "../services/textDbPriceListActions";
 
 const inter = Inter({ subsets: ["latin"] });
 

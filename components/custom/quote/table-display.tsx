@@ -9,8 +9,8 @@ import {
   TableRow,
   getKeyValue,
 } from "@nextui-org/react";
-import { DisplayFormData } from "../[id]/page";
-import Watermark from "./Watermark";
+import { DisplayFormData } from "../../../app/quote/[id]/page";
+import Watermark from "./watermark";
 
 type Props = {
   data: DisplayFormData[];
@@ -23,7 +23,7 @@ const columns = [
   { key: "total", label: "Total" },
 ];
 
-const TableDisplay = ({ data }: Props) => {
+export default function TableDisplay({ data }: Props) {
   return (
     <div className="w-full relative">
       <Watermark />
@@ -72,6 +72,4 @@ const TableDisplay = ({ data }: Props) => {
       </Table>
     </div>
   );
-};
-
-export default TableDisplay;
+}

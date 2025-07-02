@@ -18,8 +18,8 @@ import {
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
-import TableDropdown from "./TableDropdown";
-import TableDropdownQty from "./TableDropdownQty";
+import TableDropdown from "./table-dropdown";
+import TableDropdownQty from "./table-dropdown-qty";
 
 type Props = {
   data: ProductItemSelectionData[];
@@ -49,7 +49,7 @@ const columns = [
   },
 ];
 
-const TableForm = ({ data, dataToEdit }: Props) => {
+export default function TableForm({ data, dataToEdit }: Props) {
   const dataClient = useUserSelected((state) => state.dynamicData);
   const initDataClient = useUserSelected((state) => state.initData);
   const addDataClient = useUserSelected((state) => state.addData);
@@ -285,6 +285,4 @@ const TableForm = ({ data, dataToEdit }: Props) => {
       </Table>
     </>
   );
-};
-
-export default TableForm;
+}

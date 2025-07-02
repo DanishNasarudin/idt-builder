@@ -23,7 +23,7 @@ type Props = {
 
 type Selection = "all" | Set<React.Key>;
 
-const TableDropdown = ({ data, disabledKeys }: Props) => {
+export default function TableDropdown({ data, disabledKeys }: Props) {
   const setDataClient = useUserSelected((state) => state.setData);
   const updateSelected = useUserSelected((state) => state.updateSelected);
 
@@ -184,6 +184,4 @@ const TableDropdown = ({ data, disabledKeys }: Props) => {
       </Popover>
     </>
   );
-};
-
-export default TableDropdown;
+}
