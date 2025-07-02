@@ -1,9 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    // appDir: true,
-    // serverActions: true,
-  },
   images: {
     domains: ["idealtech.com.my"],
     unoptimized: true,
@@ -18,15 +14,6 @@ const nextConfig = {
 
     return config;
   },
-  // api: {
-  //   bodyParser: {
-  //     sizeLimit: "10mb",
-  //   },
-  //   responseLimit: "10mb",
-  // },
-  // output: {
-  //   globalObject: `typeof self !== 'undefined' ? self : this`,
-  // },
 };
 
 module.exports = nextConfig;

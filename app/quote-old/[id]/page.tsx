@@ -11,7 +11,7 @@ import { State } from "country-state-city";
 import Link from "next/link";
 import React from "react";
 
-import Offers from "@/app/(components)/Offers";
+import Offers from "@/components/custom/offers";
 import html2pdf from "html2pdf.js";
 import { toast } from "sonner";
 

@@ -1,9 +1,9 @@
-import Offers from "@/app/(components)/Offers";
 import { readData } from "@/app/(serverActions)/textDbActions";
 import {
   CategoryType,
   getAllPriceList,
 } from "@/app/(serverActions)/textDbPriceListActions";
+import Offers from "@/components/custom/offers";
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 import CarouselDisplay from "../(quote-components)/CarouselDisplay";
 import GrandTotal from "../(quote-components)/GrandTotal";

@@ -5,7 +5,7 @@ type Props = {
   text: string;
 };
 
-function Offer({ src, text }: Props) {
+export default function Offer({ src, text }: Props) {
   const iconSize = 60;
 
   return (
@@ -22,5 +22,3 @@ function Offer({ src, text }: Props) {
     </div>
   );
 }
-
-export default Offer;

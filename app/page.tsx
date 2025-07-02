@@ -1,8 +1,8 @@
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 import { Inter } from "next/font/google";
 import { cache } from "react";
+import Offers from "../components/custom/offers";
 import Hero from "./(components)/Hero";
-import Offers from "./(components)/Offers";
 import TableForm from "./(newform-components)/TableForm";
 import TableSearch from "./(newform-components)/TableSearch";
 import { readData } from "./(serverActions)/textDbActions";

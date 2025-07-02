@@ -45,46 +45,6 @@ import { useTheme } from "next-themes";
 import { queueWrite } from "../(serverActions)/textDbActions";
 import { LogoIcon } from "./Icons";
 
-type Props = {};
-
-const components: { title: string; href: string; description: string }[] = [
-  {
-    title: "Alert Dialog",
-    href: "/docs/primitives/alert-dialog",
-    description:
-      "A modal dialog that interrupts the user with important content and expects a response.",
-  },
-  {
-    title: "Hover Card",
-    href: "/docs/primitives/hover-card",
-    description:
-      "For sighted users to preview content available behind a link.",
-  },
-  {
-    title: "Progress",
-    href: "/docs/primitives/progress",
-    description:
-      "Displays an indicator showing the completion progress of a task, typically displayed as a progress bar.",
-  },
-  {
-    title: "Scroll-area",
-    href: "/docs/primitives/scroll-area",
-    description: "Visually or semantically separates content.",
-  },
-  {
-    title: "Tabs",
-    href: "/docs/primitives/tabs",
-    description:
-      "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
-  },
-  {
-    title: "Tooltip",
-    href: "/docs/primitives/tooltip",
-    description:
-      "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
-  },
-];
-
 type MenuStd = {
   title: string;
   href: string;
@@ -197,29 +157,10 @@ const menuList: MenuList[] = [
   },
 ];
 
-function Navbar({}: Props) {
-  // const [toggle, setToggle] = useState(true);
-  // const [offerToggle, setOfferToggle] = useState(false);
-  // const [careToggle, setCareToggle] = useState(false);
-  const scroll = useScrollListener();
-  const [hideNavbar, setHideNavbar] = useState(false);
-  // console.log(scroll);
-
-  useEffect(() => {
-    if (scroll.checkY > 0) {
-      setHideNavbar(true);
-    } else if (scroll.checkY < 0) {
-      setHideNavbar(false);
-    }
-  }, [scroll.y, scroll.lastY]);
-
-  // useEffect(() => {
-  //   document.documentElement.classList.add("dark");
-  // }, []);
+function Navbar() {
+  const router = useRouter();
   const { setTheme } = useTheme();
-  useEffect(() => {
-    setTheme("dark");
-  }, []);
+  const scroll = useScrollListener();
 
   const isBuildPage = useNavbarStore((state) => state.isBuildPage);
   const dataClient = useUserSelected((state) => state.dynamicData);
@@ -228,42 +169,10 @@ function Navbar({}: Props) {
   const dataToQuote = useUserSelected((state) => state.dataToQuote);
   const setIsBuildPage = useNavbarStore((state) => state.setIsBuildPage);
 
+  const [hideNavbar, setHideNavbar] = useState(false);
   const [data, setData] = useState<ProductSelectionData>(selected);
 
-  // const [dataSearchImage, setDataSearchImage] = useState<string[]>([]);
-
-  // console.log(dataSearchImage, "CEHCL ");
-
-  // const [buildPage, setBuildPage] = useState(false);
-
-  useEffect(() => {
-    if (isBuildPage) {
-      setData(selected);
-
-      const dataToString =
-        selected.grand_total > 0
-          ? selected.product_items
-              .map((item) => {
-                const productName = item.products[0].product_name;
-                const match = productName.match(/^[^\(\[]+/);
-                return match ? match[0].trim() : productName;
-              })
-              .join(", ")
-          : "";
-
-      // getImageFromStock(dataToString).then((images) => {
-      //   setDataSearchImage(images.images);
-      // });
-
-      // console.log(dataToString, "PASS");
-
-      // setBuildPage(true);
-    }
-  }, [dataClient, isBuildPage]);
-
-  const router = useRouter();
-
-  // ------ clear the link from google analytics
+  // Clear the link from google analytics
   let isSafari: boolean;
   let pathname = "";
 
@@ -274,13 +183,6 @@ function Navbar({}: Props) {
       window.navigator.userAgent
     );
   }
-  useEffect(() => {
-    // // List of common Google Analytics parameters - remove them
-
-    if (pathname.includes("_ga") || pathname.includes("_gl")) {
-      router.replace("/");
-    }
-  }, [pathname]);
 
   const createQuote = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -288,10 +190,8 @@ function Navbar({}: Props) {
     if (check.grand_total === 0) return;
     const id = uuidv4();
     const quoteData = dataToQuote();
-    // console.log(id, quoteData);
 
     await queueWrite(quoteData, id);
-    // await drizzleInsertQuote(id, json);
 
     let quoteWindow;
     if (isSafari) {
@@ -301,8 +201,6 @@ function Navbar({}: Props) {
     const quoteUrl = `${window.location.protocol}//${window.location.host}/quote/${id}`;
 
     if (isSafari) {
-      // serverConsole("pass");
-      // quoteWindow.location.href = quoteUrl;
       router.push(`/quote/${id}`);
       setIsBuildPage(false);
     } else {
@@ -310,10 +208,32 @@ function Navbar({}: Props) {
     }
   };
 
-  const preventHover = (event: any) => {
-    const e = event as Event;
-    e.preventDefault();
-  };
+  useEffect(() => {
+    setTheme("dark");
+  }, []);
+
+  // For navbar hide on scroll
+  useEffect(() => {
+    if (scroll.checkY > 0) {
+      setHideNavbar(true);
+    } else if (scroll.checkY < 0) {
+      setHideNavbar(false);
+    }
+  }, [scroll.y, scroll.lastY]);
+
+  // For when user is trying to edit quotes
+  useEffect(() => {
+    if (isBuildPage) {
+      setData(selected);
+    }
+  }, [dataClient, isBuildPage]);
+
+  // Remove Google Analytics parameters
+  useEffect(() => {
+    if (pathname.includes("_ga") || pathname.includes("_gl")) {
+      router.replace("/");
+    }
+  }, [pathname]);
 
   return (
     <nav
@@ -329,7 +249,7 @@ function Navbar({}: Props) {
     >
       <div
         className={`
-    top-0 z-[100] border-b-[1px] border-[#323232] bg-background/80 transition-all 
+    top-0 z-[100] border-b-[1px] border-border bg-background/80 transition-all 
     before:absolute before:top-0 before:-z-10 before:h-full before:w-full before:backdrop-blur-md before:content-['']
     
     `}

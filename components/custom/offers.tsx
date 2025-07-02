@@ -2,11 +2,9 @@
 
 import { useState } from "react";
 import { RiArrowDropDownFill, RiArrowDropLeftFill } from "react-icons/ri";
-import Offer from "./Offer";
+import Offer from "./offer";
 
-type Props = {};
-
-function Offers({}: Props) {
+export default function Offers() {
   const [toggle, setToggle] = useState(false);
   return (
     <>
@@ -120,5 +118,3 @@ function Offers({}: Props) {
     </>
   );
 }
-
-export default Offers;
