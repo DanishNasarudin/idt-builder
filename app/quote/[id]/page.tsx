@@ -221,7 +221,10 @@ export default async function QuotePage({
             quoteId={quoteId}
             data={data}
             dataList={dataFormList}
-            isAdmin={clerk?.privateMetadata.role === "Admin"}
+            isAdmin={
+              clerk?.privateMetadata.role === "Admin" ||
+              clerk?.privateMetadata.role === "Staff"
+            }
           />
           <NewForm quoteId={quoteId} />
         </div>
