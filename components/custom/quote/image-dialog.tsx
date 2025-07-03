@@ -20,7 +20,7 @@ export default function ImageDialog({
 }) {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Image
           data-loaded="false"
           onLoad={(e) => e.currentTarget.setAttribute("data-loaded", "true")}
