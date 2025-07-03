@@ -6,6 +6,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 import Link from "next/link";
 
@@ -19,11 +21,16 @@ export default function ImageDialog({
   return (
     <Dialog>
       <DialogTrigger>
-        <img
-          loading="lazy"
-          src={image}
-          alt="Preview"
-          className="w-full h-auto cursor-pointer rounded-lg border-transparent border-2 hover:border-white/60 transition-all duration-300 ease-in-out"
+        <Image
+          data-loaded="false"
+          onLoad={(e) => e.currentTarget.setAttribute("data-loaded", "true")}
+          src={image || ""}
+          alt={`${invoice}`}
+          width={322}
+          height={215}
+          className={cn(
+            "data-[loaded=false]:bg-foreground/30 data-[loaded=false]:animate-pulse w-full h-auto object-cover rounded-lg border-transparent hover:border-foreground/60 border-[1px] transition-all cursor-pointer"
+          )}
         />
       </DialogTrigger>
       <DialogContent className="max-w-[1000px] rounded-lg">
