@@ -1,6 +1,12 @@
-import { clerkMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
 
-export default clerkMiddleware();
+const isPrivateRoute = createRouteMatcher(["/pdf"]);
+
+export default clerkMiddleware(async (auth, req) => {
+  const { origin } = req.nextUrl;
+  if (isPrivateRoute(req)) return NextResponse.redirect(new URL("/", origin));
+});
 
 export const config = {
   matcher: [
