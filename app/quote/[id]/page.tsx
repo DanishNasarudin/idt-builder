@@ -5,6 +5,7 @@ import {
   CategoryType,
   getAllPriceList,
 } from "@/services/textDbPriceListActions";
+import { currentUser } from "@clerk/nextjs/server";
 import CarouselDisplay from "../../../components/custom/quote/carousel-display";
 import GrandTotal from "../../../components/custom/quote/grand-total";
 import NewForm from "../../../components/custom/quote/new-form";
@@ -111,6 +112,7 @@ export default async function QuotePage({
   params: { id: string };
 }) {
   const quoteId = params.id;
+  const clerk = await currentUser();
 
   const data = (await readData(quoteId)) as QuoteData;
 
@@ -215,7 +217,12 @@ export default async function QuotePage({
             final={data.grandTotal}
             discount={data.oriTotal - data.grandTotal}
           />
-          <UserActions quoteId={quoteId} data={data} dataList={dataFormList} />
+          <UserActions
+            quoteId={quoteId}
+            data={data}
+            dataList={dataFormList}
+            isAdmin={clerk?.privateMetadata.role === "Admin"}
+          />
           <NewForm quoteId={quoteId} />
         </div>
       </div>

@@ -17,9 +17,15 @@ type Props = {
   quoteId: string;
   data?: QuoteData;
   dataList: ProductItemSelectionData[];
+  isAdmin: boolean | null;
 };
 
-export default function UserActions({ quoteId, data, dataList }: Props) {
+export default function UserActions({
+  quoteId,
+  data,
+  dataList,
+  isAdmin,
+}: Props) {
   const quoteToData = useUserSelected((state) => state.quoteToData);
 
   const checkOldQuote = data?.retainFormatData;
@@ -91,7 +97,7 @@ export default function UserActions({ quoteId, data, dataList }: Props) {
   const setSearchParams = new URLSearchParams();
 
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 flex-wrap justify-center">
       <Button
         variant={"outline"}
         onClick={() => {
@@ -120,7 +126,7 @@ export default function UserActions({ quoteId, data, dataList }: Props) {
       >
         Edit Spec
       </Button>
-      <GenerateQuotation />
+      {isAdmin && <GenerateQuotation />}
       <div>
         {/* <PDFDownloadLink document={<Quotation />} fileName="somename.pdf">
           {pdf.blob ? "Loading document..." : "Download now!"}

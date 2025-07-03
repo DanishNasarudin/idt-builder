@@ -34,7 +34,7 @@ import {
   useNavbarStore,
   useUserSelected,
 } from "@/lib/zus-store";
-import { ChevronDown, MenuIcon } from "lucide-react";
+import { ChevronDown, LogIn, MenuIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -42,11 +42,13 @@ import { v4 as uuidv4 } from "uuid";
 // import { drizzleInsertQuote } from "../(serverActions)/drizzleCmd";
 import { useScrollListener } from "@/lib/hooks/useScrollListener";
 import { menuList } from "@/lib/menu";
+import { SignInButton } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { queueWrite } from "../../services/textDbActions";
 import { LogoIcon } from "./icons";
+import TooltipWrapper from "./tooltip-wrapper";
 
-export default function Navbar() {
+export default function Navbar({ signedIn = false }: { signedIn?: boolean }) {
   const router = useRouter();
   const { setTheme } = useTheme();
   const scroll = useScrollListener();
@@ -215,6 +217,19 @@ export default function Navbar() {
                   );
                 }
               })}
+              {!signedIn && (
+                <SignInButton>
+                  <TooltipWrapper content="Sign In">
+                    <Button
+                      variant={"outline"}
+                      size={"icon"}
+                      className="w-8 h-8 shrink-0"
+                    >
+                      <LogIn />
+                    </Button>
+                  </TooltipWrapper>
+                </SignInButton>
+              )}
             </NavigationMenuList>
           </NavigationMenu>
           <div className="z-[100] flex justify-between px-4 py-4 sm:hidden">
@@ -295,6 +310,13 @@ export default function Navbar() {
                         );
                       }
                     })}
+                    {!signedIn && (
+                      <SignInButton>
+                        <Button variant={"outline"} className="w-full">
+                          Sign In <LogIn />
+                        </Button>
+                      </SignInButton>
+                    )}
                   </NavigationMenuList>
                 </NavigationMenu>
                 <SheetFooter className="flex-col gap-4 text-zinc-400">

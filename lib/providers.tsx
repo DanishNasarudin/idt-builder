@@ -3,9 +3,8 @@ import { Toaster } from "@/components/ui/sonner";
 import { NextUIProvider } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { ThemeProvider } from "./theme-provider";
-
-type Props = {};
+import CustomClerkProvider from "./providers/clerk-provider";
+import { ThemeProvider } from "./providers/theme-provider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const router = useRouter();
@@ -17,10 +16,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
       enableSystem
       disableTransitionOnChange
     >
-      <NextUIProvider navigate={router.push}>
-        {children}
-        <Toaster richColors closeButton />
-      </NextUIProvider>
+      <CustomClerkProvider>
+        <NextUIProvider navigate={router.push}>
+          {children}
+          <Toaster richColors closeButton />
+        </NextUIProvider>
+      </CustomClerkProvider>
     </ThemeProvider>
   );
 }

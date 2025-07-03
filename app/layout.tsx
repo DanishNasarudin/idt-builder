@@ -1,6 +1,7 @@
 import Navbar from "@/components/custom/navbar";
 import { Providers } from "@/lib/providers";
 import cover from "@/public/Cover.webp";
+import { auth } from "@clerk/nextjs/server";
 import { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
@@ -51,11 +52,12 @@ export const metadata: Metadata = {
 
 const GTM_ID = "G-F1BXD9F7PC";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { userId } = await auth();
   return (
     <html lang="en">
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${GTM_ID}`} />
@@ -70,7 +72,7 @@ export default function RootLayout({
       </Script>
       <body className={`${inter.className} relative`}>
         <Providers>
-          <Navbar />
+          <Navbar signedIn={userId !== null} />
           <div className="max-w-[1060px] mx-auto">{children}</div>
           <div className="h-[200px]"></div>
           <Footer />
