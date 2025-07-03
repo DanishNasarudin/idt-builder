@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    serverComponentsExternalPackages: ["@react-pdf/renderer"],
+  },
   images: {
     domains: ["idealtech.com.my"],
     unoptimized: true,

@@ -11,6 +11,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 import { toast } from "sonner";
+import GenerateQuotation from "./generate-quotation";
 
 type Props = {
   quoteId: string;
@@ -88,6 +89,7 @@ export default function UserActions({ quoteId, data, dataList }: Props) {
   const router = useRouter();
   const pathname = usePathname();
   const setSearchParams = new URLSearchParams();
+
   return (
     <div className="flex gap-2">
       <Button
@@ -118,6 +120,12 @@ export default function UserActions({ quoteId, data, dataList }: Props) {
       >
         Edit Spec
       </Button>
+      <GenerateQuotation />
+      <div>
+        {/* <PDFDownloadLink document={<Quotation />} fileName="somename.pdf">
+          {pdf.blob ? "Loading document..." : "Download now!"}
+        </PDFDownloadLink> */}
+      </div>
     </div>
   );
 }
