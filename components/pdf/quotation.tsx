@@ -170,6 +170,7 @@ export const Quotation = ({
               \tatque ipsum laboriosam. Maxime qui rerum necessitatibus ipsam
               \tnesciunt unde a cupiditate vel, sapiente?`,
   date = "99/99/9999",
+  type = "Quotation",
   subTotal = 99999,
   total = 99999,
   products = [],
@@ -177,6 +178,7 @@ export const Quotation = ({
   branch?: "ampang" | "jb" | "sa" | "ss2";
   toAddress?: string;
   date?: string;
+  type?: string;
   subTotal?: number;
   total?: number;
   products?: ProductQuoteType[];
@@ -215,7 +217,7 @@ export const Quotation = ({
               padding: "4px 0px",
             }}
           >
-            Quotation
+            {type}
           </Text>
           <View
             style={{

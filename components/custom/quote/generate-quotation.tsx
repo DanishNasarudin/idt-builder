@@ -45,6 +45,7 @@ export default function GenerateQuotation() {
     "ampang"
   );
 
+  const [type, setType] = useState("Quotation");
   const [branch, setBranch] = useState("ampang");
   const [toAddress, setToAddress] = useState("");
   const [date, setDate] = useState<Date | undefined>(today);
@@ -112,6 +113,7 @@ export default function GenerateQuotation() {
           branch={branch as Branch}
           toAddress={toAddress}
           date={format(date || new Date(), "dd/MM/yyyy")}
+          type={type}
           subTotal={quoteData.grand_total}
           total={quoteData.grand_total}
           products={products}
@@ -142,6 +144,7 @@ export default function GenerateQuotation() {
       <DialogContent
         onInteractOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={(e) => e.preventDefault()}
+        className="sm:max-w-[600px]"
       >
         <DialogHeader>
           <DialogTitle>Generate Quote</DialogTitle>
@@ -151,37 +154,76 @@ export default function GenerateQuotation() {
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
-            <div className="grid gap-2 items-start">
-              <Label htmlFor="branch">Branch</Label>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant={"outline"} className="w-min">
-                    {branchNameDropdown[branch as Branch]} <ChevronsUpDown />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuRadioGroup
-                    value={branch}
-                    onValueChange={(e) => {
-                      setBranch(e);
-                      setBranchLocal(e);
-                    }}
-                  >
-                    <DropdownMenuRadioItem value="ampang">
-                      Ampang HQ
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="sa">
-                      Setia Alam
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="ss2">
-                      SS2, PJ
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="jb">
-                      Johor Bahru
-                    </DropdownMenuRadioItem>
-                  </DropdownMenuRadioGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="grid gap-2 items-start">
+                <Label htmlFor="branch">Type</Label>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant={"outline"} className="w-min">
+                      {type} <ChevronsUpDown className="text-foreground/60" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuRadioGroup
+                      value={type}
+                      onValueChange={(e) => {
+                        setType(e);
+                      }}
+                    >
+                      <DropdownMenuRadioItem value="Quotation">
+                        Quotation
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="Proforma Invoice">
+                        Proforma Invoice
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="Invoice">
+                        Invoice
+                      </DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <div className="grid gap-2 items-start">
+                <Label htmlFor="branch">Branch</Label>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant={"outline"} className="w-min">
+                      {branchNameDropdown[branch as Branch]}{" "}
+                      <ChevronsUpDown className="text-foreground/60" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuRadioGroup
+                      value={branch}
+                      onValueChange={(e) => {
+                        setBranch(e);
+                        setBranchLocal(e);
+                      }}
+                    >
+                      <DropdownMenuRadioItem value="ampang">
+                        Ampang HQ
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="sa">
+                        Setia Alam
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="ss2">
+                        SS2, PJ
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="jb">
+                        Johor Bahru
+                      </DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="date">Quote Date</Label>
+                <Calendar
+                  id="date"
+                  value={date}
+                  onValueChange={(_, newValue) => setDate(newValue)}
+                />
+              </div>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="to-add&#8204;ress">Receiver Address</Label>
@@ -190,14 +232,6 @@ export default function GenerateQuotation() {
                 rows={6}
                 onChange={(e) => setToAddress(e.currentTarget.value)}
                 placeholder={`Example:\nIDEAL TECH PC SDN BHD\n17, Jalan Pandan Prima 1, Dataran Pandan Prima, 55100 Kuala Lumpur.\nHP: +6012-5787804 sales@idealtech.com.my\nTIN: 201401008251`}
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="date">Quote Date</Label>
-              <Calendar
-                id="date"
-                value={date}
-                onValueChange={(_, newValue) => setDate(newValue)}
               />
             </div>
           </div>
