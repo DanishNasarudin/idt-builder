@@ -176,9 +176,6 @@ export default function GenerateQuotation() {
                       <DropdownMenuRadioItem value="Proforma Invoice">
                         Proforma Invoice
                       </DropdownMenuRadioItem>
-                      <DropdownMenuRadioItem value="Invoice">
-                        Invoice
-                      </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                   </DropdownMenuContent>
                 </DropdownMenu>
