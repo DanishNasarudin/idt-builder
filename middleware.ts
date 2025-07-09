@@ -1,7 +1,7 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const isPrivateRoute = createRouteMatcher(["/pdf", "/shadcn"]);
+const isPrivateRoute = createRouteMatcher(["/shadcn"]);
 
 export default clerkMiddleware(async (auth, req) => {
   const { origin } = req.nextUrl;

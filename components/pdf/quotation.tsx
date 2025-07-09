@@ -174,6 +174,7 @@ export const Quotation = ({
   subTotal = 99999,
   total = 99999,
   products = [],
+  isComputerGenerated = true,
 }: {
   branch?: "ampang" | "jb" | "sa" | "ss2";
   toAddress?: string;
@@ -182,7 +183,9 @@ export const Quotation = ({
   subTotal?: number;
   total?: number;
   products?: ProductQuoteType[];
+  isComputerGenerated?: boolean;
 }) => {
+  console.log(isComputerGenerated, "CHECK");
   const productPages =
     products.length > 0
       ? Array.from({
@@ -337,8 +340,19 @@ export const Quotation = ({
                 alignItems: "center",
               }}
             >
-              <Text>..................................................</Text>
-              <Text>{branchName[branch]}</Text>
+              {isComputerGenerated ? (
+                <>
+                  <Text>This is a system generated</Text>
+                  <Text>{type.toLowerCase()}, no signature required.</Text>
+                </>
+              ) : (
+                <>
+                  <Text>
+                    ..................................................
+                  </Text>
+                  <Text>{branchName[branch]}</Text>
+                </>
+              )}
             </View>
           </View>
         </Page>

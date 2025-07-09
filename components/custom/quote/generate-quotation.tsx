@@ -48,6 +48,7 @@ export default function GenerateQuotation() {
   const [type, setType] = useState("Quotation");
   const [branch, setBranch] = useState("ampang");
   const [toAddress, setToAddress] = useState("");
+  const [isComputerGenerated, setIsComputerGenerated] = useState("True");
   const [date, setDate] = useState<Date | undefined>(today);
   const quoteData = useUserSelected((state) => state.selected);
 
@@ -114,6 +115,9 @@ export default function GenerateQuotation() {
           toAddress={toAddress}
           date={format(date || new Date(), "dd/MM/yyyy")}
           type={type}
+          isComputerGenerated={Boolean(
+            isComputerGenerated.toLowerCase() === "true"
+          )}
           subTotal={quoteData.grand_total}
           total={quoteData.grand_total}
           products={products}
@@ -129,7 +133,7 @@ export default function GenerateQuotation() {
       saveAs(blob, filename);
       setToAddress("");
     },
-    [branch, date, quoteData, toAddress]
+    [branch, date, quoteData, toAddress, isComputerGenerated, type]
   );
 
   useEffect(() => {
@@ -221,6 +225,32 @@ export default function GenerateQuotation() {
                   onValueChange={(_, newValue) => setDate(newValue)}
                 />
               </div>
+            </div>
+            <div className="grid gap-2 items-start">
+              <Label htmlFor="branch">Is System Generated</Label>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant={"outline"} className="w-min">
+                    {`${isComputerGenerated}`}{" "}
+                    <ChevronsUpDown className="text-foreground/60" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuRadioGroup
+                    value={`${isComputerGenerated}`}
+                    onValueChange={(e) => {
+                      setIsComputerGenerated(e);
+                    }}
+                  >
+                    <DropdownMenuRadioItem value="True">
+                      True
+                    </DropdownMenuRadioItem>
+                    <DropdownMenuRadioItem value="False">
+                      False
+                    </DropdownMenuRadioItem>
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="to-add&#8204;ress">Receiver Address</Label>
