@@ -18,13 +18,14 @@ import {
   DropdownMenuRadioItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useUserSelected } from "@/lib/zus-store";
 import { pdf } from "@react-pdf/renderer/lib/react-pdf.browser";
 import { format } from "date-fns";
 import { saveAs } from "file-saver";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown, Minus } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import Calendar from "./calendar";
@@ -57,6 +58,7 @@ export default function GenerateQuotation() {
   const [isComputerGenerated, setIsComputerGenerated] = useState("True");
   const [pcType, setPcType] = useState("Custom");
   const [packageSpecs, setPackageSpecs] = useState("");
+  const [additional, setAdditional] = useState<ProductQuoteType[]>([]);
   const [date, setDate] = useState<Date | undefined>(today);
   const quoteData = useUserSelected((state) => state.selected);
 
@@ -156,8 +158,6 @@ export default function GenerateQuotation() {
             ? /^(?:Add\s*On:\s*)?(.+?)\s*-\s*RM\s*([\d.,]+)/i
             : /^(.+?)\s*-\s*RM\s*([\d.,]+)/i;
 
-        console.log(line, "CK");
-
         const m = line.match(regex);
         if (m) {
           const name = m[1].trim();
@@ -232,6 +232,12 @@ export default function GenerateQuotation() {
           unitPrice: item.sub_total,
         })) ?? [];
 
+      const fullProduct = [...products, ...additional];
+      const fullTotal = fullProduct.reduce(
+        (sum, p) => sum + p.unitPrice * p.quantity,
+        0
+      );
+
       const blob = await pdf(
         <Quotation
           branch={branch as Branch}
@@ -241,9 +247,17 @@ export default function GenerateQuotation() {
           isComputerGenerated={Boolean(
             isComputerGenerated.toLowerCase() === "true"
           )}
-          subTotal={quoteData.grand_total}
-          total={quoteData.grand_total}
-          products={products}
+          subTotal={
+            quoteData.grand_total > fullTotal
+              ? quoteData.grand_total
+              : fullTotal
+          }
+          total={
+            quoteData.grand_total > fullTotal
+              ? quoteData.grand_total
+              : fullTotal
+          }
+          products={[...products, ...additional]}
         />
       ).toBlob();
 
@@ -256,7 +270,16 @@ export default function GenerateQuotation() {
       saveAs(blob, filename);
       setToAddress("");
     },
-    [branch, date, quoteData, toAddress, isComputerGenerated, type, pcType]
+    [
+      branch,
+      date,
+      quoteData,
+      toAddress,
+      isComputerGenerated,
+      type,
+      pcType,
+      additional,
+    ]
   );
 
   useEffect(() => {
@@ -425,7 +448,96 @@ export default function GenerateQuotation() {
             )}
             {pcType === "Custom" && (
               <div className="grid gap-2">
-                <Button variant={"outline"}>Add Product</Button>
+                {additional.length > 0 && (
+                  <div className="flex gap-2 text-sm text-foreground/60">
+                    <div className="flex-1">Product name</div>
+                    <div className="min-w-[36px]">Qty</div>
+                    <div className="min-w-[100px]">Unit price</div>
+                    <div className="min-w-[36px]"></div>
+                  </div>
+                )}
+                {additional.length > 0 &&
+                  additional.map((item, idx) => (
+                    <div key={idx} className="flex gap-2">
+                      <Input
+                        className="w-full text-sm"
+                        value={item.name}
+                        placeholder="Prod&#8204;uct nam&#8204;e"
+                        onChange={(e) =>
+                          setAdditional((prev) =>
+                            prev.map((p, pidx) =>
+                              pidx === idx ? { ...p, name: e.target.value } : p
+                            )
+                          )
+                        }
+                      />
+                      <Input
+                        className="min-w-[36px] flex-1 text-sm"
+                        value={item.quantity}
+                        onChange={(e) =>
+                          setAdditional((prev) =>
+                            prev.map((p, pidx) =>
+                              pidx === idx
+                                ? {
+                                    ...p,
+                                    quantity: Number.isNaN(
+                                      Number(e.target.value)
+                                    )
+                                      ? 0
+                                      : Number(e.target.value),
+                                  }
+                                : p
+                            )
+                          )
+                        }
+                      />
+                      <Input
+                        className="min-w-[100px] flex-1 text-sm"
+                        value={item.unitPrice}
+                        placeholder="Un&#8204;it pri&#8204;ce"
+                        onChange={(e) =>
+                          setAdditional((prev) =>
+                            prev.map((p, pidx) =>
+                              pidx === idx
+                                ? {
+                                    ...p,
+                                    unitPrice: Number.isNaN(
+                                      Number(e.target.value)
+                                    )
+                                      ? 0
+                                      : Number(e.target.value),
+                                  }
+                                : p
+                            )
+                          )
+                        }
+                      />
+                      <Button
+                        variant={"outline"}
+                        size={"icon"}
+                        className="shrink-0"
+                        onClick={() => {
+                          setAdditional((prev) =>
+                            prev.filter((p, pidx) => pidx !== idx)
+                          );
+                        }}
+                      >
+                        <Minus />
+                      </Button>
+                    </div>
+                  ))}
+                <Button
+                  type="button"
+                  variant={"outline"}
+                  onClick={() =>
+                    setAdditional((prev) => [
+                      ...prev,
+                      { name: "Product 1", quantity: 1, unitPrice: 0 },
+                    ])
+                  }
+                >
+                  Add Additional Product
+                </Button>
               </div>
             )}
           </div>
