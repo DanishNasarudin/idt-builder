@@ -29,6 +29,12 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import Calendar from "./calendar";
 
+type ParsedQuote = {
+  products: ProductQuoteType[];
+  subTotal: number;
+  total: number;
+};
+
 type Branch = "ampang" | "sa" | "ss2" | "jb";
 
 const branchNameDropdown = {
@@ -49,6 +55,8 @@ export default function GenerateQuotation() {
   const [branch, setBranch] = useState("ampang");
   const [toAddress, setToAddress] = useState("");
   const [isComputerGenerated, setIsComputerGenerated] = useState("True");
+  const [pcType, setPcType] = useState("Custom");
+  const [packageSpecs, setPackageSpecs] = useState("");
   const [date, setDate] = useState<Date | undefined>(today);
   const quoteData = useUserSelected((state) => state.selected);
 
@@ -93,9 +101,124 @@ export default function GenerateQuotation() {
     return "";
   };
 
+  const parseStringQuote = (input: string): ParsedQuote => {
+    const lines = input
+      .split(/\r?\n/)
+      .map((l) => l.trim())
+      .filter((l) => l);
+
+    let subTotal = 0;
+    let total = 0;
+    const baseLines: string[] = [];
+    const manual: ProductQuoteType[] = [];
+    const upgrades: ProductQuoteType[] = [];
+    const addons: ProductQuoteType[] = [];
+    let section: "base" | "upgrades" | "addons" = "base";
+
+    for (const line of lines) {
+      if (/^SUBTOTAL PRICE:/i.test(line)) {
+        const m = line.match(/RM\s*([\d,.]+)/i);
+        if (m) subTotal = parseFloat(m[1].replace(/,/g, ""));
+        continue;
+      }
+      if (/^FINAL TOTAL PRICE:/i.test(line) || /^TOTAL PRICE:/i.test(line)) {
+        const m = line.match(/RM\s*([\d,.]+)/i);
+        if (m) total = parseFloat(m[1].replace(/,/g, ""));
+        continue;
+      }
+      if (/^Upgrades:\s*$/i.test(line)) {
+        section = "upgrades";
+        continue;
+      }
+      if (/^Add On:\s*$/i.test(line)) {
+        section = "addons";
+        continue;
+      }
+
+      if (section === "base") {
+        const regex = /^(.+?)\s*-\s*RM\s*([\d.,]+)/i;
+        const m = line.match(regex);
+        if (m) {
+          const name = m[1].trim();
+          const price = parseFloat(m[2].replace(/,/g, ""));
+          const item: ProductQuoteType = {
+            name: name,
+            quantity: 1,
+            unitPrice: price,
+          };
+          manual.push(item);
+        } else {
+          baseLines.push(line);
+        }
+      } else {
+        const regex =
+          section === "addons"
+            ? /^(?:Add\s*On:\s*)?(.+?)\s*-\s*RM\s*([\d.,]+)/i
+            : /^(.+?)\s*-\s*RM\s*([\d.,]+)/i;
+
+        console.log(line, "CK");
+
+        const m = line.match(regex);
+        if (m) {
+          const name = m[1].trim();
+          const price = parseFloat(m[2].replace(/,/g, ""));
+          const tag = section === "upgrades" ? "Upgrade: " : "Add On: ";
+          const item: ProductQuoteType = {
+            name: `${tag}${name}`,
+            quantity: 1,
+            unitPrice: price,
+          };
+          if (section === "upgrades") upgrades.push(item);
+          else addons.push(item);
+        }
+      }
+    }
+
+    const products: ProductQuoteType[] = baseLines.map((name, i) => ({
+      name,
+      quantity: 1,
+      unitPrice: i === 0 ? (subTotal === 0 ? total : subTotal) : 0,
+    }));
+
+    products.push(...manual, ...upgrades, ...addons);
+
+    if (total === 0) {
+      total = products.reduce((sum, p) => sum + p.unitPrice, 0);
+    }
+
+    return { products, subTotal: total, total };
+  };
+
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
+
+      if (pcType === "Package") {
+        const { products, subTotal, total } = parseStringQuote(packageSpecs);
+
+        const blob = await pdf(
+          <Quotation
+            branch={branch as Branch}
+            toAddress={toAddress}
+            date={format(date || new Date(), "dd/MM/yyyy")}
+            type={type}
+            isComputerGenerated={isComputerGenerated.toLowerCase() === "true"}
+            subTotal={subTotal}
+            total={total}
+            products={products}
+          />
+        ).toBlob();
+
+        const now = new Date();
+        const filename = `${format(
+          now,
+          "yyyyMMdd_HHmm"
+        )}_IdealTechPC_Quotation.pdf`;
+
+        saveAs(blob, filename);
+        setToAddress("");
+        return;
+      }
 
       const products: ProductQuoteType[] =
         quoteData?.product_items?.map((item) => ({
@@ -133,7 +256,7 @@ export default function GenerateQuotation() {
       saveAs(blob, filename);
       setToAddress("");
     },
-    [branch, date, quoteData, toAddress, isComputerGenerated, type]
+    [branch, date, quoteData, toAddress, isComputerGenerated, type, pcType]
   );
 
   useEffect(() => {
@@ -226,31 +349,59 @@ export default function GenerateQuotation() {
                 />
               </div>
             </div>
-            <div className="grid gap-2 items-start">
-              <Label htmlFor="branch">Is System Generated</Label>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant={"outline"} className="w-min">
-                    {`${isComputerGenerated}`}{" "}
-                    <ChevronsUpDown className="text-foreground/60" />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent>
-                  <DropdownMenuRadioGroup
-                    value={`${isComputerGenerated}`}
-                    onValueChange={(e) => {
-                      setIsComputerGenerated(e);
-                    }}
-                  >
-                    <DropdownMenuRadioItem value="True">
-                      True
-                    </DropdownMenuRadioItem>
-                    <DropdownMenuRadioItem value="False">
-                      False
-                    </DropdownMenuRadioItem>
-                  </DropdownMenuRadioGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
+            <div className="grid grid-cols-3 gap-2">
+              <div className="grid gap-2 items-start">
+                <Label htmlFor="branch">Is System Generated</Label>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant={"outline"} className="w-min">
+                      {`${isComputerGenerated}`}{" "}
+                      <ChevronsUpDown className="text-foreground/60" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuRadioGroup
+                      value={`${isComputerGenerated}`}
+                      onValueChange={(e) => {
+                        setIsComputerGenerated(e);
+                      }}
+                    >
+                      <DropdownMenuRadioItem value="True">
+                        True
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="False">
+                        False
+                      </DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+              <div></div>
+              <div className="grid gap-2 items-start">
+                <Label htmlFor="branch">PC Type</Label>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant={"outline"} className="w-min">
+                      {pcType} <ChevronsUpDown className="text-foreground/60" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuRadioGroup
+                      value={pcType}
+                      onValueChange={(e) => {
+                        setPcType(e);
+                      }}
+                    >
+                      <DropdownMenuRadioItem value="Custom">
+                        Custom
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="Package">
+                        Package
+                      </DropdownMenuRadioItem>
+                    </DropdownMenuRadioGroup>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="to-add&#8204;ress">Receiver Address</Label>
@@ -261,6 +412,22 @@ export default function GenerateQuotation() {
                 placeholder={`Example:\nIDEAL TECH PC SDN BHD\n17, Jalan Pandan Prima 1, Dataran Pandan Prima, 55100 Kuala Lumpur.\nHP: +6012-5787804 sales@idealtech.com.my\nTIN: 201401008251`}
               />
             </div>
+            {pcType === "Package" && (
+              <div className="grid gap-2">
+                <Label htmlFor="package-specs">Package Specs</Label>
+                <Textarea
+                  id="package-specs"
+                  rows={6}
+                  onChange={(e) => setPackageSpecs(e.currentTarget.value)}
+                  placeholder={`Paste from the package pc copy specs`}
+                />
+              </div>
+            )}
+            {pcType === "Custom" && (
+              <div className="grid gap-2">
+                <Button variant={"outline"}>Add Product</Button>
+              </div>
+            )}
           </div>
           <DialogFooter className="flex gap-2 w-full justify-end">
             <DialogClose asChild>

@@ -153,10 +153,12 @@ const renderTable = (products: ProductQuoteType[]) => (
           <Text>{p.quantity}</Text>
         </View>
         <View style={styles.rowMd}>
-          <Text>{p.unitPrice.toFixed(2)}</Text>
+          <Text>{p.unitPrice > 0 ? p.unitPrice.toFixed(2) : ""}</Text>
         </View>
         <View style={styles.rowMd}>
-          <Text>{(p.quantity * p.unitPrice).toFixed(2)}</Text>
+          <Text>
+            {p.unitPrice > 0 ? (p.quantity * p.unitPrice).toFixed(2) : ""}
+          </Text>
         </View>
       </View>
     ))}
@@ -185,7 +187,6 @@ export const Quotation = ({
   products?: ProductQuoteType[];
   isComputerGenerated?: boolean;
 }) => {
-  console.log(isComputerGenerated, "CHECK");
   const productPages =
     products.length > 0
       ? Array.from({
