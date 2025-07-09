@@ -279,6 +279,7 @@ export default function GenerateQuotation() {
       type,
       pcType,
       additional,
+      packageSpecs,
     ]
   );
 
