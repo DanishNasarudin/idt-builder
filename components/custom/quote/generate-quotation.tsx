@@ -229,7 +229,7 @@ export default function GenerateQuotation() {
             .replace(/\s+/g, " ")
             .trim()}`,
           quantity: item.qty,
-          unitPrice: item.sub_total,
+          unitPrice: item.sub_total / item.qty,
         })) ?? [];
 
       const fullProduct = [...products, ...additional];
@@ -257,7 +257,7 @@ export default function GenerateQuotation() {
               ? quoteData.grand_total
               : fullTotal
           }
-          products={[...products, ...additional]}
+          products={fullProduct}
         />
       ).toBlob();
 
