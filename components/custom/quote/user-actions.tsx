@@ -1,6 +1,8 @@
 "use client";
+import { CustomerQuotation } from "@/components/pdf/customer-quotation";
+import { ProductQuoteType } from "@/components/pdf/quotation";
 import { Button } from "@/components/ui/button";
-import { createURL } from "@/lib/utils";
+import { createURL, getCategory } from "@/lib/utils";
 import {
   ProductItemSelectionData,
   ProductSelectionData,
@@ -8,8 +10,11 @@ import {
   useTriggerStore,
   useUserSelected,
 } from "@/lib/zus-store";
+import { pdf } from "@react-pdf/renderer/lib/react-pdf.browser";
+import { format } from "date-fns";
+import saveAs from "file-saver";
 import { usePathname, useRouter } from "next/navigation";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 import { toast } from "sonner";
 import GenerateQuotation from "./generate-quotation";
 
@@ -27,8 +32,14 @@ export default function UserActions({
   isAdmin,
 }: Props) {
   const quoteToData = useUserSelected((state) => state.quoteToData);
+  const today = useMemo(() => new Date(), []);
 
   const checkOldQuote = data?.retainFormatData;
+  let fullUrl = "";
+
+  if (typeof window !== "undefined") {
+    fullUrl = `${window.location.protocol}//${window.location.host}/quote/${quoteId}`;
+  }
 
   React.useEffect(() => {
     if (data && checkOldQuote) {
@@ -81,6 +92,44 @@ export default function UserActions({
     }
   }
 
+  const handlePrintPDF = useCallback(async () => {
+    try {
+      const products: ProductQuoteType[] =
+        quoteData?.product_items?.map((item) => ({
+          name: `${getCategory(
+            item.category_name
+          )}${item.products[0].product_name
+            .replace(/ *(\([^)]*\)|\[[^\]]*\]) */g, " ")
+            .replace(/\s+/g, " ")
+            .trim()}`,
+          quantity: item.qty,
+          unitPrice: item.sub_total / item.qty,
+        })) ?? [];
+
+      const blob = await pdf(
+        <CustomerQuotation
+          date={quoteData.createdAt}
+          subTotal={quoteData.ori_total}
+          total={quoteData.grand_total}
+          products={products}
+          quoteLink={fullUrl}
+          monthly={Math.floor(quoteData.grand_total / (1 - 0.04) / 12)}
+        />
+      ).toBlob();
+
+      const now = new Date();
+      const filename = `${format(
+        now,
+        "yyyyMMdd_HHmm"
+      )}_IdealTechPC_Quotation.pdf`;
+
+      saveAs(blob, filename);
+      toast.success("Downloaded PDF!");
+    } catch (error) {
+      toast.error("PDF Download failed!");
+    }
+  }, [today, quoteData]);
+
   let copySpec: string;
 
   if (!(Object.keys(quoteData).length === 0)) {
@@ -110,7 +159,8 @@ export default function UserActions({
       <Button
         variant={"outline"}
         onClick={() => {
-          setPDFTrigger(!pdfTrigger);
+          // setPDFTrigger(!pdfTrigger);
+          handlePrintPDF();
         }}
       >
         Print PDF

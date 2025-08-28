@@ -7,7 +7,7 @@ import {
   Text,
   View,
 } from "@react-pdf/renderer/lib/react-pdf.browser";
-import { ReactNode } from "react";
+import { QuotationPDFInput } from "./quotation";
 
 const styles = StyleSheet.create({
   page: {
@@ -56,78 +56,6 @@ const styles = StyleSheet.create({
   },
 });
 
-type BranchDetailsType = {
-  [key: string]: ReactNode;
-};
-
-const branchDetails: BranchDetailsType = {
-  ampang: (
-    <View style={{ padding: "8px 0px" }}>
-      <Text style={{ fontWeight: 700 }}>
-        IDEAL TECH PC SDN BHD (BRN: 201401008251)
-      </Text>
-      <Text>
-        17, Jalan Pandan Prima 1, Dataran Pandan Prima, 55100 Kuala Lumpur.
-      </Text>
-      <Text>https://www.idealtech.com.my</Text>
-      <Text>Tel: +603-92023137 Email: sales@idealtech.com.my</Text>
-      <Text>Sales Enquiry: +6012-5787804 Warranty: +6012-4278782</Text>
-    </View>
-  ),
-  jb: (
-    <View style={{ padding: "8px 0px" }}>
-      <Text style={{ fontWeight: 700 }}>
-        IDEAL TECH PC SDN BHD (BRN: 201401008251)
-      </Text>
-      <Text>
-        53, Jln Austin Height 8/8, Taman Mount Austin, 81100 Johor Bahru.
-      </Text>
-      <Text>https://www.idealtech.com.my</Text>
-      <Text>Email: sales@idealtech.com.my</Text>
-      <Text>Sales Enquiry: +6016-8541253</Text>
-    </View>
-  ),
-  sa: (
-    <View style={{ padding: "8px 0px" }}>
-      <Text style={{ fontWeight: 700 }}>
-        IDEAL TECH SERVICES SDN BHD (BRN: 201601018045)
-      </Text>
-      <Text>
-        No. 36G, Jalan Setia Utama U13/AU, Setia Alam Seksyen U13, 40170 Shah
-        Alam.
-      </Text>
-      <Text>https://www.idealtech.com.my</Text>
-      <Text>Email: sales@idealtech.com.my</Text>
-      <Text>Sales Enquiry: +6012-6101871</Text>
-    </View>
-  ),
-  ss2: (
-    <View style={{ padding: "8px 0px" }}>
-      <Text style={{ fontWeight: 700 }}>
-        IDEAL TECH SERVICES SDN BHD (BRN: 201601018045)
-      </Text>
-      <Text>42, Jalan SS 2/55, SS 2, 47300 Petaling Jaya.</Text>
-      <Text>https://www.idealtech.com.my</Text>
-      <Text>Email: sales@idealtech.com.my</Text>
-      <Text>Sales Enquiry: +6017-8650076</Text>
-    </View>
-  ),
-};
-
-const branchName = {
-  ampang: "IDEAL TECH PC SDN BHD",
-  jb: "IDEAL TECH PC SDN BHD",
-  sa: "IDEAL TECH SERVICES SDN BHD",
-  ss2: "IDEAL TECH SERVICES SDN BHD",
-};
-
-const branchMB = {
-  ampang: "514383560814 (IDEAL TECH PC SDN BHD)",
-  jb: "514383560814 (IDEAL TECH PC SDN BHD)",
-  sa: " 514383567728 (IDEAL TECH SERVICES SDN BHD)",
-  ss2: " 514383567728 (IDEAL TECH SERVICES SDN BHD)",
-};
-
 const PRODUCTS_PER_PAGE = 22;
 
 export type ProductQuoteType = {
@@ -165,30 +93,17 @@ const renderTable = (products: ProductQuoteType[]) => (
   </>
 );
 
-export type QuotationPDFInput = {
-  branch?: "ampang" | "jb" | "sa" | "ss2";
-  toAddress?: string;
-  date?: string;
-  type?: string;
-  subTotal?: number;
-  total?: number;
-  products?: ProductQuoteType[];
-  isComputerGenerated?: boolean;
-};
-
-export const Quotation = ({
-  branch = "ampang",
-  toAddress = `Lorem ipsum dolor sit amet consectetur adipisicing.
-              \tConsequatur consequuntur assumenda
-              \tatque ipsum laboriosam. Maxime qui rerum necessitatibus ipsam
-              \tnesciunt unde a cupiditate vel, sapiente?`,
-  date = "99/99/9999",
-  type = "Quotation",
+export const CustomerQuotation = ({
+  products = [],
   subTotal = 99999,
   total = 99999,
-  products = [],
-  isComputerGenerated = true,
-}: QuotationPDFInput) => {
+  date = "",
+  quoteLink = "",
+  monthly = 99999,
+}: Omit<
+  QuotationPDFInput,
+  "branch" | "toAddress" | "type" | "isComputerGenerated"
+> & { quoteLink?: string; monthly?: number }) => {
   const productPages =
     products.length > 0
       ? Array.from({
@@ -198,10 +113,15 @@ export const Quotation = ({
         )
       : [[]];
 
+  const lastPage = productPages.length - 1;
   return (
     <Document>
       {productPages.map((productChunk, pageIdx) => (
-        <Page key={pageIdx} size="A4" style={{ padding: "16px", fontSize: 11 }}>
+        <Page
+          key={pageIdx}
+          size="A4"
+          style={{ padding: "16px", fontSize: 11, position: "relative" }}
+        >
           <View
             style={{
               flexDirection: "row",
@@ -211,7 +131,14 @@ export const Quotation = ({
             }}
           >
             <Image src={logo.src} style={{ height: 80, aspectRatio: "1/1" }} />
-            {branchDetails[branch]}
+            <View style={{ padding: "8px 0px" }}>
+              <Text style={{ fontWeight: 700 }}>
+                IDEAL TECH PC SDN BHD (BRN: 201401008251)
+              </Text>
+              <Text>Thank you for using Ideal Tech PC Builder.</Text>
+              <Text>We will contact you to proceed with the order soon.</Text>
+              <Text>Quotation generated on: {date}</Text>
+            </View>
           </View>
           <Text
             style={{
@@ -223,29 +150,42 @@ export const Quotation = ({
               padding: "4px 0px",
             }}
           >
-            {type}
+            Quotation
           </Text>
-          <View
-            style={{
-              width: "100%",
-              flexDirection: "row",
-              padding: "32px 0px",
-            }}
-          >
-            <View style={{ minWidth: 50 }}>
-              <Text style={{ fontWeight: 700 }}>To</Text>
-            </View>
-            <View style={{ flex: 1 }}>
-              <Text style={{ maxWidth: 350 }}>{toAddress}</Text>
-            </View>
-            <View style={{ minWidth: 120 }}>
-              <Text
-                style={{ fontWeight: 700, justifyContent: "space-between" }}
-              >
-                Date: {date}
+          {pageIdx === 0 ? (
+            <View
+              style={{
+                width: "100%",
+                padding: "16px 16px",
+              }}
+            >
+              <Text style={{ fontWeight: 700 }}>
+                Our Aftersales Services cover the following:
+              </Text>
+              <Text style={{ paddingLeft: "16px" }}>
+                1. Lifetime FREE Labor Charges.
+              </Text>
+              <Text style={{ paddingLeft: "16px" }}>
+                2. 90 Days One to One Exchange.
+              </Text>
+              <Text style={{ paddingLeft: "16px" }}>
+                3. FREE On-Site Service / Repair within Klang Valley, Johor,
+                Penang.
+              </Text>
+              <Text style={{ paddingLeft: "16px" }}>
+                4. Full Years Warranty Covered. Up to 10 Years.
+              </Text>
+              <Text style={{ paddingLeft: "16px" }}>
+                5. FREE Warranty Pick-Up and Return Covered Whole Malaysia.
+              </Text>
+              <Text style={{ paddingLeft: "16px" }}>
+                6. Lifetime Technical Support.
               </Text>
             </View>
-          </View>
+          ) : (
+            <View style={{ padding: "8px 0" }}></View>
+          )}
+
           <View
             style={{
               width: "100%",
@@ -310,6 +250,21 @@ export const Quotation = ({
                     <Text>{subTotal.toFixed(2)}</Text>
                   </View>
                 </View>
+                {subTotal - total > 0 && (
+                  <View style={{ flexDirection: "row", fontWeight: 700 }}>
+                    <View style={styles.colProduct}>
+                      <Text>Discount: </Text>
+                    </View>
+                    <View
+                      style={{
+                        ...styles.colMd,
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text>{(subTotal - total).toFixed(2)}</Text>
+                    </View>
+                  </View>
+                )}
                 <View style={{ flexDirection: "row", fontWeight: 700 }}>
                   <View style={styles.colProduct}>
                     <Text>Total: </Text>
@@ -326,38 +281,93 @@ export const Quotation = ({
               </>
             )}
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              minHeight: 150,
-              padding: "16px 0px",
-            }}
-          >
-            <View style={{ flex: 1 }}>
-              <Text>Maybank Acc: {branchMB[branch]}</Text>
-            </View>
+          {pageIdx === productPages.length - 1 ? (
             <View
               style={{
-                minWidth: 200,
-                justifyContent: "flex-end",
-                alignItems: "center",
+                minHeight: 150,
+                padding: "16px 0px",
               }}
             >
-              {isComputerGenerated ? (
-                <>
-                  <Text>This is a system generated</Text>
-                  <Text>{type.toLowerCase()}, no signature required.</Text>
-                </>
-              ) : (
-                <>
-                  <Text>
-                    ..................................................
-                  </Text>
-                  <Text>{branchName[branch]}</Text>
-                </>
-              )}
+              <Text style={{ fontWeight: 700 }}>
+                Quotation Link: {quoteLink}
+              </Text>
+              <Text style={{ fontWeight: 700 }}>Installment Options</Text>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  width: "100%",
+                  gap: "32px",
+                }}
+              >
+                <View style={{ flex: "80%" }}>
+                  <Text style={{ fontWeight: 700 }}>List of Bank:</Text>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      width: "100%",
+                    }}
+                  >
+                    <View style={{ flex: "50%" }}>
+                      <Text>Public Bank</Text>
+                      <Text>AEON Credit Card</Text>
+                      <Text>Affin Bank</Text>
+                      <Text>RHB Bank</Text>
+                      <Text>AMBANK</Text>
+                    </View>
+                    <View style={{ flex: "50%" }}>
+                      <Text>HSBC</Text>
+                      <Text>Standard Charted Bank</Text>
+                      <Text>Bank Simpanan Nasional</Text>
+                      <Text>OCBC</Text>
+                      <Text>UOB</Text>
+                    </View>
+                  </View>
+                </View>
+                <View
+                  style={{
+                    flex: "33%",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <Text>Installment with 12-month</Text>
+                  <Text>period starting from</Text>
+                  <Text style={{ fontWeight: 700 }}>RM{monthly}/mo</Text>
+                  <Text>with listed bank.</Text>
+                </View>
+              </View>
             </View>
-          </View>
+          ) : (
+            <View
+              style={{
+                minHeight: 150,
+                padding: "16px 0px",
+                display: "flex",
+                width: "100%",
+                justifyContent: "flex-end",
+                alignContent: "flex-end",
+              }}
+            >
+              <Text style={{ textAlign: "right" }}>Next page</Text>
+            </View>
+          )}
+          <Text
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "0",
+              transform: "translate(0,-50%) rotate(-15deg)",
+              fontSize: "80px",
+              color: "#999",
+              fontWeight: "bold",
+              opacity: "0.2",
+              zIndex: 0,
+              width: "600px",
+            }}
+          >
+            IDEAL TECH PC
+          </Text>
         </Page>
       ))}
     </Document>

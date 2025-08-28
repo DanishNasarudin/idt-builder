@@ -59,3 +59,44 @@ export const containsSearchTerm = (value: any, searchTerm: string): boolean => {
   }
   return false;
 };
+
+export const getCategory = (name: string) => {
+  if (name.includes("Motherboard")) return "Motherboard: ";
+  if (name.includes("Processor")) return "Processor: ";
+  if (name.includes("Cooler")) return "Cooler: ";
+  if (name.includes("RAM")) return "RAM: ";
+  if (name.includes("Graphic Card")) return "GPU: ";
+  if (name.includes("PowerSupplyUnit") || name.includes("PSU"))
+    return "Power Supply: ";
+  if (name.includes("Case")) return "Casing: ";
+  if (name.includes("SSD")) return "SSD: ";
+  if (name.includes("HDD")) return "HDD: ";
+  if (name.includes("Monitor")) return "";
+  if (name.includes("Keyboard") && name.includes("Mouse")) return "Combo: ";
+  if (name.includes("Keyboard")) return "Keyboard: ";
+  if (name.includes("Mouse")) return "Mouse: ";
+  if (name.includes("Mousepad")) return "Mousepad: ";
+  if (name.includes("Headsets")) return "Headsets: ";
+  if (name.includes("Speaker")) return "Speaker: ";
+  if (name.includes("Fans")) return "Fans: ";
+  if (name.includes("WIFI Receiver")) return "WIFI Receiver: ";
+  if (name.includes("WIFI Router")) return "WIFI Router: ";
+  if (name.includes("Optical Drive")) return "Optical Drive: ";
+  if (name.includes("Software")) return "Software: ";
+  if (name.includes("Accessories-Other")) return "";
+  if (
+    name.includes("MIC") ||
+    name.includes("Webcam") ||
+    name.includes("Capture Card") ||
+    name.includes("Streaming") ||
+    name.includes("Sound Card")
+  ) {
+    return "";
+  }
+  if (name.includes("Drawing Tablet")) return "";
+  if (name.includes("Gaming Chair")) return "Gaming Chair: ";
+  if (name.includes("Gaming Desk")) return "Gaming Desk: ";
+  if (name.includes("New PC Accessories")) return "";
+
+  return "";
+};

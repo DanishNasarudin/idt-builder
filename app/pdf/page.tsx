@@ -1,6 +1,6 @@
 "use client";
 
-import { Quotation } from "@/components/pdf/quotation";
+import { CustomerQuotation } from "@/components/pdf/customer-quotation";
 import { PDFViewer } from "@react-pdf/renderer/lib/react-pdf.browser";
 
 const mockProducts = Array.from({ length: 30 }, (_, i) => ({
@@ -19,9 +19,7 @@ const total = subtotal;
 export default function Page() {
   return (
     <PDFViewer className="w-[500px] mx-auto min-h-screen">
-      <Quotation
-        branch="ss2"
-        toAddress={`John Doe\n123 Example Street\nPetaling Jaya, Selangor`}
+      <CustomerQuotation
         date="03/07/2025"
         products={mockProducts}
         subTotal={subtotal}
