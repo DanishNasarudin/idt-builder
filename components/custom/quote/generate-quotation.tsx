@@ -118,17 +118,17 @@ export default function GenerateQuotation() {
     let section: "base" | "upgrades" | "addons" = "base";
 
     for (const line of lines) {
-      if (/^SUBTOTAL PRICE:/i.test(line)) {
+      if (/^(SUBTOTAL PRICE:|Base Specs Subtotal Price:)/i.test(line)) {
         const m = line.match(/RM\s*([\d,.]+)/i);
         if (m) subTotal = parseFloat(m[1].replace(/,/g, ""));
         continue;
       }
-      if (/^FINAL TOTAL PRICE:/i.test(line) || /^TOTAL PRICE:/i.test(line)) {
+      if (/^(FINAL TOTAL PRICE:|TOTAL PRICE:)/i.test(line)) {
         const m = line.match(/RM\s*([\d,.]+)/i);
         if (m) total = parseFloat(m[1].replace(/,/g, ""));
         continue;
       }
-      if (/^Upgrades:\s*$/i.test(line)) {
+      if (/^Upgrades?:\s*$/i.test(line)) {
         section = "upgrades";
         continue;
       }
