@@ -137,15 +137,23 @@ export default function GenerateQuotation() {
         continue;
       }
 
+      const LINE_RE_BASE =
+        /^(?<name>.+?)(?:\s*(?:\([x×]\s*(?<qty2>\d+)\)|\((?:qty|quantity)\s*[:\-]?\s*(?<qty1>\d+)\)|[x×]\s*(?<qty3>\d+)))?\s*-\s*RM\s*(?<price>[\d.,]+)/i;
+
+      const LINE_RE_ADDON =
+        /^(?:Add\s*On:\s*)?(?<name>.+?)(?:\s*(?:\([x×]\s*(?<qty2>\d+)\)|\((?:qty|quantity)\s*[:\-]?\s*(?<qty1>\d+)\)|[x×]\s*(?<qty3>\d+)))?\s*-\s*RM\s*(?<price>[\d.,]+)/i;
+
       if (section === "base") {
-        const regex = /^(.+?)\s*-\s*RM\s*([\d.,]+)/i;
-        const m = line.match(regex);
-        if (m) {
-          const name = m[1].trim();
-          const price = parseFloat(m[2].replace(/,/g, ""));
+        const m = line.match(LINE_RE_BASE);
+        if (m?.groups) {
+          const name = m.groups.name.trim();
+          const price = parseFloat(m.groups.price.replace(/,/g, ""));
+          const qtyStr = m.groups.qty1 ?? m.groups.qty2 ?? m.groups.qty3;
+          const quantity = qtyStr ? parseInt(qtyStr, 10) : 1;
+
           const item: ProductQuoteType = {
-            name: name,
-            quantity: 1,
+            name,
+            quantity,
             unitPrice: price,
           };
           manual.push(item);
@@ -153,19 +161,18 @@ export default function GenerateQuotation() {
           baseLines.push(line);
         }
       } else {
-        const regex =
-          section === "addons"
-            ? /^(?:Add\s*On:\s*)?(.+?)\s*-\s*RM\s*([\d.,]+)/i
-            : /^(.+?)\s*-\s*RM\s*([\d.,]+)/i;
-
+        const regex = section === "addons" ? LINE_RE_ADDON : LINE_RE_BASE;
         const m = line.match(regex);
-        if (m) {
-          const name = m[1].trim();
-          const price = parseFloat(m[2].replace(/,/g, ""));
+        if (m?.groups) {
+          const name = m.groups.name.trim();
+          const price = parseFloat(m.groups.price.replace(/,/g, ""));
+          const qtyStr = m.groups.qty1 ?? m.groups.qty2 ?? m.groups.qty3;
+          const quantity = qtyStr ? parseInt(qtyStr, 10) : 1;
+
           const tag = section === "upgrades" ? "Upgrade: " : "Add On: ";
           const item: ProductQuoteType = {
             name: `${tag}${name}`,
-            quantity: 1,
+            quantity,
             unitPrice: price,
           };
           if (section === "upgrades") upgrades.push(item);
@@ -183,7 +190,7 @@ export default function GenerateQuotation() {
     products.push(...manual, ...upgrades, ...addons);
 
     if (total === 0) {
-      total = products.reduce((sum, p) => sum + p.unitPrice, 0);
+      total = products.reduce((sum, p) => sum + p.unitPrice * p.quantity, 0);
     }
 
     return { products, subTotal: total, total };
