@@ -87,6 +87,20 @@ const branchDetails: BranchDetailsType = {
       <Text>Sales Enquiry: +6016-8541253</Text>
     </View>
   ),
+  pg: (
+    <View style={{ padding: "8px 0px" }}>
+      <Text style={{ fontWeight: 700 }}>
+        IDEAL TECH PC SDN BHD (BRN: 201401008251)
+      </Text>
+      <Text>
+        70-01-64, D'Piazza Mall, Jalan Mahsuri, Bandar Bayan Baru, 11950 Bayan 
+        Lepas, Penang
+      </Text>
+      <Text>https://www.idealtech.com.my</Text>
+      <Text>Email: sales@idealtech.com.my</Text>
+      <Text>Sales Enquiry: +6010-3830164</Text>
+    </View>
+  ),
   sa: (
     <View style={{ padding: "8px 0px" }}>
       <Text style={{ fontWeight: 700 }}>
@@ -117,6 +131,7 @@ const branchDetails: BranchDetailsType = {
 const branchName = {
   ampang: "IDEAL TECH PC SDN BHD",
   jb: "IDEAL TECH PC SDN BHD",
+  pg: "IDEAL TECH PC SDN BHD",
   sa: "IDEAL TECH SERVICES SDN BHD",
   ss2: "IDEAL TECH SERVICES SDN BHD",
 };
@@ -124,6 +139,7 @@ const branchName = {
 const branchMB = {
   ampang: "514383560814 (IDEAL TECH PC SDN BHD)",
   jb: "514383560814 (IDEAL TECH PC SDN BHD)",
+  pg: "514383560814 (IDEAL TECH PC SDN BHD)",
   sa: " 514383567728 (IDEAL TECH SERVICES SDN BHD)",
   ss2: " 514383567728 (IDEAL TECH SERVICES SDN BHD)",
 };
@@ -166,7 +182,7 @@ const renderTable = (products: ProductQuoteType[]) => (
 );
 
 export type QuotationPDFInput = {
-  branch?: "ampang" | "jb" | "sa" | "ss2";
+  branch?: "ampang" | "jb" | "sa" | "ss2" | "pg";
   toAddress?: string;
   date?: string;
   type?: string;
