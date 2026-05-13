@@ -93,7 +93,7 @@ const branchDetails: BranchDetailsType = {
         IDEAL TECH PC SDN BHD (BRN: 201401008251)
       </Text>
       <Text>
-        70-01-64, D'Piazza Mall, Jalan Mahsuri, Bandar Bayan Baru, 11950 Bayan 
+        70-01-64, D&apos;Piazza Mall, Jalan Mahsuri, Bandar Bayan Baru, 11950 Bayan 
         Lepas, Penang
       </Text>
       <Text>https://www.idealtech.com.my</Text>
