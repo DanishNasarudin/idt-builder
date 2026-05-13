@@ -36,13 +36,14 @@ type ParsedQuote = {
   total: number;
 };
 
-type Branch = "ampang" | "sa" | "ss2" | "jb";
+type Branch = "ampang" | "sa" | "ss2" | "jb" | "pg";
 
 const branchNameDropdown = {
   ampang: "Ampang HQ",
   sa: "Setia Alam",
   ss2: "SS2, PJ",
   jb: "Johor Bahru",
+  pg: "Penang",
 };
 
 export default function GenerateQuotation() {
@@ -366,6 +367,9 @@ export default function GenerateQuotation() {
                       </DropdownMenuRadioItem>
                       <DropdownMenuRadioItem value="jb">
                         Johor Bahru
+                      </DropdownMenuRadioItem>
+                      <DropdownMenuRadioItem value="pg">
+                        Penang
                       </DropdownMenuRadioItem>
                     </DropdownMenuRadioGroup>
                   </DropdownMenuContent>
