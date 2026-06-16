@@ -52,6 +52,11 @@ Security:
 - Never commit `.env.local`.
 - If secrets are ever shared/committed accidentally, rotate them immediately (email password + Clerk keys).
 
+## Architecture
+
+See `docs/ARCHITECTURE.md` for the intended public route surface, module
+boundaries, and simpler architecture direction.
+
 ## Repo structure (where to change things)
 
 - `app/` – Next.js routes (App Router)
