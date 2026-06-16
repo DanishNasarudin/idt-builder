@@ -1,1 +1,2 @@
 npm run lint:quiet
+npm run typecheck
