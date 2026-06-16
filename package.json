@@ -7,7 +7,10 @@
     "build": "next build",
     "delbuild": "rm -r .next && next build",
     "start": "next start",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:quiet": "eslint . --ext .js,.jsx,.ts,.tsx --quiet",
+    "commitlint": "commitlint --edit",
+    "prepare": "husky"
   },
   "dependencies": {
     "@clerk/nextjs": "6.23.2",
@@ -75,6 +78,8 @@
   },
   "devDependencies": {
     "@ag-media/react-pdf-table": "2.0.3",
+    "@commitlint/cli": "21.0.2",
+    "@commitlint/config-conventional": "21.0.2",
     "@types/body-parser": "1.19.5",
     "@types/busboy": "1.5.4",
     "@types/dompurify": "3.0.5",
@@ -83,7 +88,8 @@
     "@types/nodemailer": "6.4.16",
     "@types/papaparse": "5.3.14",
     "@types/react-beautiful-dnd": "13.1.8",
-    "@types/uuid": "9.0.8"
+    "@types/uuid": "9.0.8",
+    "husky": "9.1.7"
   },
   "browser": {
     "fs": false,
