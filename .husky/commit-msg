@@ -1,0 +1,19 @@
+npm run commitlint -- "$1" || {
+  echo
+  echo "Commit message must follow Conventional Commits:"
+  echo
+  echo "  feat: add quotation export"
+  echo "  fix: handle missing customer address"
+  echo "  chore: update dependencies"
+  echo "  docs: update setup guide"
+  echo
+  echo "Format: <type>(optional-scope): <description>"
+  echo
+  echo "Optional scope examples:"
+  echo "  feat(quotation): add export button"
+  echo "  fix(pdf): handle missing logo"
+  echo "  chore(deps): update commitlint"
+  echo
+  echo "Common types: feat, fix, docs, style, refactor, test, chore, ci, build"
+  exit 1
+}
