@@ -153,7 +153,7 @@ If you don’t want email sending during local dev, either:
    - Example: `git checkout -b fix/quote-pdf-spacing`
 3. Make changes and run checks:
    - `npm run lint`
-   - `npm run build`
+   - `npm run typecheck`
 4. Push branch:
    - `git push -u origin <branch-name>`
 5. Open a PR and request review.
