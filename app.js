@@ -1,6 +1,44 @@
 const { createServer } = require("http");
 const { parse } = require("url");
 const next = require("next");
+const fs = require("fs");
+
+const logFilePath = "./logs/server.log"; // Define log file path
+
+// Ensure logs directory exists
+if (!fs.existsSync("./logs")) {
+  fs.mkdirSync("./logs");
+}
+
+// Function to append logs to a file
+function appendLog(message) {
+  const timestamp = new Date().toISOString();
+  fs.appendFileSync(logFilePath, `[${timestamp}] ${message}\n`, "utf8");
+}
+
+// Override console.log
+const oldConsoleLog = console.log;
+console.log = (...args) => {
+  oldConsoleLog(...args);
+  appendLog(
+    args
+      .map((arg) => (typeof arg === "object" ? JSON.stringify(arg) : arg))
+      .join(" ")
+  );
+};
+
+// Override console.error
+const oldConsoleError = console.error;
+console.error = (...args) => {
+  oldConsoleError(...args);
+  // Use a different prefix or formatting if desired
+  appendLog(
+    "ERROR: " +
+      args
+        .map((arg) => (typeof arg === "object" ? JSON.stringify(arg) : arg))
+        .join(" ")
+  );
+};
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname =
