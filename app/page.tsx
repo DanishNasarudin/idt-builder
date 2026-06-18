@@ -12,8 +12,6 @@ import {
   getLatestUpdatedTimestamp,
 } from "../services/textDbPriceListActions";
 import SpreadsheetSidePosters from "../components/custom/spreadsheet-side-posters";
-import { sidePostersConfig } from "../components/custom/side-poster";
-
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -104,7 +102,7 @@ const Home = cache(async ({ searchParams }: Props) => {
     <main className={`mx-auto flex w-full flex-col px-4 sm:w-4/5 sm:px-0`}>
       <Hero />
       <Offers />
-      <SpreadsheetSidePosters left={sidePostersConfig.left} right={sidePostersConfig.right}>
+      <SpreadsheetSidePosters>
         <div className="flex flex-col items-center gap-4 pt-4">
           <h2>Choose your parts</h2>
           <p className="text-zinc-400">Price list last updated: {lastUpdated}</p>
