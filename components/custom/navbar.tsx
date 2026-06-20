@@ -29,7 +29,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useScrollListener } from "@/lib/hooks/useScrollListener";
-import { menuList } from "@/lib/menu";
+import type { MenuList } from "@/lib/menu";
 import { cn } from "@/lib/utils";
 import {
   ProductSelectionData,
@@ -45,7 +45,11 @@ import { v4 as uuidv4 } from "uuid";
 import { queueWrite } from "../../services/textDbActions";
 import { LogoIcon } from "./icons";
 
-export default function Navbar() {
+type NavbarProps = {
+  menuList: MenuList[];
+};
+
+export default function Navbar({ menuList }: NavbarProps) {
   const router = useRouter();
   const { setTheme } = useTheme();
   const scroll = useScrollListener();
