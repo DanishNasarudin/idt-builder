@@ -1,11 +1,12 @@
 import { ProductItemSelectionData, QuoteData } from "@/lib/zus-store";
 import { Inter } from "next/font/google";
+import { notFound } from "next/navigation";
 import { cache } from "react";
 import Hero from "../components/custom/hero";
 import Offers from "../components/custom/offers";
 import TableForm from "../components/custom/table-form";
 import TableSearch from "../components/custom/table-search";
-import { readData } from "../services/textDbActions";
+import { isQuoteDataNotFoundError, readData } from "../services/textDbActions";
 import {
   CategoryType,
   getAllPriceList,
@@ -95,7 +96,15 @@ const Home = cache(async ({ searchParams }: Props) => {
     : searchParams.edit;
 
   if (searchTerm) {
-    dataToEdit = await readData(searchTerm);
+    try {
+      dataToEdit = await readData(searchTerm);
+    } catch (error) {
+      if (isQuoteDataNotFoundError(error)) {
+        notFound();
+      }
+
+      throw error;
+    }
   }
 
   return (

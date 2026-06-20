@@ -3,6 +3,23 @@ import { QuoteData } from "@/lib/zus-store";
 import fs from "fs/promises";
 import path from "path";
 
+class QuoteDataNotFoundError extends Error {
+  constructor(id: string, filePath: string) {
+    super(`Quote data file not found for "${id}" at ${filePath}`);
+    this.name = "QuoteDataNotFoundError";
+  }
+}
+
+function isNodeFileError(error: unknown): error is NodeJS.ErrnoException {
+  return error instanceof Error && "code" in error;
+}
+
+function isQuoteDataNotFoundError(
+  error: unknown
+): error is QuoteDataNotFoundError {
+  return error instanceof QuoteDataNotFoundError;
+}
+
 // Helper function to read data from the specific JSON file
 async function readData(id: string) {
   const filePath = getFilePath(id); // Use the previously defined getFilePath function
@@ -10,7 +27,10 @@ async function readData(id: string) {
     const rawData = await fs.readFile(filePath, "utf8");
     return JSON.parse(rawData);
   } catch (error) {
-    // Handle the error, such as if the file does not exist
+    if (isNodeFileError(error) && error.code === "ENOENT") {
+      throw new QuoteDataNotFoundError(id, filePath);
+    }
+
     throw error;
   }
 }
@@ -103,4 +123,10 @@ async function deleteOldestFiles(maxFiles: number): Promise<void> {
   }
 }
 
-export { deleteOldestFiles, queueWrite, readData, writeData };
+export {
+  deleteOldestFiles,
+  isQuoteDataNotFoundError,
+  queueWrite,
+  readData,
+  writeData,
+};
