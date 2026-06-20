@@ -5,16 +5,30 @@ import {
   CategoryType,
   getAllPriceList,
 } from "@/services/textDbPriceListActions";
+import { isQuoteDataNotFoundError } from "@/services/textDbActions";
 import { currentUser } from "@clerk/nextjs/server";
+import { notFound } from "next/navigation";
 import CarouselDisplay from "../../../components/custom/quote/carousel-display";
 import GrandTotal from "../../../components/custom/quote/grand-total";
 import NewForm from "../../../components/custom/quote/new-form";
 import TableDisplay from "../../../components/custom/quote/table-display";
 import UserActions from "../../../components/custom/quote/user-actions";
 
+async function readQuoteDataOrNotFound(quoteId: string) {
+  try {
+    return (await readData(quoteId)) as QuoteData;
+  } catch (error) {
+    if (isQuoteDataNotFoundError(error)) {
+      notFound();
+    }
+
+    throw error;
+  }
+}
+
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const quoteId = params.id;
-  const data = (await readData(quoteId)) as QuoteData;
+  const data = await readQuoteDataOrNotFound(quoteId);
 
   function extractBrandAndModel(product: string): string {
     const tokens: string[] = product.split(" ");
@@ -114,7 +128,7 @@ export default async function QuotePage({
   const quoteId = params.id;
   const clerk = await currentUser();
 
-  const data = (await readData(quoteId)) as QuoteData;
+  const data = await readQuoteDataOrNotFound(quoteId);
 
   const displayData: DisplayFormData[] = data.formData.map((data) => {
     return {
