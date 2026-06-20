@@ -11,6 +11,7 @@ import {
   getAllPriceList,
   getLatestUpdatedTimestamp,
 } from "../services/textDbPriceListActions";
+import SpreadsheetSidePosters from "../components/custom/spreadsheet-side-posters";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -64,14 +65,14 @@ const Home = cache(async ({ searchParams }: Props) => {
   const lastUpdated =
     timeUpdatedGMT8 != null
       ? timeUpdatedGMT8.toLocaleString("en-GB", {
-          day: "2-digit",
-          month: "short",
-          year: "numeric",
-          hour: "numeric",
-          minute: "2-digit",
-          hour12: true,
-          timeZone: "GMT",
-        })
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+        timeZone: "GMT",
+      })
       : "";
 
   const dataPriceList: CategoryType[] = await getAllPriceList();
@@ -101,13 +102,15 @@ const Home = cache(async ({ searchParams }: Props) => {
     <main className={`mx-auto flex w-full flex-col px-4 sm:w-4/5 sm:px-0`}>
       <Hero />
       <Offers />
-      <div className="flex flex-col items-center gap-4 pt-4">
-        <h2>Choose your parts</h2>
-        <p className="text-zinc-400">Price list last updated: {lastUpdated}</p>
-        <TableSearch data={flattenSearchData(dataPriceList)} />
-        <TableForm data={dataFormList} dataToEdit={dataToEdit} />
-        <section className="h-[100px] sm:h-[300px]" />
-      </div>
+      <SpreadsheetSidePosters>
+        <div className="flex flex-col items-center gap-4 pt-4">
+          <h2>Choose your parts</h2>
+          <p className="text-zinc-400">Price list last updated: {lastUpdated}</p>
+          <TableSearch data={flattenSearchData(dataPriceList)} />
+          <TableForm data={dataFormList} dataToEdit={dataToEdit} />
+          <section className="h-[100px] sm:h-[300px]" />
+        </div>
+      </SpreadsheetSidePosters>
     </main>
   );
 });
