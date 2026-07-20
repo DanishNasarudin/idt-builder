@@ -12,7 +12,7 @@ export default function SpreadsheetSidePosters({ children }: Props) {
   ],
   right: [
     { imageSrc: "/poster/WebBanner_600x1600_Corsair.webp", alt: "Corsair" },
-    { imageSrc: "/poster/WebBanner_600x1600_Samsung.webp", alt: "Samsung" },
+    { imageSrc: "/poster/WebBanner_600x1600_Samsung_v2.webp", alt: "Samsung" },
   ],
 };
 
