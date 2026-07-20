@@ -54,6 +54,7 @@ export default function TableForm({ data, dataToEdit }: Props) {
   const initDataClient = useUserSelected((state) => state.initData);
   const addDataClient = useUserSelected((state) => state.addData);
   const delDataClient = useUserSelected((state) => state.delData);
+  const resetItem = useUserSelected((state) => state.resetItem);
   // const selected = useUserSelected((state) => state.selected);
   const quoteToData = useUserSelected((state) => state.quoteToData);
   const updateSelected = useUserSelected((state) => state.updateSelected);
@@ -107,38 +108,58 @@ export default function TableForm({ data, dataToEdit }: Props) {
       switch (columnKey) {
         case "action":
           return (
-            <div className="relative flex justify-center !h-full">
-              <Button
-                className={`${
-                  data.selected_id ? "block" : "hidden"
-                } absolute left-[-150%] h-full w-[40px] bg-white text-xs text-black mobilehover:hover:bg-primary`}
-                size="icon"
-                aria-label="copy"
-                onClick={() => {
-                  currentProduct?.product_name &&
-                    navigator.clipboard.writeText(
-                      `${currentProduct?.product_name
-                        .replace(/\([^)]*\)/g, "")
-                        .trim()} | RM ${currentProduct.dis_price}`
-                    );
-                  toast.success("Copied!");
-                }}
-                onKeyDown={(e) => {
-                  e.preventDefault();
-                  if (e.key === "Enter") {
-                    if (currentProduct?.product_name) {
-                      navigator.clipboard.writeText(
-                        `${currentProduct?.product_name
-                          .replace(/\([^)]*\)/g, "")
-                          .trim()} | RM ${currentProduct.dis_price}`
-                      );
+            <div className="relative flex h-full items-center justify-center">
+              {data.selected_id ? (
+                <div className="absolute left-[-110px] hidden h-full items-center gap-2 sm:flex">
+                  <Button
+                    className="h-full w-[40px] bg-white text-xs text-black mobilehover:hover:bg-primary"
+                    size="icon"
+                    aria-label="copy"
+                    onClick={() => {
+                      currentProduct?.product_name &&
+                        navigator.clipboard.writeText(
+                          `${currentProduct?.product_name
+                            .replace(/\([^)]*\)/g, "")
+                            .trim()} | RM ${currentProduct.dis_price}`
+                        );
                       toast.success("Copied!");
-                    }
-                  }
-                }}
-              >
-                Copy
-              </Button>
+                    }}
+                    onKeyDown={(e) => {
+                      e.preventDefault();
+                      if (e.key === "Enter") {
+                        if (currentProduct?.product_name) {
+                          navigator.clipboard.writeText(
+                            `${currentProduct?.product_name
+                              .replace(/\([^)]*\)/g, "")
+                              .trim()} | RM ${currentProduct.dis_price}`
+                          );
+                          toast.success("Copied!");
+                        }
+                      }
+                    }}
+                  >
+                    Copy
+                  </Button>
+                  <Button
+                    className="h-full w-[40px] text-xs bg-white text-black mobilehover:hover:bg-primary"
+                    size="icon"
+                    aria-label="reset"
+                    onClick={() => {
+                      resetItem(data.category_id);
+                      updateSelected();
+                    }}
+                    onKeyDown={(e) => {
+                      e.preventDefault();
+                      if (e.key === "Enter") {
+                        resetItem(data.category_id);
+                        updateSelected();
+                      }
+                    }}
+                  >
+                    Reset
+                  </Button>
+                </div>
+              ) : null}
               {data.duplicate ? (
                 <Button
                   className="text-md h-full w-[40px] bg-white text-black mobilehover:hover:bg-red-500 mobilehover:hover:text-white"
@@ -232,7 +253,7 @@ export default function TableForm({ data, dataToEdit }: Props) {
                   ? "w-[82px] px-0 sm:px-3 [&>div]:mx-auto [&>div]:w-min"
                   : "",
                 column.key === "action"
-                  ? "!w-[40px] !min-w-[40px] px-0 sm:px-3 [&>div]:mx-auto [&>div]:w-min"
+                  ? "!w-[40px] !min-w-[10px] px-0 sm:px-3 [&>div]:mx-auto [&>div]:w-min"
                   : "",
                 column.key === "quantity"
                   ? "w-[40px] px-0 sm:px-3 [&>div]:mx-auto [&>div]:w-min"
