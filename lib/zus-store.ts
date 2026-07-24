@@ -151,9 +151,9 @@ export const useUserSelected = create<UserSelected>()((set, get) => ({
           return {
             ...item,
             selected_id: undefined,
-            qty: 0,
+            qty: 1,
             sub_total: 0,
-            discount: undefined,
+            discount: 0,
           };
         }
         return item;

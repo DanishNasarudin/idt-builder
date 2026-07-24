@@ -18,14 +18,14 @@ export default function SpreadsheetSidePosters({ children }: Props) {
 
   return (
     <div className="relative 3xl:min-h-[1632px]">
-      <div className="absolute top-0 -left-[460px] hidden flex-col gap-8 3xl:flex">
+      <div className="absolute top-0 -left-[400px] hidden flex-col gap-8 3xl:flex">
         {sidePostersConfig.left.map((poster, i) => (
           <div key={i} className="h-[800px] w-[300px]">
             <SidePosterComponent poster={poster} />
           </div>
         ))}
       </div>
-      <div className="absolute top-0 -right-[460px] hidden flex-col gap-8 3xl:flex">
+      <div className="absolute top-0 -right-[400px] hidden flex-col gap-8 3xl:flex">
         {sidePostersConfig.right.map((poster, i) => (
           <div key={i} className="h-[800px] w-[300px]">
             <SidePosterComponent poster={poster} />
