@@ -108,83 +108,78 @@ export default function TableForm({ data, dataToEdit }: Props) {
       switch (columnKey) {
         case "action":
           return (
-            <div className="flex h-full items-center justify-center">
-              <div className="relative flex w-full h-full items-center justify-center">
-                {data.selected_id ? (
-                  <div className="absolute right-full mr-6 top-0 hidden h-full items-center sm:flex">
-                    <Button
-                      className="h-full w-[40px] bg-white text-xs text-black mobilehover:hover:bg-primary"
-                      size="icon"
-                      aria-label="copy"
-                      onClick={() => {
-                        currentProduct?.product_name &&
-                          navigator.clipboard.writeText(
-                            `${currentProduct?.product_name
-                              .replace(/\([^)]*\)/g, "")
-                              .trim()} | RM ${currentProduct.dis_price}`
-                          );
-                        toast.success("Copied!");
-                      }}
-                      onKeyDown={(e) => {
-                        e.preventDefault();
-                        if (e.key === "Enter") {
-                          if (currentProduct?.product_name) {
-                            navigator.clipboard.writeText(
-                              `${currentProduct?.product_name
-                                .replace(/\([^)]*\)/g, "")
-                                .trim()} | RM ${currentProduct.dis_price}`
-                            );
-                            toast.success("Copied!");
-                          }
-                        }
-                      }}
-                    >
-                      Copy
-                    </Button>
-                  </div>
-                ) : null}
-                {data.duplicate ? (
-                  <Button
-                    className="text-md h-full w-[40px] bg-white text-black mobilehover:hover:bg-red-500 mobilehover:hover:text-white"
-                    size="icon"
-                    aria-label="del"
-                    onClick={() => {
+            <div className="relative flex justify-center !h-full">
+              <Button
+                className={`${data.selected_id ? "block" : "hidden"
+                  } absolute left-[-150%] h-full w-[40px] bg-white text-xs text-black mobilehover:hover:bg-primary`}
+                size="icon"
+                aria-label="copy"
+                onClick={() => {
+                  currentProduct?.product_name &&
+                    navigator.clipboard.writeText(
+                      `${currentProduct?.product_name
+                        .replace(/\([^)]*\)/g, "")
+                        .trim()} | RM ${currentProduct.dis_price}`
+                    );
+                  toast.success("Copied!");
+                }}
+                onKeyDown={(e) => {
+                  e.preventDefault();
+                  if (e.key === "Enter") {
+                    if (currentProduct?.product_name) {
+                      navigator.clipboard.writeText(
+                        `${currentProduct?.product_name
+                          .replace(/\([^)]*\)/g, "")
+                          .trim()} | RM ${currentProduct.dis_price}`
+                      );
+                      toast.success("Copied!");
+                    }
+                  }
+                }}
+              >
+                Copy
+              </Button>
+              {data.duplicate ? (
+                <Button
+                  className="text-md h-full w-[40px] bg-white text-black mobilehover:hover:bg-red-500 mobilehover:hover:text-white"
+                  size="icon"
+                  aria-label="del"
+                  onClick={() => {
+                    delDataClient(data.category_id);
+                    updateSelected();
+                  }}
+                  onKeyDown={(e) => {
+                    e.preventDefault();
+                    if (e.key === "Enter") {
                       delDataClient(data.category_id);
                       updateSelected();
-                    }}
-                    onKeyDown={(e) => {
-                      e.preventDefault();
-                      if (e.key === "Enter") {
-                        delDataClient(data.category_id);
-                        updateSelected();
-                      }
-                    }}
-                  >
-                    -
-                  </Button>
-                ) : (
-                  <Button
-                    className={cn(
-                      "h-full w-[40px] text-md bg-white text-black mobilehover:hover:bg-primary mobilehover:hover:text-white"
-                    )}
-                    size="icon"
-                    aria-label="add"
-                    onClick={() => {
+                    }
+                  }}
+                >
+                  -
+                </Button>
+              ) : (
+                <Button
+                  className={cn(
+                    "h-full w-[40px] text-md bg-white text-black mobilehover:hover:bg-primary mobilehover:hover:text-white"
+                  )}
+                  size="icon"
+                  aria-label="add"
+                  onClick={() => {
+                    addDataClient(data.category_id);
+                    updateSelected();
+                  }}
+                  onKeyDown={(e) => {
+                    e.preventDefault();
+                    if (e.key === "Enter") {
                       addDataClient(data.category_id);
                       updateSelected();
-                    }}
-                    onKeyDown={(e) => {
-                      e.preventDefault();
-                      if (e.key === "Enter") {
-                        addDataClient(data.category_id);
-                        updateSelected();
-                      }
-                    }}
-                  >
-                    +
-                  </Button>
-                )}
-              </div>
+                    }
+                  }}
+                >
+                  +
+                </Button>
+              )}
             </div>
           );
         case "products":
@@ -204,41 +199,34 @@ export default function TableForm({ data, dataToEdit }: Props) {
           );
         case "sub_total":
           return (
-            <div className="flex h-full items-center justify-center">
-              <div className="relative flex w-full h-full items-center">
-                <div
-                  className={cn(
-                    "whitespace-nowrap text-center",
-                    currentProduct?.is_discounted && "font-bold text-green-500"
-                  )}
-                >
-                  {data.sub_total === null ? 0 : data.sub_total}
-                </div>
-                {data.selected_id ? (
-                  <div className="absolute left-full ml-9 top-0 hidden h-full items-center sm:flex">
-                    <Button
-                      className="h-full w-[40px] bg-white text-xs text-black mobilehover:hover:bg-primary"
-                      size="icon"
-                      aria-label="reset"
-                      onClick={() => {
-                        resetItem(data.category_id);
-                        updateSelected();
-                      }}
-                      onKeyDown={(e) => {
-                        e.preventDefault();
-                        if (e.key === "Enter") {
-                          resetItem(data.category_id);
-                          updateSelected();
-                        }
-                      }}
-                    >
-                      Reset
-                    </Button>
-                  </div>
-                ) : null}
+            <div className="relative flex w-full h-full items-center">
+              <div
+                className={`${currentProduct?.is_discounted ? "font-bold text-green-500" : ""
+                  } text-center`}
+              >
+                {data.sub_total === null ? 0 : data.sub_total}
               </div>
+              <Button
+                className={`${data.selected_id ? "block" : "hidden"
+                  } absolute right-[-210%] h-full w-[40px] bg-white text-xs text-black mobilehover:hover:bg-primary`}
+                size="icon"
+                aria-label="reset"
+                onClick={() => {
+                  resetItem(data.category_id);
+                  updateSelected();
+                }}
+                onKeyDown={(e) => {
+                  e.preventDefault();
+                  if (e.key === "Enter") {
+                    resetItem(data.category_id);
+                    updateSelected();
+                  }
+                }}
+              >
+                Reset
+              </Button>
             </div>
-          );
+          ); null
         default:
           return <div>{cellValue ? cellValue.toString() : ""}</div>;
       }
@@ -247,6 +235,7 @@ export default function TableForm({ data, dataToEdit }: Props) {
   );
 
   return (
+    <>
       <Table
         aria-label="Main Table"
         isCompact
@@ -310,6 +299,7 @@ export default function TableForm({ data, dataToEdit }: Props) {
             </TableRow>
           )}
         </TableBody>
-      </Table>   
+      </Table>
+    </>
   );
 }
