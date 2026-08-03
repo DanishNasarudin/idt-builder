@@ -68,6 +68,7 @@ type UserSelected = {
   ) => void;
   addData: (category_id: number) => void;
   delData: (category_id: number) => void;
+  resetItem: (category_id: number) => void;
   selected: ProductSelectionData;
   updateSelected: () => void;
   resetData: () => void;
@@ -140,6 +141,23 @@ export const useUserSelected = create<UserSelected>()((set, get) => ({
       const newData = state.dynamicData.filter(
         (item) => item.category_id !== category_id
       );
+
+      return { dynamicData: newData };
+    }),
+  resetItem: (category_id) =>
+    set((state) => {
+      const newData = state.dynamicData.map((item) => {
+        if (item.category_id === category_id) {
+          return {
+            ...item,
+            selected_id: undefined,
+            qty: 1,
+            sub_total: 0,
+            discount: 0,
+          };
+        }
+        return item;
+      }) as ProductItemSelectionData[];
 
       return { dynamicData: newData };
     }),
