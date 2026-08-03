@@ -54,7 +54,6 @@ export default function TableForm({ data, dataToEdit }: Props) {
   const initDataClient = useUserSelected((state) => state.initData);
   const addDataClient = useUserSelected((state) => state.addData);
   const delDataClient = useUserSelected((state) => state.delData);
-  const resetItem = useUserSelected((state) => state.resetItem);
   // const selected = useUserSelected((state) => state.selected);
   const quoteToData = useUserSelected((state) => state.quoteToData);
   const updateSelected = useUserSelected((state) => state.updateSelected);
@@ -110,8 +109,9 @@ export default function TableForm({ data, dataToEdit }: Props) {
           return (
             <div className="relative flex justify-center !h-full">
               <Button
-                className={`${data.selected_id ? "block" : "hidden"
-                  } absolute left-[-150%] h-full w-[40px] bg-white text-xs text-black mobilehover:hover:bg-primary`}
+                className={`${
+                  data.selected_id ? "block" : "hidden"
+                } absolute left-[-150%] h-full w-[40px] bg-white text-xs text-black mobilehover:hover:bg-primary`}
                 size="icon"
                 aria-label="copy"
                 onClick={() => {
@@ -199,34 +199,14 @@ export default function TableForm({ data, dataToEdit }: Props) {
           );
         case "sub_total":
           return (
-            <div className="relative flex w-full h-full items-center">
-              <div
-                className={`${currentProduct?.is_discounted ? "font-bold text-green-500" : ""
-                  } text-center`}
-              >
-                {data.sub_total === null ? 0 : data.sub_total}
-              </div>
-              <Button
-                className={`${data.selected_id ? "block" : "hidden"
-                  } absolute right-[-210%] h-full w-[40px] bg-white text-xs text-black mobilehover:hover:bg-primary`}
-                size="icon"
-                aria-label="reset"
-                onClick={() => {
-                  resetItem(data.category_id);
-                  updateSelected();
-                }}
-                onKeyDown={(e) => {
-                  e.preventDefault();
-                  if (e.key === "Enter") {
-                    resetItem(data.category_id);
-                    updateSelected();
-                  }
-                }}
-              >
-                Reset
-              </Button>
+            <div
+              className={`${
+                currentProduct?.is_discounted ? "font-bold text-green-500" : ""
+              } text-center`}
+            >
+              {data.sub_total === null ? 0 : data.sub_total}
             </div>
-          ); null
+          );
         default:
           return <div>{cellValue ? cellValue.toString() : ""}</div>;
       }
