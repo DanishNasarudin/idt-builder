@@ -86,8 +86,7 @@ export async function getNavbarMenu(): Promise<MenuList[]> {
       .map(toMenuItem);
 
     return remoteMenu.length > 0 ? remoteMenu : menuList;
-  } catch (error) {
-    console.error("Failed to fetch public navbar", error);
+  } catch {
     return menuList;
   }
 }
